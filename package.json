@@ -1,0 +1,26 @@
+{
+  "name": "nodebot",
+  "version": "1.0.0",
+  "description": "A bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "supervisor index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trustgit/nodebot.git"
+  },
+  "author": "trustgit",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/trustgit/nodebot/issues"
+  },
+  "homepage": "https://github.com/trustgit/nodebot#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "koa": "^2.5.0",
+    "koa-body": "^2.5.0",
+    "koa-router": "^7.4.0",
+    "supervisor": "^0.12.0"
+  }
+}
