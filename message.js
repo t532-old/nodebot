@@ -29,6 +29,7 @@ module.exports = {
         // Is this an existing Command?
         if (typeof commands[main] === 'object') {
             response = commands[main].action({ sender, param }, ...sub)
+            sender(response)
         } else sender('Unknown Command!')
     }
 }
