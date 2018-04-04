@@ -28,11 +28,7 @@ module.exports = {
         const sender = this.send[type].bind(this, target)
         // Is this an existing Command?
         if (typeof commands[main] === 'object') {
-            // Check if this is a command that need permission
-            if (param.message.match(/^>>[^]+$/m)) 
-                response = commands[main].action(sender, param, ...sub)
-            else
-                response = commands[main].action(sender, ...sub)
+            response = commands[main].action({ sender, param }, ...sub)
         } else sender('Unknown Command!')
     }
 }

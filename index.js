@@ -1,5 +1,4 @@
 const Koa = require('koa')
-const Router = require('koa-router')
 const body = require('koa-body')
 
 const message = require('./message')
