@@ -17,10 +17,9 @@ module.exports = {
         const target = param.group_id || param.user_id
         // The response
         let response = ''
-        // This splits the command into different parts
-        const raw = param.message.trim().slice(1).split(
-                        commands[param.message.trim().slice(1).split(/[\r\n\s]/).filter(i => i)[0]].separator)
-                    .filter(i => i)
+        // This splits the command into parts
+        const raw = unescape(param.message.replace(/&#(\d+);/g, (match, str) => '%' + parseInt(str).toString(16))).trim().slice(1).split(commands[param.message.trim().slice(1).split(/[\r\n\s]/).filter(i => i)[0]].separator)
+        .filter(i => i)
         // Main & sub Command
         const main = raw[0].toLowerCase()
         const sub = raw.slice(1)

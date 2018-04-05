@@ -19,6 +19,7 @@ module.exports = {
                 if (fs.existsSync(path)) {
                     codes = unescape(codes.join('\n').replace(/&#(\d+);/g, (match, str) => '%' + parseInt(str).toString(16)))
                     fs.writeFileSync(path, codes, 'utf-8')
+                    msg.sender('develop: editcode: edited successfully')
                 } else msg.sender('develop: editcode: No such file or directory')
             } else msg.sender('develop: editcode: No permission')
         },
