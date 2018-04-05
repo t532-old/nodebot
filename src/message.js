@@ -27,8 +27,8 @@ module.exports = {
         const sender = this.send[type].bind(this, target)
         // Is this an existing Command?
         if (typeof commands[main] === 'object') {
-            response = commands[main].action({ sender, param }, ...sub)
-            sender(response)
+            commands[main].action({ sender, param }, ...sub)
         } else sender('Unknown Command!')
+        return response || 'Unknown Command!'
     }
 }

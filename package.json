@@ -4,7 +4,8 @@
   "description": "A bot",
   "main": "src/index.js",
   "scripts": {
-    "test": "supervisor src/index.js"
+    "dev": "supervisor src/index.js",
+    "cover": "babel-istanbul cover src/index.js"
   },
   "repository": {
     "type": "git",
@@ -21,7 +22,9 @@
     "gm": "^1.23.1",
     "koa": "^2.5.0",
     "koa-body": "^2.5.0",
-    "monk": "^6.0.5",
+    "monk": "^6.0.5"
+  },
+  "devDependencies": {
     "supervisor": "^0.12.0"
   }
 }
