@@ -29,6 +29,5 @@ module.exports = {
         if (typeof commands[main] === 'object') {
             commands[main].action({ sender, param }, ...sub)
         } else sender('Unknown Command!')
-        return response || 'Unknown Command!'
     }
 }

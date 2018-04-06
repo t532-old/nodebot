@@ -6,6 +6,28 @@ const gm = require('gm')
 
 const users = db.get('users')
 
+const util = {
+    modes: [['o', 's', '0', 'osu', 'std', 'osu!', 'standard'],
+            ['t', '1', 'tk', 'taiko'],
+            ['c', '2', 'ctb', 'catch', 'catchthebeat'],
+            ['m', '3', 'mania']],
+    checkmode(mode) {
+        mode = mode.toLowerCase()
+        for (let i in this.modes)
+            if (this.modes[i].includes(mode)) return i
+        return 0
+    }
+}
+
+function flatten(arr) {
+    const flat = []
+    for (let i of arr) {
+        if (i instanceof Array) flat.push(...flatten(i))
+        else flat.push(i)
+    }
+    return flat
+}
+
 module.exports = {
     test: {
         action(msg, ...txt) { msg.sender(txt.join(' ')) },
@@ -21,54 +43,38 @@ module.exports = {
     stat: {
         action(msg, usr = 'me', mode = 'o') {
             new Promise(function(resolve, reject) {
-                function checkmode(mode) {
-                    switch(mode) {
-                        case 'o': mode = 0; break;
-                        case 't': mode = 1; break;
-                        case 'c': mode = 2; break;
-                        case 'm': mode = 3; break;
-                    }
-                    return mode
-                }
-                mode = checkmode(mode)
-                if (['o', 't', 'c', 'm'].includes(usr)) {
-                    mode = checkmode(usr)
+                mode = util.checkmode(mode)
+                if (flatten(util.modes).includes(usr.toLowerCase())) {
+                    mode = util.checkmode(usr)
                     usr = 'me'
                 }
                 if (usr === 'me') users.findOne({ qqid: msg.param.user_id }).then(doc => { usr = doc.osuid }).then(resolve).catch(reject)
                 else resolve()
             }).then(() => axios.get(`https://osu.ppy.sh/api/get_user?k=${config.key}&u=${usr}&m=${mode}`))
               .then(res => {
-                if (res.data !== []) msg.sender(JSON.stringify(res.data[0]))
-                else msg.sender('osubot: stat: user not exist or bad network status')
+                if (res.data[0] !== undefined) msg.sender(JSON.stringify(res.data[0]))
+                else msg.sender('osubot: stat: user does not exist')
               })
+              .catch(() => msg.sender('osubot: stat: bad network status'))
         },
         separator: /[\r\n\s]/
     },
     recent: {
         action(msg, usr = 'me', mode = 'o') {
             new Promise(function(resolve, reject) {
-                function checkmode(mode) {
-                    switch(mode) {
-                        case 'o': mode = 0; break;
-                        case 't': mode = 1; break;
-                        case 'c': mode = 2; break;
-                        case 'm': mode = 3; break;
-                    }
-                    return mode
-                }
-                mode = checkmode(mode)
-                if (['o', 't', 'c', 'm'].includes(usr)) {
-                    mode = checkmode(usr)
+                mode = util.checkmode(mode)
+                if (util.modes.flatten().includes(usr.toLowerCase())) {
+                    mode = util.checkmode(usr)
                     usr = 'me'
                 }
                 if (usr === 'me') users.findOne({ qqid: msg.param.user_id }).then(doc => { usr = doc.osuid }).then(resolve).catch(reject)
                 else resolve()
             }).then(() => axios.get(`https://osu.ppy.sh/api/get_user_recent?k=${config.key}&u=${usr}&m=${mode}&limit=1`))
               .then(res => {
-                if (res.data !== []) msg.sender(JSON.stringify(res.data[0]))
-                else msg.sender('osubot: recent: user not exist or bad network status')
+                if (res.data[0] !== undefined) msg.sender(JSON.stringify(res.data[0]))
+                else msg.sender('osubot: recent: user does not exist')
               })
+              .catch(() => msg.sender('osubot: stat: bad network status'))
         },
         separator: /[\r\n\s]/
     },

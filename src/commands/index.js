@@ -1,1 +1,4 @@
-module.exports = { ...require('./develop'), ...require('./osubot') }
+module.exports = Object.assign({}, 
+    require('./develop'), 
+    require('./osubot'),
+)

@@ -8,7 +8,7 @@ const app = new Koa()
 app.use(body());
 
 app.use(async ctx => {
-    ctx.body = message.handle(ctx.request.body)
+    message.handle(ctx.request.body)
 });
 
 app.listen(8080)
