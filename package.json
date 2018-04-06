@@ -7,7 +7,8 @@
     "dev": "supervisor src/index.js",
     "run": "npm run build && node dist/index.js",
     "build": "babel src -d dist",
-    "test": "npm run build"
+    "test": "npm run build",
+    "cover": "istanbul cover dist/message.js"
   },
   "repository": {
     "type": "git",

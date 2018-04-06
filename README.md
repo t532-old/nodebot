@@ -1,4 +1,8 @@
 # nodebot
+[![license](https://img.shields.io/github/license/trustgit/nodebot.svg?style=for-the-badge)](https://github.com/trustgit/nodebot/blob/master/LICENSE)
+[![AppVeyor](https://img.shields.io/appveyor/ci/trustgit/nodebot.svg?style=for-the-badge)](https://ci.appveyor.com/project/trustgit/nodebot)
+![osubot(](https://img.shields.io/badge/developed%20for-osu!-ff6699.svg)
+
 **IN PROGRESS**
 
 A bot developed for qureying osu! info.
