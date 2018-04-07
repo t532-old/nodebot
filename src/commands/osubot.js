@@ -1,9 +1,8 @@
-const axios = require('axios')
 const fs = require('fs')
 const config = eval('(' + fs.readFileSync('config.json') + ')').osubot
 const db = require('monk')('localhost:27017/botdb')
 const gm = require('gm')
-const { StatQuery, RecentQuery } = require('./osubot-classes')
+const api = require('./osubot-classes')
 
 const users = db.get('users')
 
@@ -58,13 +57,14 @@ module.exports = {
                 }
             }
             try { 
-                data = (await axios.get(`https://osu.ppy.sh/api/get_user?k=${config.key}&u=${usr}&m=${mode}`)).data 
-            } catch (err) { 
-                msg.sender('osubot: stat: bad network status') 
-                return
+                msg.sender(await new api.StatQuery({
+                    u: usr,
+                    m: mode,
+                    k: config.key
+                }))
+            } catch(err) {
+                msg.sender(err.toString())
             }
-            if (data[0] !== undefined) msg.sender(JSON.stringify(data[0]))
-            else msg.sender('osubot: stat: user does not exist')
         },
         separator: /[\r\n\s]/
     },
@@ -84,14 +84,16 @@ module.exports = {
                     msg.sender('osubot: recent: user does not exist')
                 }
             }
-            try {
-                data = (await axios.get(`https://osu.ppy.sh/api/get_user_recent?k=${config.key}&u=${usr}&m=${mode}&limit=1`)).data
+            try { 
+                msg.sender(await new api.RecentQuery({
+                    u: usr,
+                    m: mode,
+                    limit: '1',
+                    k: config.key
+                }))
             } catch(err) {
-                msg.sender('osubot: stat: bad network status')
-                return
+                msg.sender(err.toString())
             }
-            if (data[0] !== undefined) msg.sender(JSON.stringify(data[0]))
-            else msg.sender('osubot: recent: user does not exist')
         },
         separator: /[\r\n\s]/
     },
