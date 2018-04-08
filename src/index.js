@@ -1,7 +1,7 @@
-const Koa = require('koa')
-const body = require('koa-body')
+import Koa from 'koa'
+import body from 'koa-body'
 
-const message = require('./message')
+import message from './message'
 
 const app = new Koa()
 

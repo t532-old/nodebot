@@ -1,11 +1,12 @@
-const fs = require('fs')
-const config = eval('(' + fs.readFileSync('config.json') + ')').osubot
-const db = require('monk')('localhost:27017/botdb')
-const gm = require('gm')
-const api = require('./osubot-classes')
+import fs from 'fs'
+import Monk from 'monk'
+import gm from 'gm'
+import api from './osubot-classes'
 
+const db = Monk('localhost:27017/botdb')
 const users = db.get('users')
 
+const config = eval('(' + fs.readFileSync('config.json') + ')').osubot
 const util = {
     modes: [['o', 's', '0', 'osu', 'std', 'osu!', 'standard'],
             ['t', '1', 'tk', 'taiko'],
@@ -28,7 +29,7 @@ function flatten(arr) {
     return flat
 }
 
-module.exports = {
+export default {
     test: {
         action(msg, ...txt) { msg.sender(txt.join(' ')) },
         separator: /[\r\n\s]/

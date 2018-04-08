@@ -1,4 +1,5 @@
-module.exports = Object.assign({}, 
-    require('./develop'), 
-    require('./osubot'),
-)
+import osubot from './osubot'
+import develop from './develop'
+export default {
+    ...osubot,
+}

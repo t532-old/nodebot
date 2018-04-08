@@ -1,14 +1,24 @@
 'use strict';
 
-var fs = require('fs');
-var config = eval('(' + fs.readFileSync('config.json', 'utf-8') + ')').develop;
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _fs = require('fs');
+
+var _fs2 = _interopRequireDefault(_fs);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var config = eval('(' + _fs2.default.readFileSync('config.json', 'utf-8') + ')').develop;
 var permission = config.operators;
-module.exports = {
+
+exports.default = {
     ">seecode": {
         action: function action(msg, path) {
             if (permission.indexOf(msg.param.user_id) > -1) {
-                if (fs.existsSync(path)) {
-                    var response = fs.readFileSync(path, 'utf-8');
+                if (_fs2.default.existsSync(path)) {
+                    var response = _fs2.default.readFileSync(path, 'utf-8');
                     msg.sender(response);
                 } else msg.sender('develop: seecode: No such file or directory');
             } else msg.sender('develop: seecode: No permission');
@@ -23,11 +33,11 @@ module.exports = {
             }
 
             if (permission.indexOf(msg.param.user_id) > -1) {
-                if (fs.existsSync(path)) {
+                if (_fs2.default.existsSync(path)) {
                     codes = unescape(codes.join('\n').replace(/&#(\d+);/g, function (match, str) {
                         return '%' + parseInt(str).toString(16);
                     }));
-                    fs.writeFileSync(path, codes, 'utf-8');
+                    _fs2.default.writeFileSync(path, codes, 'utf-8');
                     msg.sender('develop: editcode: edited successfully');
                 } else msg.sender('develop: editcode: No such file or directory');
             } else msg.sender('develop: editcode: No permission');

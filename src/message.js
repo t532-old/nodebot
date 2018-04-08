@@ -1,6 +1,6 @@
-const commands = require('./commands')
-const axios = require('axios')
-module.exports = {
+import commands from './commands'
+import axios from 'axios'
+export default {
     send: {
         private(user_id, message) {
             axios.post('http://localhost:5700/send_private_msg', { user_id, message })

@@ -8,16 +8,23 @@ var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
+var _koa = require('koa');
+
+var _koa2 = _interopRequireDefault(_koa);
+
+var _koaBody = require('koa-body');
+
+var _koaBody2 = _interopRequireDefault(_koaBody);
+
+var _message = require('./message');
+
+var _message2 = _interopRequireDefault(_message);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Koa = require('koa');
-var body = require('koa-body');
+var app = new _koa2.default();
 
-var message = require('./message');
-
-var app = new Koa();
-
-app.use(body());
+app.use((0, _koaBody2.default)());
 
 app.use(function () {
     var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(ctx) {
@@ -25,7 +32,7 @@ app.use(function () {
             while (1) {
                 switch (_context.prev = _context.next) {
                     case 0:
-                        message.handle(ctx.request.body);
+                        _message2.default.handle(ctx.request.body);
 
                     case 1:
                     case 'end':

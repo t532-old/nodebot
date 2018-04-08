@@ -1,5 +1,9 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
 
 var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
@@ -8,17 +12,23 @@ var _typeof2 = require('babel-runtime/helpers/typeof');
 
 var _typeof3 = _interopRequireDefault(_typeof2);
 
+var _commands = require('./commands');
+
+var _commands2 = _interopRequireDefault(_commands);
+
+var _axios = require('axios');
+
+var _axios2 = _interopRequireDefault(_axios);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var commands = require('./commands');
-var axios = require('axios');
-module.exports = {
+exports.default = {
     send: {
         private: function _private(user_id, message) {
-            axios.post('http://localhost:5700/send_private_msg', { user_id: user_id, message: message });
+            _axios2.default.post('http://localhost:5700/send_private_msg', { user_id: user_id, message: message });
         },
         group: function group(group_id, message) {
-            axios.post('http://localhost:5700/send_group_msg', { group_id: group_id, message: message });
+            _axios2.default.post('http://localhost:5700/send_group_msg', { group_id: group_id, message: message });
         }
     },
     handle: function handle(param) {
@@ -32,7 +42,7 @@ module.exports = {
         // This splits the command into parts
         var raw = unescape(param.message.replace(/&#(\d+);/g, function (match, str) {
             return '%' + parseInt(str).toString(16);
-        })).trim().slice(1).split(commands[param.message.trim().slice(1).split(/[\r\n\s]/).filter(function (i) {
+        })).trim().slice(1).split(_commands2.default[param.message.trim().slice(1).split(/[\r\n\s]/).filter(function (i) {
             return i;
         })[0]].separator).filter(function (i) {
             return i;
@@ -43,10 +53,10 @@ module.exports = {
         // The sender
         var sender = this.send[type].bind(this, target);
         // Is this an existing Command?
-        if ((0, _typeof3.default)(commands[main]) === 'object') {
+        if ((0, _typeof3.default)(_commands2.default[main]) === 'object') {
             var _commands$main;
 
-            (_commands$main = commands[main]).action.apply(_commands$main, [{ sender: sender, param: param }].concat((0, _toConsumableArray3.default)(sub)));
+            (_commands$main = _commands2.default[main]).action.apply(_commands$main, [{ sender: sender, param: param }].concat((0, _toConsumableArray3.default)(sub)));
         } else sender('Unknown Command!');
     }
 };
