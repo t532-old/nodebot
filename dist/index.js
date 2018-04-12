@@ -8,6 +8,10 @@ var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
+var _fs = require('fs');
+
+var _fs2 = _interopRequireDefault(_fs);
+
 var _koa = require('koa');
 
 var _koa2 = _interopRequireDefault(_koa);
@@ -21,6 +25,8 @@ var _message = require('./message');
 var _message2 = _interopRequireDefault(_message);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+if (!_fs2.default.existsSync('../bot-data')) _fs2.default.mkdir('../bot-data');
 
 var app = new _koa2.default();
 

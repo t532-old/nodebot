@@ -28,13 +28,13 @@ var _monk = require('monk');
 
 var _monk2 = _interopRequireDefault(_monk);
 
-var _gm = require('gm');
+var _osubotApi = require('./osubot-api');
 
-var _gm2 = _interopRequireDefault(_gm);
+var _osubotApi2 = _interopRequireDefault(_osubotApi);
 
-var _osubotClasses = require('./osubot-classes');
+var _osubotCanvas = require('./osubot-canvas');
 
-var _osubotClasses2 = _interopRequireDefault(_osubotClasses);
+var _osubotCanvas2 = _interopRequireDefault(_osubotCanvas);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -150,11 +150,11 @@ exports.default = {
                                 _context.prev = 14;
                                 _context.t1 = msg;
                                 _context.next = 18;
-                                return new _osubotClasses2.default.StatQuery({
+                                return new _osubotApi2.default.StatQuery({
                                     u: usr,
                                     m: mode,
                                     k: config.key
-                                });
+                                }).exec();
 
                             case 18:
                                 _context.t2 = _context.sent;
@@ -191,76 +191,96 @@ exports.default = {
         action: function () {
             var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(msg) {
                 var usr = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'me';
-                var mode = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'o';
-                var data, doc;
+                var data, doc, rec, map, stat, path;
                 return _regenerator2.default.wrap(function _callee2$(_context2) {
                     while (1) {
                         switch (_context2.prev = _context2.next) {
                             case 0:
-                                mode = util.checkmode(mode);
                                 data = [];
 
-                                if (util.modes.flatten().includes(usr.toLowerCase())) {
-                                    mode = util.checkmode(usr);
-                                    usr = 'me';
-                                }
-
                                 if (!(usr === 'me')) {
-                                    _context2.next = 14;
+                                    _context2.next = 13;
                                     break;
                                 }
 
-                                _context2.prev = 4;
-                                _context2.next = 7;
+                                _context2.prev = 2;
+                                _context2.next = 5;
                                 return users.findOne({ qqid: msg.param.user_id });
 
-                            case 7:
+                            case 5:
                                 doc = _context2.sent;
 
                                 usr = doc.osuid;
-                                _context2.next = 14;
+                                _context2.next = 13;
                                 break;
 
-                            case 11:
-                                _context2.prev = 11;
-                                _context2.t0 = _context2['catch'](4);
+                            case 9:
+                                _context2.prev = 9;
+                                _context2.t0 = _context2['catch'](2);
 
                                 msg.sender('osubot: recent: user does not exist');
+                                return _context2.abrupt('return');
 
-                            case 14:
-                                _context2.prev = 14;
-                                _context2.t1 = msg;
-                                _context2.next = 18;
-                                return new _osubotClasses2.default.RecentQuery({
+                            case 13:
+                                _context2.prev = 13;
+                                _context2.next = 16;
+                                return new _osubotApi2.default.RecentQuery({
                                     u: usr,
-                                    m: mode,
                                     limit: '1',
                                     k: config.key
-                                });
+                                }).exec();
 
-                            case 18:
-                                _context2.t2 = _context2.sent;
+                            case 16:
+                                rec = _context2.sent;
+                                _context2.next = 19;
+                                return new _osubotApi2.default.MapQuery({
+                                    b: rec.beatmap_id,
+                                    k: config.key
+                                }).exec();
 
-                                _context2.t1.sender.call(_context2.t1, _context2.t2);
-
-                                _context2.next = 25;
-                                break;
+                            case 19:
+                                map = _context2.sent;
+                                _context2.next = 22;
+                                return new _osubotApi2.default.StatQuery({
+                                    u: usr,
+                                    k: config.key
+                                }).exec();
 
                             case 22:
-                                _context2.prev = 22;
-                                _context2.t3 = _context2['catch'](14);
-
-                                msg.sender(_context2.t3.toString());
+                                stat = _context2.sent;
+                                _context2.next = 25;
+                                return _osubotCanvas2.default.drawRecent(rec, map, stat);
 
                             case 25:
+                                path = _context2.sent;
+
+                                msg.sender([{
+                                    type: "image",
+                                    data: {
+                                        file: "../"
+                                    }
+                                }]);
+                                _context2.next = 34;
+                                break;
+
+                            case 29:
+                                _context2.prev = 29;
+                                _context2.t1 = _context2['catch'](13);
+                                _context2.next = 33;
+                                return _osubotCanvas2.default.drawErrRecent();
+
+                            case 33:
+                                return _context2.abrupt('return');
+
+                            case 34:
                             case 'end':
                                 return _context2.stop();
                         }
                     }
-                }, _callee2, this, [[4, 11], [14, 22]]);
+                }, _callee2, this, [[2, 9], [13, 29]]);
             }));
 
-            function action(_x6) {
+            function action(_x5) {
                 return _ref2.apply(this, arguments);
             }
 
@@ -290,7 +310,7 @@ exports.default = {
                 }, _callee3, this);
             }));
 
-            function action(_x8) {
+            function action(_x7) {
                 return _ref3.apply(this, arguments);
             }
 
