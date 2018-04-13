@@ -1,33 +1,13 @@
 import fs from 'fs'
 import Monk from 'monk'
-import gm from 'gm'
-import api from './osubot-classes'
+import api from './osubot-api'
+import canvas from './osubot-canvas'
+import util from './osubot-util'
 
 const db = Monk('localhost:27017/botdb')
 const users = db.get('users')
 
 const config = eval('(' + fs.readFileSync('config.json') + ')').osubot
-const util = {
-    modes: [['o', 's', '0', 'osu', 'std', 'osu!', 'standard'],
-            ['t', '1', 'tk', 'taiko'],
-            ['c', '2', 'ctb', 'catch', 'catchthebeat'],
-            ['m', '3', 'mania']],
-    checkmode(mode) {
-        mode = mode.toLowerCase()
-        for (let i in this.modes)
-            if (this.modes[i].includes(mode)) return i
-        return 0
-    }
-}
-
-function flatten(arr) {
-    const flat = []
-    for (let i of arr) {
-        if (i instanceof Array) flat.push(...flatten(i))
-        else flat.push(i)
-    }
-    return flat
-}
 
 export default {
     test: {
@@ -45,7 +25,7 @@ export default {
         async action(msg, usr = 'me', mode = 'o') {
             mode = util.checkmode(mode)
             let data = []
-            if (flatten(util.modes).includes(usr.toLowerCase())) {
+            if (util.modes.flatten().includes(usr.toLowerCase())) {
                 mode = util.checkmode(usr)
                 usr = 'me'
             }
@@ -62,7 +42,7 @@ export default {
                     u: usr,
                     m: mode,
                     k: config.key
-                }))
+                }).exec())
             } catch(err) {
                 msg.sender(err.toString())
             }
@@ -70,30 +50,41 @@ export default {
         separator: /[\r\n\s]/
     },
     recent: {
-        async action(msg, usr = 'me', mode = 'o') {
-            mode = util.checkmode(mode)
+        async action(msg, usr = 'me') {
             let data = []
-            if (util.modes.flatten().includes(usr.toLowerCase())) {
-                mode = util.checkmode(usr)
-                usr = 'me'
-            }
             if (usr === 'me') {
                 try {
                     const doc = await users.findOne({ qqid: msg.param.user_id })
                     usr = doc.osuid
                 } catch (err) {
                     msg.sender('osubot: recent: user does not exist')
+                    return
                 }
             }
             try { 
-                msg.sender(await new api.RecentQuery({
+                const rec = await new api.RecentQuery({
                     u: usr,
-                    m: mode,
                     limit: '1',
                     k: config.key
-                }))
+                }).exec()
+                const map = await new api.MapQuery({
+                    b: rec.beatmap_id,
+                    k: config.key
+                }).exec()
+                const stat = await new api.StatQuery({
+                    u: usr,
+                    k: config.key
+                }).exec()
+                const path = await canvas.drawRecent(rec, map, stat)
+                msg.sender([{
+                    type: 'image',
+                    data: {
+                        file: path,
+                    }
+                }])
             } catch(err) {
                 msg.sender(err.toString())
+                return
             }
         },
         separator: /[\r\n\s]/

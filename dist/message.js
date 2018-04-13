@@ -12,9 +12,9 @@ var _typeof2 = require('babel-runtime/helpers/typeof');
 
 var _typeof3 = _interopRequireDefault(_typeof2);
 
-var _commands = require('./commands');
+var _modules = require('./modules');
 
-var _commands2 = _interopRequireDefault(_commands);
+var _modules2 = _interopRequireDefault(_modules);
 
 var _axios = require('axios');
 
@@ -25,10 +25,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
     send: {
         private: function _private(user_id, message) {
-            _axios2.default.post('http://localhost:5700/send_private_msg', { user_id: user_id, message: message });
+            return _axios2.default.post('http://localhost:5700/send_private_msg', { user_id: user_id, message: message });
         },
         group: function group(group_id, message) {
-            _axios2.default.post('http://localhost:5700/send_group_msg', { group_id: group_id, message: message });
+            return _axios2.default.post('http://localhost:5700/send_group_msg', { group_id: group_id, message: message });
         }
     },
     handle: function handle(param) {
@@ -42,7 +42,7 @@ exports.default = {
         // This splits the command into parts
         var raw = unescape(param.message.replace(/&#(\d+);/g, function (match, str) {
             return '%' + parseInt(str).toString(16);
-        })).trim().slice(1).split(_commands2.default[param.message.trim().slice(1).split(/[\r\n\s]/).filter(function (i) {
+        })).trim().slice(1).split(_modules2.default[param.message.trim().slice(1).split(/[\r\n\s]/).filter(function (i) {
             return i;
         })[0]].separator).filter(function (i) {
             return i;
@@ -53,10 +53,10 @@ exports.default = {
         // The sender
         var sender = this.send[type].bind(this, target);
         // Is this an existing Command?
-        if ((0, _typeof3.default)(_commands2.default[main]) === 'object') {
-            var _commands$main;
+        if ((0, _typeof3.default)(_modules2.default[main]) === 'object') {
+            var _botModules$main;
 
-            (_commands$main = _commands2.default[main]).action.apply(_commands$main, [{ sender: sender, param: param }].concat((0, _toConsumableArray3.default)(sub)));
+            (_botModules$main = _modules2.default[main]).action.apply(_botModules$main, [{ sender: sender, param: param }].concat((0, _toConsumableArray3.default)(sub)));
         } else sender('Unknown Command!');
     }
 };

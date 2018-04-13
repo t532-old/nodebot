@@ -187,38 +187,45 @@ exports.default = {
 
                             case 16:
                                 rec = _context2.sent;
-
-                                console.log('test');
-                                _context2.next = 20;
+                                _context2.next = 19;
                                 return new _osubotApi2.default.MapQuery({
                                     b: rec.beatmap_id,
                                     k: config.key
                                 }).exec();
 
-                            case 20:
+                            case 19:
                                 map = _context2.sent;
-                                _context2.next = 23;
+                                _context2.next = 22;
                                 return new _osubotApi2.default.StatQuery({
                                     u: usr,
                                     k: config.key
                                 }).exec();
 
-                            case 23:
+                            case 22:
                                 stat = _context2.sent;
-                                _context2.next = 26;
+                                _context2.next = 25;
                                 return _osubotCanvas2.default.drawRecent(rec, map, stat);
 
-                            case 26:
+                            case 25:
                                 path = _context2.sent;
-                                _context2.next = 32;
+
+                                msg.sender([{
+                                    type: 'image',
+                                    data: {
+                                        file: path
+                                    }
+                                }]);
+                                _context2.next = 33;
                                 break;
 
                             case 29:
                                 _context2.prev = 29;
                                 _context2.t1 = _context2['catch'](13);
+
+                                msg.sender(_context2.t1.toString());
                                 return _context2.abrupt('return');
 
-                            case 32:
+                            case 33:
                             case 'end':
                                 return _context2.stop();
                         }

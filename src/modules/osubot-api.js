@@ -1,7 +1,7 @@
 import url from 'url'
 import axios from 'axios'
 
-class Query {
+class APIQuery {
     constructor(name, params) {
         this.name = name
         this.params = params
@@ -19,7 +19,7 @@ class Query {
     }
 }
 
-class StatQuery extends Query {
+class StatQuery extends APIQuery {
     constructor(params) { super('get_user', params) }
     async exec() {
         let result
@@ -31,8 +31,21 @@ class StatQuery extends Query {
     }
 }
 
-class RecentQuery extends Query {
+class RecentQuery extends APIQuery {
     constructor(params) { super('get_user_recent', params) }
+    async exec() {
+        let result
+        try { 
+            console.log(this.url)
+            result = await super.exec()
+            if (result.data[0] === undefined) throw new Error('RecentQuery: user does not exist or not played recently')
+            else return result.data[0]
+        } catch (err) { throw new Error('RecentQuery: bad network status') } 
+    }
+}
+
+class MapQuery extends APIQuery {
+    constructor(params) { super('get_beatmaps', params) }
     async exec() {
         let result
         try { 
@@ -43,4 +56,4 @@ class RecentQuery extends Query {
     }
 }
 
-export default { Query, RecentQuery, StatQuery }
+export default { APIQuery, RecentQuery, StatQuery, MapQuery }
