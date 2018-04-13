@@ -12,14 +12,6 @@ var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
-
-var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
-
-var _getIterator2 = require('babel-runtime/core-js/get-iterator');
-
-var _getIterator3 = _interopRequireDefault(_getIterator2);
-
 var _fs = require('fs');
 
 var _fs2 = _interopRequireDefault(_fs);
@@ -36,51 +28,16 @@ var _osubotCanvas = require('./osubot-canvas');
 
 var _osubotCanvas2 = _interopRequireDefault(_osubotCanvas);
 
+var _osubotUtil = require('./osubot-util');
+
+var _osubotUtil2 = _interopRequireDefault(_osubotUtil);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var db = (0, _monk2.default)('localhost:27017/botdb');
 var users = db.get('users');
 
 var config = eval('(' + _fs2.default.readFileSync('config.json') + ')').osubot;
-var util = {
-    modes: [['o', 's', '0', 'osu', 'std', 'osu!', 'standard'], ['t', '1', 'tk', 'taiko'], ['c', '2', 'ctb', 'catch', 'catchthebeat'], ['m', '3', 'mania']],
-    checkmode: function checkmode(mode) {
-        mode = mode.toLowerCase();
-        for (var i in this.modes) {
-            if (this.modes[i].includes(mode)) return i;
-        }return 0;
-    }
-};
-
-function flatten(arr) {
-    var flat = [];
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
-
-    try {
-        for (var _iterator = (0, _getIterator3.default)(arr), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var i = _step.value;
-
-            if (i instanceof Array) flat.push.apply(flat, (0, _toConsumableArray3.default)(flatten(i)));else flat.push(i);
-        }
-    } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-    } finally {
-        try {
-            if (!_iteratorNormalCompletion && _iterator.return) {
-                _iterator.return();
-            }
-        } finally {
-            if (_didIteratorError) {
-                throw _iteratorError;
-            }
-        }
-    }
-
-    return flat;
-}
 
 exports.default = {
     test: {
@@ -116,11 +73,11 @@ exports.default = {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
-                                mode = util.checkmode(mode);
+                                mode = _osubotUtil2.default.checkmode(mode);
                                 data = [];
 
-                                if (flatten(util.modes).includes(usr.toLowerCase())) {
-                                    mode = util.checkmode(usr);
+                                if (_osubotUtil2.default.flatten(_osubotUtil2.default.modes).includes(usr.toLowerCase())) {
+                                    mode = _osubotUtil2.default.checkmode(usr);
                                     usr = 'me';
                                 }
 

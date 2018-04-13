@@ -2,32 +2,12 @@ import fs from 'fs'
 import Monk from 'monk'
 import api from './osubot-api'
 import canvas from './osubot-canvas'
+import util from './osubot-util'
 
 const db = Monk('localhost:27017/botdb')
 const users = db.get('users')
 
 const config = eval('(' + fs.readFileSync('config.json') + ')').osubot
-const util = {
-    modes: [['o', 's', '0', 'osu', 'std', 'osu!', 'standard'],
-            ['t', '1', 'tk', 'taiko'],
-            ['c', '2', 'ctb', 'catch', 'catchthebeat'],
-            ['m', '3', 'mania']],
-    checkmode(mode) {
-        mode = mode.toLowerCase()
-        for (let i in this.modes)
-            if (this.modes[i].includes(mode)) return i
-        return 0
-    }
-}
-
-function flatten(arr) {
-    const flat = []
-    for (let i of arr) {
-        if (i instanceof Array) flat.push(...flatten(i))
-        else flat.push(i)
-    }
-    return flat
-}
 
 export default {
     test: {
@@ -45,7 +25,7 @@ export default {
         async action(msg, usr = 'me', mode = 'o') {
             mode = util.checkmode(mode)
             let data = []
-            if (flatten(util.modes).includes(usr.toLowerCase())) {
+            if (util.flatten(util.modes).includes(usr.toLowerCase())) {
                 mode = util.checkmode(usr)
                 usr = 'me'
             }
