@@ -19,7 +19,7 @@
 - MongoDB
 - Nodejs 8.9（正在用的）& npm
 - 酷Q 5.x.x（现在在用5.11.12A）
-- ImageMagick
+- GraphicsMagick
 
 **酷Q一定要装 [cqhttp](https://github.com/richardchien/coolq-http-api/releases)！！！**
 
@@ -31,7 +31,7 @@
     |-- ...other files
 ```
 ## 运行
-在27017端口上运行mongod并在5700端口上运行cqhttp。然后在命令行中输入：
+根据config.template.json创建一个config.json文件，并在27017端口上运行mongod，在5700端口上运行cqhttp。然后在命令行中输入：
 ```sh
 $ cd <your-bot-directory>
 $ npm install
@@ -47,7 +47,7 @@ I didn't do compatibility tests. You can try if it can run in other environments
 - MongoDB
 - Node.js 8.9.x (8.9.3 in use) or higher & npm
 - CoolQ 5.x.x (5.11.12A in use) or higher
-- ImageMagick
+- GraphicsMagick
 
 **Be sure your CoolQ has already installed [cqhttp](https://github.com/richardchien/coolq-http-api/releases).**
 
@@ -59,7 +59,7 @@ Your directory **SHOULD** be like this:
     |-- ...other files
 ```
 ## Run
-Run mongod on port 27017 and cqhttp on port 5700, and enter:
+Create a `config.json` file based on the given `config.template.json`, Run mongod on port 27017 and cqhttp on port 5700, and enter:
 ```sh
 $ cd <your-bot-directory>
 $ npm install

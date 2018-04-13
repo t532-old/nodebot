@@ -40,21 +40,10 @@ var users = db.get('users');
 var config = eval('(' + _fs2.default.readFileSync('config.json') + ')').osubot;
 
 exports.default = {
-    test: {
-        action: function action(msg) {
-            for (var _len = arguments.length, txt = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-                txt[_key - 1] = arguments[_key];
-            }
-
-            msg.sender(txt.join(' '));
-        },
-
-        separator: /[\r\n\s]/
-    },
     bind: {
         action: function action(msg) {
-            for (var _len2 = arguments.length, account = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-                account[_key2 - 1] = arguments[_key2];
+            for (var _len = arguments.length, account = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+                account[_key - 1] = arguments[_key];
             }
 
             users.insert({ qqid: msg.param.user_id, osuid: account.join(' ') });

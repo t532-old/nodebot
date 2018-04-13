@@ -10,10 +10,6 @@ const users = db.get('users')
 const config = eval('(' + fs.readFileSync('config.json') + ')').osubot
 
 export default {
-    test: {
-        action(msg, ...txt) { msg.sender(txt.join(' ')) },
-        separator: /[\r\n\s]/
-    },
     bind: {
         action(msg, ...account) { 
             users.insert({ qqid: msg.param.user_id, osuid: account.join(' ')})
