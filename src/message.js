@@ -1,12 +1,12 @@
-import commands from './commands'
+import botModules from './modules'
 import axios from 'axios'
 export default {
     send: {
         private(user_id, message) {
-            axios.post('http://localhost:5700/send_private_msg', { user_id, message })
+            return axios.post('http://localhost:5700/send_private_msg', { user_id, message })
         },
         group(group_id, message) {
-            axios.post('http://localhost:5700/send_group_msg', { group_id, message })
+            return axios.post('http://localhost:5700/send_group_msg', { group_id, message })
         }
     },
     handle(param) {
@@ -18,7 +18,7 @@ export default {
         // The response
         let response = ''
         // This splits the command into parts
-        const raw = unescape(param.message.replace(/&#(\d+);/g, (match, str) => '%' + parseInt(str).toString(16))).trim().slice(1).split(commands[param.message.trim().slice(1).split(/[\r\n\s]/).filter(i => i)[0]].separator)
+        const raw = unescape(param.message.replace(/&#(\d+);/g, (match, str) => '%' + parseInt(str).toString(16))).trim().slice(1).split(botModules[param.message.trim().slice(1).split(/[\r\n\s]/).filter(i => i)[0]].separator)
         .filter(i => i)
         // Main & sub Command
         const main = raw[0].toLowerCase()
@@ -26,8 +26,8 @@ export default {
         // The sender
         const sender = this.send[type].bind(this, target)
         // Is this an existing Command?
-        if (typeof commands[main] === 'object') {
-            commands[main].action({ sender, param }, ...sub)
+        if (typeof botModules[main] === 'object') {
+            botModules[main].action({ sender, param }, ...sub)
         } else sender('Unknown Command!')
     }
 }

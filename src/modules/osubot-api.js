@@ -36,8 +36,9 @@ class RecentQuery extends APIQuery {
     async exec() {
         let result
         try { 
+            console.log(this.url)
             result = await super.exec()
-            if (result.data[0] === undefined) throw new Error('RecentQuery: user does not exist')
+            if (result.data[0] === undefined) throw new Error('RecentQuery: user does not exist or not played recently')
             else return result.data[0]
         } catch (err) { throw new Error('RecentQuery: bad network status') } 
     }

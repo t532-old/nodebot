@@ -25,7 +25,7 @@ export default {
         async action(msg, usr = 'me', mode = 'o') {
             mode = util.checkmode(mode)
             let data = []
-            if (util.flatten(util.modes).includes(usr.toLowerCase())) {
+            if (util.modes.flatten().includes(usr.toLowerCase())) {
                 mode = util.checkmode(usr)
                 usr = 'me'
             }
@@ -77,13 +77,13 @@ export default {
                 }).exec()
                 const path = await canvas.drawRecent(rec, map, stat)
                 msg.sender([{
-                    type: "image",
+                    type: 'image',
                     data: {
-                        file: "../",
+                        file: path,
                     }
                 }])
             } catch(err) {
-                await canvas.drawErrRecent()
+                msg.sender(err.toString())
                 return
             }
         },

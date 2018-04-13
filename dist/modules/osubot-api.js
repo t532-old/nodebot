@@ -198,7 +198,7 @@ var RecentQuery = function (_APIQuery2) {
                             case 13:
                                 _context3.prev = 13;
                                 _context3.t0 = _context3['catch'](1);
-                                throw _context3.t0;
+                                throw new Error('RecentQuery: bad network status');
 
                             case 16:
                             case 'end':
