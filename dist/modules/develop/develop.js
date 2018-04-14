@@ -3,7 +3,14 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var config = eval('(' + fs.readFileSync('config.json') + ')').develop;
+
+var _yaml = require('yaml');
+
+var _yaml2 = _interopRequireDefault(_yaml);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var config = _yaml2.default.eval(fs.readFileSync('config.yml')).develop;
 exports.default = {
     test: {
         action: function action(msg) {

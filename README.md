@@ -31,7 +31,7 @@
     |-- ...other files
 ```
 ## 运行
-根据config.template.json创建一个config.json文件，并在27017端口上运行mongod，在5700端口上运行cqhttp。然后在命令行中输入：
+根据config.template.yml创建一个config.yml文件，并在27017端口上运行mongod，在5700端口上运行cqhttp。然后在命令行中输入：
 ```sh
 $ cd <your-bot-directory>
 $ npm install
@@ -59,7 +59,7 @@ Your directory **SHOULD** be like this:
     |-- ...other files
 ```
 ## Run
-Create a `config.json` file based on the given `config.template.json`, Run mongod on port 27017 and cqhttp on port 5700, and enter:
+Create a `config.yml` file based on the given `config.template.yml`, Run mongod on port 27017 and cqhttp on port 5700, and enter:
 ```sh
 $ cd <your-bot-directory>
 $ npm install
