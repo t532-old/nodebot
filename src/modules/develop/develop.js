@@ -1,5 +1,5 @@
-import yaml from 'yaml'
-const config = yaml.eval(fs.readFileSync('config.yml')).develop
+import yaml from 'js-yaml'
+const config = yaml.safeLoad(fs.readFileSync('config.yml')).develop
 export default {
     test: {
         action(msg, ...txt) { msg.sender(txt.join(' ')) },

@@ -3,12 +3,12 @@ import Monk from 'monk'
 import api from './osubot-api'
 import canvas from './osubot-canvas'
 import util from './osubot-util'
-import yaml from 'yaml'
+import yaml from 'js-yaml'
 
 const db = Monk('localhost:27017/botdb')
 const users = db.get('users')
 
-const config = yaml.eval(fs.readFileSync('config.yml')).osubot
+const config = yaml.safeLoad(fs.readFileSync('config.yml')).osubot
 
 export default {
     bind: {

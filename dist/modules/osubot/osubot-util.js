@@ -15,7 +15,8 @@ exports.default = {
         var rec = this.copy(data);
         for (var i in rec) {
             rec[i] = parseInt(rec[i]);
-        }return parseFloat(((rec.count50 * 50 + rec.count100 * 100 + rec.count300 * 300) / ((rec.countmiss + rec.count50 + rec.count100 + rec.count300) * 300)).toString().slice(0, 6)) * 100;
+        }var result = ((rec.count50 * 50 + rec.count100 * 100 + rec.count300 * 300) / ((rec.countmiss + rec.count50 + rec.count100 + rec.count300) * 300) * 100).toString();
+        return result.slice(0, 3 + result.split('.')[0].length);
     },
     scorify: function scorify(score) {
         var sep = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 3;

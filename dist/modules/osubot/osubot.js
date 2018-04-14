@@ -32,16 +32,16 @@ var _osubotUtil = require('./osubot-util');
 
 var _osubotUtil2 = _interopRequireDefault(_osubotUtil);
 
-var _yaml = require('yaml');
+var _jsYaml = require('js-yaml');
 
-var _yaml2 = _interopRequireDefault(_yaml);
+var _jsYaml2 = _interopRequireDefault(_jsYaml);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var db = (0, _monk2.default)('localhost:27017/botdb');
 var users = db.get('users');
 
-var config = _yaml2.default.eval(_fs2.default.readFileSync('config.yml')).osubot;
+var config = _jsYaml2.default.safeLoad(_fs2.default.readFileSync('config.yml')).osubot;
 
 exports.default = {
     bind: {

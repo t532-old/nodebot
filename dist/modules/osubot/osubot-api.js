@@ -173,39 +173,37 @@ var RecentQuery = function (_APIQuery2) {
                             case 0:
                                 result = void 0;
                                 _context3.prev = 1;
-
-                                console.log(this.url);
-                                _context3.next = 5;
+                                _context3.next = 4;
                                 return (0, _get3.default)(RecentQuery.prototype.__proto__ || (0, _getPrototypeOf2.default)(RecentQuery.prototype), 'exec', this).call(this);
 
-                            case 5:
+                            case 4:
                                 result = _context3.sent;
 
                                 if (!(result.data[0] === undefined)) {
-                                    _context3.next = 10;
+                                    _context3.next = 9;
                                     break;
                                 }
 
                                 throw new Error('RecentQuery: user does not exist or not played recently');
 
-                            case 10:
+                            case 9:
                                 return _context3.abrupt('return', result.data[0]);
 
-                            case 11:
-                                _context3.next = 16;
+                            case 10:
+                                _context3.next = 15;
                                 break;
 
-                            case 13:
-                                _context3.prev = 13;
+                            case 12:
+                                _context3.prev = 12;
                                 _context3.t0 = _context3['catch'](1);
                                 throw new Error('RecentQuery: bad network status');
 
-                            case 16:
+                            case 15:
                             case 'end':
                                 return _context3.stop();
                         }
                     }
-                }, _callee3, this, [[1, 13]]);
+                }, _callee3, this, [[1, 12]]);
             }));
 
             function exec() {
