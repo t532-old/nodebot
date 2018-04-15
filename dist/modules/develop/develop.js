@@ -8,9 +8,13 @@ var _jsYaml = require('js-yaml');
 
 var _jsYaml2 = _interopRequireDefault(_jsYaml);
 
+var _fs = require('fs');
+
+var _fs2 = _interopRequireDefault(_fs);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var config = _jsYaml2.default.safeLoad(fs.readFileSync('config.yml')).develop;
+var config = _jsYaml2.default.safeLoad(_fs2.default.readFileSync('config.yml')).develop;
 exports.default = {
     test: {
         action: function action(msg) {

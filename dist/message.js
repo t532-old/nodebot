@@ -12,9 +12,9 @@ var _typeof2 = require('babel-runtime/helpers/typeof');
 
 var _typeof3 = _interopRequireDefault(_typeof2);
 
-var _modules = require('./modules');
+var _exports = require('./modules/exports.js');
 
-var _modules2 = _interopRequireDefault(_modules);
+var _exports2 = _interopRequireDefault(_exports);
 
 var _axios = require('axios');
 
@@ -42,9 +42,7 @@ exports.default = {
         // This splits the command into parts
         var raw = unescape(param.message.replace(/&#(\d+);/g, function (match, str) {
             return '%' + parseInt(str).toString(16);
-        })).trim().slice(1).split(_modules2.default[param.message.trim().slice(1).split(/[\r\n\s]/).filter(function (i) {
-            return i;
-        })[0]].separator).filter(function (i) {
+        })).trim().slice(1).split(/[\r\n\s]/).filter(function (i) {
             return i;
         });
         // Main & sub Command
@@ -53,10 +51,10 @@ exports.default = {
         // The sender
         var sender = this.send[type].bind(this, target);
         // Is this an existing Command?
-        if ((0, _typeof3.default)(_modules2.default[main]) === 'object') {
+        if ((0, _typeof3.default)(_exports2.default[main]) === 'object') {
             var _botModules$main;
 
-            (_botModules$main = _modules2.default[main]).action.apply(_botModules$main, [{ sender: sender, param: param }].concat((0, _toConsumableArray3.default)(sub)));
+            (_botModules$main = _exports2.default[main]).action.apply(_botModules$main, [{ sender: sender, param: param }].concat((0, _toConsumableArray3.default)(sub)));
         } else sender('Unknown Command!');
     }
 };

@@ -1,4 +1,4 @@
-import botModules from './modules'
+import botModules from './modules/exports.js'
 import axios from 'axios'
 export default {
     send: {
@@ -18,8 +18,7 @@ export default {
         // The response
         let response = ''
         // This splits the command into parts
-        const raw = unescape(param.message.replace(/&#(\d+);/g, (match, str) => '%' + parseInt(str).toString(16))).trim().slice(1).split(botModules[param.message.trim().slice(1).split(/[\r\n\s]/).filter(i => i)[0]].separator)
-        .filter(i => i)
+        const raw = unescape(param.message.replace(/&#(\d+);/g, (match, str) => '%' + parseInt(str).toString(16))).trim().slice(1).split(/[\r\n\s]/).filter(i => i)
         // Main & sub Command
         const main = raw[0].toLowerCase()
         const sub = raw.slice(1)

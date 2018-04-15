@@ -1,4 +1,4 @@
 export default {
-    ...require('./osubot'),
-    ...require('./develop'),
+    ...require('./osubot/exports.js'),
+    ...require('./develop/exports.js'),
 }
