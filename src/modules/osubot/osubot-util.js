@@ -32,7 +32,7 @@ export default {
     copy(obj) {
         let res = new obj.constructor()
         for (let i in obj) {
-            if (obj[i] instanceof Object) res[i] = copy(obj[i], obj[i].constructor)
+            if (obj[i] instanceof Object) res[i] = copy(obj[i])
             else res[i] = obj[i]
         }
         return res

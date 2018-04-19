@@ -26,11 +26,11 @@ var _message2 = _interopRequireDefault(_message);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-if (!_fs2.default.existsSync('../bot-data')) {
-    _fs2.default.mkdirSync('../bot-data');
-    _fs2.default.mkdirSync('../bot-data/cache');
-    _fs2.default.mkdirSync('../bot-data/cache/avatar');
-    _fs2.default.mkdirSync('../bot-data/cache/recent');
+if (!_fs2.default.existsSync('cache')) {
+    _fs2.default.mkdirSync('cache');
+    _fs2.default.mkdirSync('cache/avatar');
+    _fs2.default.mkdirSync('cache/recent');
+    _fs2.default.mkdirSync('cache/stat');
 }
 
 var app = new _koa2.default();

@@ -48,7 +48,7 @@ exports.default = {
     }(function (obj) {
         var res = new obj.constructor();
         for (var i in obj) {
-            if (obj[i] instanceof Object) res[i] = copy(obj[i], obj[i].constructor);else res[i] = obj[i];
+            if (obj[i] instanceof Object) res[i] = copy(obj[i]);else res[i] = obj[i];
         }
         return res;
     })

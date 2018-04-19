@@ -4,11 +4,11 @@ import body from 'koa-body'
 
 import message from './message'
 
-if (!fs.existsSync('../bot-data')) {
-    fs.mkdirSync('../bot-data')
-    fs.mkdirSync('../bot-data/cache')
-    fs.mkdirSync('../bot-data/cache/avatar')
-    fs.mkdirSync('../bot-data/cache/recent')
+if (!fs.existsSync('cache')) {
+    fs.mkdirSync('cache')
+    fs.mkdirSync('cache/avatar')
+    fs.mkdirSync('cache/recent')
+    fs.mkdirSync('cache/stat')
 }
 
 const app = new Koa()

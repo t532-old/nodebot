@@ -1,1 +1,2 @@
-export default { ...require('./develop') }
+import develop from './develop'
+export default { develop }

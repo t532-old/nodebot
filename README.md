@@ -37,7 +37,6 @@ $ cd <your-bot-directory>
 $ npm install
 $ npm run run
 ```
-运行之后还会自动创建一个`../bot-data`目录。
 
 # English
 A bot developed for qureying osu! info.
@@ -65,4 +64,3 @@ $ cd <your-bot-directory>
 $ npm install
 $ npm run run
 ```
-A `../bot-data/` directory will be made automatically.
