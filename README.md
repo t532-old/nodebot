@@ -22,14 +22,6 @@
 - GraphicsMagick
 
 **酷Q一定要装 [cqhttp](https://github.com/richardchien/coolq-http-api/releases)！！！**
-
-目录**必须**像这样：
-```
-|- <root-path>
-    |-- <bot-path>
-    |-- <coolq-path>
-    |-- ...other files
-```
 ## 运行
 根据config.template.yml创建一个config.yml文件，并在27017端口上运行mongod，在5700端口上运行cqhttp。然后在命令行中输入：
 ```sh
@@ -49,14 +41,6 @@ I didn't do compatibility tests. You can try if it can run in other environments
 - GraphicsMagick
 
 **Be sure your CoolQ has already installed [cqhttp](https://github.com/richardchien/coolq-http-api/releases).**
-
-Your directory **SHOULD** be like this:
-```
-|- <root-path>
-    |-- <bot-path>
-    |-- <coolq-path>
-    |-- ...other files
-```
 ## Run
 Create a `config.yml` file based on the given `config.template.yml`, Run mongod on port 27017 and cqhttp on port 5700, and enter:
 ```sh

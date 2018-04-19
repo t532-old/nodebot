@@ -127,7 +127,7 @@ async function drawRecent(rec, map, stat) {
             .gravity('North')
             .geometry('+0+90')
     )
-    return path
+    return process.cwd() + '/' + path
 }
 
 export default { drawRecent }
