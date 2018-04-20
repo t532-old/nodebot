@@ -1,2 +1,2 @@
-import osubot from './osubot'
+import osubot from './index'
 export default { ...osubot }

@@ -1,2 +1,2 @@
-import develop from './develop'
+import develop from './index'
 export default { develop }

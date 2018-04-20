@@ -6,7 +6,7 @@ Map BG(Part): https://assets.ppy.sh/beatmaps/${id}/covers/cover.jpg
 import gm from 'gm'
 import fs from 'fs'
 import axios from 'axios'
-import util from './osubot-util'
+import util from './util'
 
 function promisifyGM(gmO) {
     return new Promise(function(resolve, reject) {

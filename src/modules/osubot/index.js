@@ -1,8 +1,8 @@
 import fs from 'fs'
 import Monk from 'monk'
-import api from './osubot-api'
-import canvas from './osubot-canvas'
-import util from './osubot-util'
+import api from './api'
+import canvas from './canvas'
+import util from './util'
 import yaml from 'js-yaml'
 
 const db = Monk('localhost:27017/botdb')
