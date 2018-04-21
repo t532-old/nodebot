@@ -25,7 +25,7 @@ var drawRecent = function () {
                     case 0:
                         uid = stat.user_id;
                         sid = map.beatmapset_id;
-                        path = 'cache/recent/' + uid + '.jpg';
+                        path = '../data/image/' + uid + 'r.jpg';
                         _context.next = 5;
                         return (0, _axios2.default)({
                             method: 'get',
@@ -36,7 +36,7 @@ var drawRecent = function () {
                     case 5:
                         avatar = _context.sent;
 
-                        avatar.data.pipe(_fs2.default.createWriteStream('cache/avatar/' + uid + '.jpg'));
+                        avatar.data.pipe(_fs2.default.createWriteStream('../data/image/' + uid + 'a.jpg'));
                         _context.next = 9;
                         return promisifyStreamEvent(avatar.data, 'end');
 
@@ -65,14 +65,14 @@ var drawRecent = function () {
 
                     case 19:
                         _context.next = 21;
-                        return promisifyGM((0, _gm2.default)(path).quality(100).gravity('Center').fill('#fffa').drawCircle(750, 250, 750, 610).fill('#fff').drawCircle(750, 250, 750, 490).fill('#ccc').drawCircle(750, 250, 750, 470).fill('#fff').drawCircle(750, 250, 750, 460).fill('#aaa').drawEllipse(750, 250, 210, 210, -145, -35).fill('#fff').font('assets/fonts/Exo2.0-Regular.otf').fontSize(30).drawText(0, -145, stat.username).font('assets/fonts/Exo2.0-Bold.otf').fontSize(12).fill('#f69').drawText(0, 0, 'total score').font('assets/fonts/Exo2.0-BoldItalic.otf').fontSize(25).fill('#3ad').drawText(0, 35, map.title.slice(0, 35) + (map.title.length > 35 ? '...' : '')).fontSize(17).drawText(0, 60, map.artist.slice(0, 50) + (map.artist.length > 50 ? '...' : '')).font('assets/fonts/Exo2.0-Bold.otf').fontSize(30).drawText(-300, 0, rec.maxcombo + 'x').drawText(300, 0, _osubotUtil2.default.accuracy(rec) + '%').fontSize(12).fill('#333').drawText(-290, 20, 'max combo').drawText(290, 20, 'accuracy').font('assets/fonts/Venera-500.otf').fontSize(50).fill('#f69').drawText(0, -25, _osubotUtil2.default.scorify(rec.score)).font('assets/fonts/Exo2.0-Bold.otf').fontSize(13).fill('#999').drawText(0, 85, map.version + ' - mapped by ' + map.creator).drawRectangle(675, 345, 825, 365).font('assets/fonts/Exo2.0-Regular.otf').fill('#fff').drawText(0, 105, rec.date).fontSize(25).fill('#aaa').drawLine(650, 375, 850, 375).fill('#666').drawText(-100, 140, _osubotUtil2.default.fillNumber(rec.count300)).drawText(-33, 140, _osubotUtil2.default.fillNumber(rec.count100)).drawText(33, 140, _osubotUtil2.default.fillNumber(rec.count50)).drawText(100, 140, _osubotUtil2.default.fillNumber(rec.countmiss)).fontSize(12).drawText(-100, 160, 'Great').drawText(-33, 160, 'Good').drawText(33, 160, 'Meh').drawText(100, 160, 'Miss').crop(1200, 500));
+                        return promisifyGM((0, _gm2.default)(path).quality(100).gravity('Center').fill('#fffa').drawCircle(750, 250, 750, 610).fill('#fff').drawCircle(750, 250, 750, 490).fill('#ccc').drawCircle(750, 250, 750, 470).fill('#fff').drawCircle(750, 250, 750, 460).fill('#aaa').drawEllipse(750, 250, 210, 210, -145, -35).fill('#fff').font('assets/fonts/Exo2.0-Regular.otf').fontSize(30).drawText(0, -145, stat.username).font('assets/fonts/Exo2.0-Bold.otf').fontSize(12).fill('#f69').drawText(0, 0, 'total score').font('assets/fonts/Exo2.0-BoldItalic.otf').fontSize(25).fill('#3ad').drawText(0, 35, map.title.slice(0, 35) + (map.title.length > 35 ? '...' : '')).fontSize(17).drawText(0, 60, map.artist.slice(0, 50) + (map.artist.length > 50 ? '...' : '')).font('assets/fonts/Exo2.0-Bold.otf').fontSize(30).drawText(-300, 0, rec.maxcombo + 'x').drawText(300, 0, _util2.default.accuracy(rec) + '%').fontSize(12).fill('#333').drawText(-290, 20, 'max combo').drawText(290, 20, 'accuracy').font('assets/fonts/Venera-500.otf').fontSize(50).fill('#f69').drawText(0, -25, _util2.default.scorify(rec.score)).font('assets/fonts/Exo2.0-Bold.otf').fontSize(13).fill('#999').drawText(0, 85, map.version + ' - mapped by ' + map.creator).drawRectangle(675, 345, 825, 365).font('assets/fonts/Exo2.0-Regular.otf').fill('#fff').drawText(0, 105, rec.date).fontSize(25).fill('#aaa').drawLine(650, 375, 850, 375).fill('#666').drawText(-100, 140, _util2.default.fillNumber(rec.count300)).drawText(-33, 140, _util2.default.fillNumber(rec.count100)).drawText(33, 140, _util2.default.fillNumber(rec.count50)).drawText(100, 140, _util2.default.fillNumber(rec.countmiss)).fontSize(12).drawText(-100, 160, 'Great').drawText(-33, 160, 'Good').drawText(33, 160, 'Meh').drawText(100, 160, 'Miss').crop(1200, 500));
 
                     case 21:
                         _context.next = 23;
                         return promisifyGM((0, _gm2.default)(path).quality(100).composite('assets/image/' + rec.rank + '.png').gravity('North').geometry('+0+90'));
 
                     case 23:
-                        return _context.abrupt('return', path);
+                        return _context.abrupt('return', path.split('/').slice(-1)[0]);
 
                     case 24:
                     case 'end':
@@ -99,9 +99,9 @@ var _axios = require('axios');
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _osubotUtil = require('./osubot-util');
+var _util = require('./util');
 
-var _osubotUtil2 = _interopRequireDefault(_osubotUtil);
+var _util2 = _interopRequireDefault(_util);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

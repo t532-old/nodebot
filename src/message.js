@@ -1,12 +1,12 @@
-import botModules from './modules/exports.js'
+import botModules from './modules/exports'
 import axios from 'axios'
 export default {
     send: {
-        private(user_id, message) {
-            return axios.post('http://localhost:5700/send_private_msg', { user_id, message })
+        async private(user_id, message) {
+            return await axios.post('http://localhost:5700/send_private_msg', { user_id, message })
         },
-        group(group_id, message) {
-            return axios.post('http://localhost:5700/send_group_msg', { group_id, message })
+        async group(group_id, message) {
+            return await axios.post('http://localhost:5700/send_group_msg', { group_id, message })
         }
     },
     handle(param) {

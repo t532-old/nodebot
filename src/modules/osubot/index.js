@@ -22,7 +22,7 @@ export default {
         async action(msg, usr = 'me', mode = 'o') {
             mode = util.checkmode(mode)
             let data = []
-            if (util.modes.flatten().includes(usr.toLowerCase())) {
+            if (util.flatten(util.modes).includes(usr.toLowerCase())) {
                 mode = util.checkmode(usr)
                 usr = 'me'
             }
@@ -35,11 +35,11 @@ export default {
                 }
             }
             try { 
-                msg.sender(await new api.StatQuery({
+                msg.sender(JSON.stringify(await new api.StatQuery({
                     u: usr,
                     m: mode,
                     k: config.key
-                }).exec())
+                }).exec()))
             } catch(err) {
                 msg.sender(err.toString())
             }
@@ -73,6 +73,7 @@ export default {
                     k: config.key
                 }).exec()
                 const path = await canvas.drawRecent(rec, map, stat)
+                console.log(path)
                 msg.sender([{
                     type: 'image',
                     data: {

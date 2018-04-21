@@ -23,11 +23,10 @@ class StatQuery extends APIQuery {
     constructor(params) { super('get_user', params) }
     async exec() {
         let result
-        try { 
-            result = await super.exec()
-            if (result.data[0] === undefined) throw new Error('StatQuery: user does not exist')
-            else return result.data[0]
-        } catch (err) { throw new Error('StatQuery: bad network status') } 
+        try { result = await super.exec() }
+        catch (err) { throw new Error('StatQuery: bad network status') }
+        if (result.data[0] === undefined) throw new Error('StatQuery: user does not exist')
+        else return result.data[0]
     }
 }
 
@@ -35,11 +34,10 @@ class RecentQuery extends APIQuery {
     constructor(params) { super('get_user_recent', params) }
     async exec() {
         let result
-        try { 
-            result = await super.exec()
-            if (result.data[0] === undefined) throw new Error('RecentQuery: user does not exist or not played recently')
-            else return result.data[0]
-        } catch (err) { throw new Error('RecentQuery: bad network status') } 
+        try { result = await super.exec() }
+        catch (err) { throw new Error('RecentQuery: bad network status') }
+        if (result.data[0] === undefined) throw new Error('RecentQuery: user does not exist or not played recently')
+        else return result.data[0]
     }
 }
 

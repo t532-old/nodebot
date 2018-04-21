@@ -36,5 +36,13 @@ export default {
             else res[i] = obj[i]
         }
         return res
+    },
+    flatten(arr) {
+        const flat = []
+        for (let i of arr) {
+            if (i instanceof Array) flat.push(this.flatten(i))
+            else flat.push(i)
+        }
+        return flat
     }
 }

@@ -116,32 +116,31 @@ var StatQuery = function (_APIQuery) {
 
                             case 4:
                                 result = _context2.sent;
+                                _context2.next = 10;
+                                break;
 
+                            case 7:
+                                _context2.prev = 7;
+                                _context2.t0 = _context2['catch'](1);
+                                throw new Error('StatQuery: bad network status');
+
+                            case 10:
                                 if (!(result.data[0] === undefined)) {
-                                    _context2.next = 9;
+                                    _context2.next = 14;
                                     break;
                                 }
 
                                 throw new Error('StatQuery: user does not exist');
 
-                            case 9:
+                            case 14:
                                 return _context2.abrupt('return', result.data[0]);
-
-                            case 10:
-                                _context2.next = 15;
-                                break;
-
-                            case 12:
-                                _context2.prev = 12;
-                                _context2.t0 = _context2['catch'](1);
-                                throw new Error('StatQuery: bad network status');
 
                             case 15:
                             case 'end':
                                 return _context2.stop();
                         }
                     }
-                }, _callee2, this, [[1, 12]]);
+                }, _callee2, this, [[1, 7]]);
             }));
 
             function exec() {
@@ -178,32 +177,31 @@ var RecentQuery = function (_APIQuery2) {
 
                             case 4:
                                 result = _context3.sent;
+                                _context3.next = 10;
+                                break;
 
+                            case 7:
+                                _context3.prev = 7;
+                                _context3.t0 = _context3['catch'](1);
+                                throw new Error('RecentQuery: bad network status');
+
+                            case 10:
                                 if (!(result.data[0] === undefined)) {
-                                    _context3.next = 9;
+                                    _context3.next = 14;
                                     break;
                                 }
 
                                 throw new Error('RecentQuery: user does not exist or not played recently');
 
-                            case 9:
+                            case 14:
                                 return _context3.abrupt('return', result.data[0]);
-
-                            case 10:
-                                _context3.next = 15;
-                                break;
-
-                            case 12:
-                                _context3.prev = 12;
-                                _context3.t0 = _context3['catch'](1);
-                                throw new Error('RecentQuery: bad network status');
 
                             case 15:
                             case 'end':
                                 return _context3.stop();
                         }
                     }
-                }, _callee3, this, [[1, 12]]);
+                }, _callee3, this, [[1, 7]]);
             }));
 
             function exec() {

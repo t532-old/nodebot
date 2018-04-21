@@ -12,7 +12,15 @@ var _typeof2 = require('babel-runtime/helpers/typeof');
 
 var _typeof3 = _interopRequireDefault(_typeof2);
 
-var _exports = require('./modules/exports.js');
+var _regenerator = require('babel-runtime/regenerator');
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
+
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+
+var _exports = require('./modules/exports');
 
 var _exports2 = _interopRequireDefault(_exports);
 
@@ -25,10 +33,48 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
     send: {
         private: function _private(user_id, message) {
-            return _axios2.default.post('http://localhost:5700/send_private_msg', { user_id: user_id, message: message });
+            var _this = this;
+
+            return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
+                return _regenerator2.default.wrap(function _callee$(_context) {
+                    while (1) {
+                        switch (_context.prev = _context.next) {
+                            case 0:
+                                _context.next = 2;
+                                return _axios2.default.post('http://localhost:5700/send_private_msg', { user_id: user_id, message: message });
+
+                            case 2:
+                                return _context.abrupt('return', _context.sent);
+
+                            case 3:
+                            case 'end':
+                                return _context.stop();
+                        }
+                    }
+                }, _callee, _this);
+            }))();
         },
         group: function group(group_id, message) {
-            return _axios2.default.post('http://localhost:5700/send_group_msg', { group_id: group_id, message: message });
+            var _this2 = this;
+
+            return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2() {
+                return _regenerator2.default.wrap(function _callee2$(_context2) {
+                    while (1) {
+                        switch (_context2.prev = _context2.next) {
+                            case 0:
+                                _context2.next = 2;
+                                return _axios2.default.post('http://localhost:5700/send_group_msg', { group_id: group_id, message: message });
+
+                            case 2:
+                                return _context2.abrupt('return', _context2.sent);
+
+                            case 3:
+                            case 'end':
+                                return _context2.stop();
+                        }
+                    }
+                }, _callee2, _this2);
+            }))();
         }
     },
     handle: function handle(param) {

@@ -26,13 +26,13 @@ function promisifyStreamEvent(stream, event) {
 async function drawRecent(rec, map, stat) {
     const uid = stat.user_id
     const sid = map.beatmapset_id
-    const path = 'cache/recent/' + uid + '.jpg'
+    const path = `../data/image/${uid}r.jpg`
     const avatar = await axios({
         method: 'get',
         url: 'https://a.ppy.sh/' + uid,
         responseType: 'stream'
     })
-    avatar.data.pipe(fs.createWriteStream('cache/avatar/' + uid + '.jpg'))
+    avatar.data.pipe(fs.createWriteStream(`../data/image/${uid}a.jpg`))
     await promisifyStreamEvent(avatar.data, 'end')
     const bg = await axios({
         method: 'get',
@@ -127,7 +127,7 @@ async function drawRecent(rec, map, stat) {
             .gravity('North')
             .geometry('+0+90')
     )
-    return process.cwd() + '/' + path
+    return path.split('/').slice(-1)[0]
 }
 
 export default { drawRecent }

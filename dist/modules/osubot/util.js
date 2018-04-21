@@ -3,6 +3,13 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _getIterator2 = require('babel-runtime/core-js/get-iterator');
+
+var _getIterator3 = _interopRequireDefault(_getIterator2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 exports.default = {
     modes: [['o', 's', '0', 'osu', 'std', 'osu!', 'standard'], ['t', '1', 'tk', 'taiko'], ['c', '2', 'ctb', 'catch', 'catchthebeat'], ['m', '3', 'mania']],
     checkmode: function checkmode(mode) {
@@ -51,5 +58,34 @@ exports.default = {
             if (obj[i] instanceof Object) res[i] = copy(obj[i]);else res[i] = obj[i];
         }
         return res;
-    })
+    }),
+    flatten: function flatten(arr) {
+        var flat = [];
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+            for (var _iterator = (0, _getIterator3.default)(arr), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                var i = _step.value;
+
+                if (i instanceof Array) flat.push(this.flatten(i));else flat.push(i);
+            }
+        } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion && _iterator.return) {
+                    _iterator.return();
+                }
+            } finally {
+                if (_didIteratorError) {
+                    throw _iteratorError;
+                }
+            }
+        }
+
+        return flat;
+    }
 };
