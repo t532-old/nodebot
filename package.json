@@ -5,8 +5,9 @@
   "main": "src/index.js",
   "scripts": {
     "run": "npm run build && node dist/index.js",
-    "build": "babel src -d dist",
-    "test": "npm run build"
+    "build": "mkdir dist && babel src -d dist",
+    "test": "npm run build",
+    "doc": "mkdir doc && jsdoc src -r -d doc -R README.md"
   },
   "repository": {
     "type": "git",
@@ -31,6 +32,7 @@
     "babel-cli": "^6.26.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
-    "babel-preset-stage-0": "^6.24.1"
+    "babel-preset-stage-0": "^6.24.1",
+    "jsdoc": "^3.5.5"
   }
 }

@@ -21,7 +21,9 @@
 - 酷Q 5.x.x（现在在用5.11.12A）
 - GraphicsMagick
 
-**酷Q一定要装 [cqhttp](https://github.com/richardchien/coolq-http-api/releases)！！！**
+**酷Q一定要装 [cqhttp](https://github.com/richardchien/coolq-http-api/releases)**
+
+**必须将bot文件夹放进酷q目录内**
 ## 运行
 根据config.template.yml创建一个config.yml文件，并在27017端口上运行mongod，在5700端口上运行cqhttp。然后在命令行中输入：
 ```sh
@@ -29,6 +31,9 @@ $ cd <your-bot-directory>
 $ npm install
 $ npm run run
 ```
+## 其他命令
+- 转译(通过 Babel): `npm run build` (=> `mkdir dist && babel src -d dist`)
+- 造个文档(通过 JSDoc): `npm run doc` (=> `mkdir doc && jsdoc src -r -d doc -R README.md`)
 
 # English
 A bot developed for qureying osu! info.
@@ -41,6 +46,8 @@ I didn't do compatibility tests. You can try if it can run in other environments
 - GraphicsMagick
 
 **Be sure your CoolQ has already installed [cqhttp](https://github.com/richardchien/coolq-http-api/releases).**
+
+**Must put the bot directory in the CoolQ directory.**
 ## Run
 Create a `config.yml` file based on the given `config.template.yml`, Run mongod on port 27017 and cqhttp on port 5700, and enter:
 ```sh
@@ -48,3 +55,6 @@ $ cd <your-bot-directory>
 $ npm install
 $ npm run run
 ```
+## Other commands
+- Compile(through Babel): `npm run build` (=> `mkdir dist && babel src -d dist`)
+- Build docs(through JSDoc): `npm run doc` (=> `mkdir doc && jsdoc src -r -d doc -R README.md`)

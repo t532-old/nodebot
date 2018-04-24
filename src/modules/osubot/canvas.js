@@ -1,13 +1,12 @@
-/* Useful APIs 
-Avatar: https://a.ppy.sh/${id}
-Map Thumbnail: https://b.ppy.sh/thumb/${id}l.jpg
-Map BG(Part): https://assets.ppy.sh/beatmaps/${id}/covers/cover.jpg
-*/
+// Import modules
 import gm from 'gm'
 import fs from 'fs'
 import axios from 'axios'
+// Import local files
 import util from './util'
+import { res } from './web'
 
+// Simple sugar over gm
 function promisifyGM(gmO) {
     return new Promise(function(resolve, reject) {
         gmO.write(gmO.source, err => {
@@ -17,30 +16,18 @@ function promisifyGM(gmO) {
     })
 }
 
-function promisifyStreamEvent(stream, event) {
-    return new Promise(function (resolve, reject) {
-        stream.on(event, resolve)
-    }).catch(err => { throw err })
-}
-
+/**
+ * Draws a recent play image and returns its path
+ * @param {object} rec 
+ * @param {object} map 
+ * @param {object} stat 
+ */
 async function drawRecent(rec, map, stat) {
     const uid = stat.user_id
     const sid = map.beatmapset_id
     const path = `../data/image/${uid}r.jpg`
-    const avatar = await axios({
-        method: 'get',
-        url: 'https://a.ppy.sh/' + uid,
-        responseType: 'stream'
-    })
-    avatar.data.pipe(fs.createWriteStream(`../data/image/${uid}a.jpg`))
-    await promisifyStreamEvent(avatar.data, 'end')
-    const bg = await axios({
-        method: 'get',
-        url: 'https://assets.ppy.sh/beatmaps/' + sid + '/covers/cover.jpg',
-        responseType: 'stream'
-    })
-    bg.data.pipe(fs.createWriteStream(path))
-    await promisifyStreamEvent(bg.data, 'end')
+    await res.avatarQuery(uid, fs.createWriteStream(`../data/image/${uid}a.jpg`))
+    await res.bgQuery(sid, fs.createWriteStream(path))
     await promisifyGM(
         gm(path)
             .quality(100)
