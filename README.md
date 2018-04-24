@@ -32,8 +32,8 @@ $ npm install
 $ npm run run
 ```
 ## 其他命令
-- 转译(通过 Babel): `npm run build` (=> `mkdir dist && babel src -d dist`)
-- 造个文档(通过 JSDoc): `npm run doc` (=> `mkdir doc && jsdoc src -r -d doc -R README.md`)
+- 转译(通过 Babel): `npm run build` (=> `babel src -d dist`)
+- 造个文档(通过 JSDoc): `npm run doc` (=> `jsdoc src -r -d doc -R README.md`)
 
 # English
 A bot developed for qureying osu! info.
@@ -56,5 +56,5 @@ $ npm install
 $ npm run run
 ```
 ## Other commands
-- Compile(through Babel): `npm run build` (=> `mkdir dist && babel src -d dist`)
-- Build docs(through JSDoc): `npm run doc` (=> `mkdir doc && jsdoc src -r -d doc -R README.md`)
+- Compile(through Babel): `npm run build` (=> `babel src -d dist`)
+- Build docs(through JSDoc): `npm run doc` (=> `jsdoc src -r -d doc -R README.md`)
