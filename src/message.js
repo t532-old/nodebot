@@ -1,4 +1,5 @@
 import botModules from './modules'
+import Commmand from './command'
 import axios from 'axios'
 
 /**
@@ -31,18 +32,9 @@ class Message {
 }
 
 function handle(param) {
-    // Check if this is command format
-    if (!param.message.match(/^[>》][^]+$/m)) return 
     // This splits the command into parts
-    const raw = unescape(param.message.replace(/&#(\d+);/g, (match, str) => '%' + parseInt(str).toString(16))).trim().slice(1).split(/[\r\n\s]/).filter(i => i)
-    // Main & sub Command
-    const main = raw[0].toLowerCase()
-    const sub = raw.slice(1)
-    // The Message object
-    const msg = new Message(param)
-    // Is this an existing Command?
-    if (typeof botModules[main] === 'function') botModules[main](msg, ...sub)
-    else send('Unknown Command!')
+    const raw = unescape(param.message.replace(/&#(\d+);/g, (match, str) => '%' + parseInt(str).toString(16))).trim()
+    
 }
 
 export default { Message, handle }
