@@ -24,15 +24,17 @@ var _modules = require('./modules');
 
 var _modules2 = _interopRequireDefault(_modules);
 
-var _command = require('./command');
-
-var _command2 = _interopRequireDefault(_command);
-
 var _axios = require('axios');
 
 var _axios2 = _interopRequireDefault(_axios);
 
+var _command = require('./command');
+
+var _command2 = _interopRequireDefault(_command);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var handler = new _command2.default(/>》/);
 
 /**
  * A class that is uses to send message asynchronously.
@@ -40,6 +42,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @property {function} send A cqhttp sender binds to a specific target
  * @property {object} param The message object that cqhttp gives
  */
+
 var Message = function () {
   /**
    * builds a message object
@@ -118,11 +121,17 @@ var Message = function () {
   return Message;
 }();
 
+function listen() {
+  for (i in _modules2.default) {
+    handler.on(i, _modules2.default[i]);
+  }
+}
+
 function handle(param) {
-  // This splits the command into parts
-  var raw = unescape(param.message.replace(/&#(\d+);/g, function (match, str) {
+  var comm = unescape(param.message.replace(/&#(\d+);/g, function (match, str) {
     return '%' + parseInt(str).toString(16);
   })).trim();
+  handler.do(comm, new Message(param));
 }
 
 exports.default = { Message: Message, handle: handle };

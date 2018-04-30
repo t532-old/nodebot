@@ -28,6 +28,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var app = new _koa2.default();
 
+if (!_fs2.default.existsSync('cache')) {
+    _fs2.default.mkdirSync('cache');
+    _fs2.default.mkdirSync('cache/osubot');
+    _fs2.default.mkdirSync('cache/osubot/avatar');
+    _fs2.default.mkdirSync('cache/osubot/recent');
+    _fs2.default.mkdirSync('cache/osubot/stat');
+}
+
 app.use((0, _koaBody2.default)());
 
 app.use(function () {

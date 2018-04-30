@@ -1,6 +1,8 @@
 import botModules from './modules'
-import Commmand from './command'
 import axios from 'axios'
+import Command from './command'
+
+const handler = new Command(/>》/)
 
 /**
  * A class that is uses to send message asynchronously.
@@ -31,10 +33,14 @@ class Message {
     static async 'group'(group_id, message) { return axios.post('http://localhost:5700/send_group_msg', { group_id, message }) }
 }
 
+function listen() {
+    for (i in botModules)
+        handler.on(i, botModules[i])
+}
+
 function handle(param) {
-    // This splits the command into parts
-    const raw = unescape(param.message.replace(/&#(\d+);/g, (match, str) => '%' + parseInt(str).toString(16))).trim()
-    
+    const comm = unescape(param.message.replace(/&#(\d+);/g, (match, str) => '%' + parseInt(str).toString(16))).trim()
+    handler.do(comm, new Message(param))
 }
 
 export default { Message, handle }

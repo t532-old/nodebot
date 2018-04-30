@@ -1,6 +1,8 @@
 // Import modules
 import gm from 'gm'
 import fs from 'fs'
+import url from 'url'
+import path from 'path'
 import axios from 'axios'
 // Import local files
 import util from './util'
@@ -25,27 +27,27 @@ function promisifyGM(gmO) {
 async function drawRecent(rec, map, stat) {
     const uid = stat.user_id
     const sid = map.beatmapset_id
-    const path = `../data/image/${uid}r.jpg`
-    await res.avatarQuery(uid, fs.createWriteStream(`../data/image/${uid}a.jpg`))
-    await res.bgQuery(sid, fs.createWriteStream(path))
+    const dest = `cache${path.sep}osubot${path.sep}recent${path.sep}${uid}.jpg`
+    await res.avatarQuery(uid, fs.createWriteStream(`cache${path.sep}osubot${path.sep}avatar${path.sep}${uid}.jpg`))
+    await res.bgQuery(sid, fs.createWriteStream(dest))
     await promisifyGM(
-        gm(path)
+        gm(dest)
             .quality(100)
             .resize(2765, 768)
     )
     await promisifyGM(
-        gm(path)
+        gm(dest)
             .quality(100)
             .gravity('Center')
             .crop(1500, 500)
             .blur(50, 50)
             .fill('#888b')
             .drawCircle(750, 250, 750, 620)
-            .tile(path)
+            .tile(dest)
             .drawCircle(750, 250, 750, 610)
     )
     await promisifyGM(
-        gm(path)
+        gm(dest)
             .quality(100)
             .gravity('Center')
             .fill('#fffa')
@@ -108,13 +110,13 @@ async function drawRecent(rec, map, stat) {
             .crop(1200, 500)
     )
     await promisifyGM(
-        gm(path)
+        gm(dest)
             .quality(100)
             .composite('assets/image/' + rec.rank + '.png')
             .gravity('North')
             .geometry('+0+90')
     )
-    return path.split('/').slice(-1)[0]
+    return 'file://' + process.cwd() + path.sep + dest
 }
 
 export default { drawRecent }
