@@ -2,7 +2,10 @@ import botModules from './modules'
 import axios from 'axios'
 import Command from './command'
 
-const handler = new Command(/>》/)
+const handler = new Command({
+    prefix: />|》/,
+    handler: msg => msg.send('Command not found!')
+})
 
 /**
  * A class that is uses to send message asynchronously.
@@ -34,13 +37,16 @@ class Message {
 }
 
 function listen() {
-    for (i in botModules)
+    for (let i in botModules)
         handler.on(i, botModules[i])
 }
 
 function handle(param) {
     const comm = unescape(param.message.replace(/&#(\d+);/g, (match, str) => '%' + parseInt(str).toString(16))).trim()
+    console.log(comm)
     handler.do(comm, new Message(param))
 }
 
-export default { Message, handle }
+export { Message }
+
+export default { listen, handle }

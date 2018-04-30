@@ -37,8 +37,7 @@ class Command {
                           .map(i => i.split(/<|>/)[1]),
             optional: args.filter(i => i.match(/^\[[^\.]+\]$/))
                           .map(i => i.split(/\[|\]/)[1]),
-            group: args.filter(i => i.match(/^\[.+\.{3,3}\]$/))[0]
-                       .split(/\[|\.{3,3}\]/)[1],
+            group: args.filter(i => i.match(/^\[.+\.{3,3}\]$/))[0] ? args.filter(i => i.match(/^\[.+\.{3,3}\]$/))[0].split(/\[|\.{3,3}\]/)[1] : null
         }
         options = options.filter(i => i.match(/^\*.+$/)).map(i => i.slice(1))
         this.list[name] = { args, options, action }
@@ -48,6 +47,7 @@ class Command {
      * @param {string} command 
      */
     do(command, ...extraArgs) {
+        console.log(this)
         if (!this.prefix.test(command.charAt(0))) return
         command = command.trim().slice(1).split('"').map(i => i.trim()).reduce((target, value, index) => {
             if (index % 2 == 0) target.push(...value.split(/[\r\n\s]/))
@@ -55,6 +55,7 @@ class Command {
             return target
         }, [])
         const name = command.shift()
+        console.log(name)
         if (!this.list[name]) this.defaultHandler(...extraArgs)
         const options = command.filter(i => i.charAt(0) === '*').map(i => i.slice(1)).filter(i => this.list[name].options.includes(i))
         command = command.filter(i => i.charAt(0) !== '*')
@@ -67,7 +68,8 @@ class Command {
             args[i] = raw.required.shift()
         for (let i of this.list[name].args.optional)
             args[i] = raw.optional.shift()
-        args[this.list[name].args.group] = raw.group
+        if (this.list[name].args.group) args[this.list[name].args.group] = raw.group
+        console.log(args)
         this.list[name].action(...extraArgs, args, options)
     }
 }

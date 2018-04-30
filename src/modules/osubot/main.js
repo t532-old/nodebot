@@ -37,6 +37,7 @@ const stat = {
      * @param {string} mode the mode that will be queried
      */
     async action(msg, { usr = 'me', mode = 'o' }) {
+        console.log(api)
         mode = util.checkmode(mode)
         let data = []
         if (util.flatten(util.modes).includes(usr.toLowerCase())) {
@@ -104,7 +105,7 @@ const recent = {
                 }
             }])
         } catch(err) {
-            msg.send(err.toString())
+            throw err
             return
         }
     }

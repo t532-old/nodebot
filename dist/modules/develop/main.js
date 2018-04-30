@@ -43,8 +43,8 @@ var test = {
                 while (1) {
                     switch (_context.prev = _context.next) {
                         case 0:
-                            msg.send(txt.join(' '));
-                        case 1:
+                            console.log(txt);msg.send(txt.join(' '));
+                        case 2:
                         case 'end':
                             return _context.stop();
                     }

@@ -33,11 +33,11 @@ var drawRecent = function () {
                         sid = map.beatmapset_id;
                         dest = 'cache' + _path2.default.sep + 'osubot' + _path2.default.sep + 'recent' + _path2.default.sep + uid + '.jpg';
                         _context.next = 5;
-                        return _web.res.avatarQuery(uid, _fs2.default.createWriteStream('cache' + _path2.default.sep + 'osubot' + _path2.default.sep + 'avatar' + _path2.default.sep + uid + '.jpg'));
+                        return _web.res.avatarQuery(uid, 'cache' + _path2.default.sep + 'osubot' + _path2.default.sep + 'avatar' + _path2.default.sep + uid + '.jpg');
 
                     case 5:
                         _context.next = 7;
-                        return _web.res.bgQuery(sid, _fs2.default.createWriteStream(dest));
+                        return _web.res.bgQuery(sid, dest);
 
                     case 7:
                         _context.next = 9;
@@ -56,9 +56,10 @@ var drawRecent = function () {
                         return promisifyGM((0, _gm2.default)(dest).quality(100).composite('assets/image/' + rec.rank + '.png').gravity('North').geometry('+0+90'));
 
                     case 15:
+                        console.log('file://' + process.cwd() + _path2.default.sep + dest);
                         return _context.abrupt('return', 'file://' + process.cwd() + _path2.default.sep + dest);
 
-                    case 16:
+                    case 17:
                     case 'end':
                         return _context.stop();
                 }

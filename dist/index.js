@@ -44,9 +44,10 @@ app.use(function () {
             while (1) {
                 switch (_context.prev = _context.next) {
                     case 0:
+                        _message2.default.listen();
                         _message2.default.handle(ctx.request.body);
 
-                    case 1:
+                    case 2:
                     case 'end':
                         return _context.stop();
                 }

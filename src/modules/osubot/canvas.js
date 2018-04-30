@@ -28,8 +28,8 @@ async function drawRecent(rec, map, stat) {
     const uid = stat.user_id
     const sid = map.beatmapset_id
     const dest = `cache${path.sep}osubot${path.sep}recent${path.sep}${uid}.jpg`
-    await res.avatarQuery(uid, fs.createWriteStream(`cache${path.sep}osubot${path.sep}avatar${path.sep}${uid}.jpg`))
-    await res.bgQuery(sid, fs.createWriteStream(dest))
+    await res.avatarQuery(uid, `cache${path.sep}osubot${path.sep}avatar${path.sep}${uid}.jpg`)
+    await res.bgQuery(sid, dest)
     await promisifyGM(
         gm(dest)
             .quality(100)
@@ -116,6 +116,7 @@ async function drawRecent(rec, map, stat) {
             .gravity('North')
             .geometry('+0+90')
     )
+    console.log('file://' + process.cwd() + path.sep + dest)
     return 'file://' + process.cwd() + path.sep + dest
 }
 

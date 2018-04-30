@@ -102,6 +102,7 @@ var stat = {
                 while (1) {
                     switch (_context2.prev = _context2.next) {
                         case 0:
+                            console.log(_web.api);
                             mode = _util2.default.checkmode(mode);
                             data = [];
 
@@ -111,59 +112,59 @@ var stat = {
                             }
 
                             if (!(usr === 'me')) {
-                                _context2.next = 14;
+                                _context2.next = 15;
                                 break;
                             }
 
-                            _context2.prev = 4;
-                            _context2.next = 7;
+                            _context2.prev = 5;
+                            _context2.next = 8;
                             return users.findOne({ qqid: msg.param.user_id });
 
-                        case 7:
+                        case 8:
                             doc = _context2.sent;
 
                             usr = doc.osuid;
-                            _context2.next = 14;
+                            _context2.next = 15;
                             break;
 
-                        case 11:
-                            _context2.prev = 11;
-                            _context2.t0 = _context2['catch'](4);
+                        case 12:
+                            _context2.prev = 12;
+                            _context2.t0 = _context2['catch'](5);
 
                             msg.send('osubot: recent: user does not exist');
 
-                        case 14:
-                            _context2.prev = 14;
+                        case 15:
+                            _context2.prev = 15;
                             _context2.t1 = msg;
                             _context2.t2 = _stringify2.default;
-                            _context2.next = 19;
+                            _context2.next = 20;
                             return _web.api.statQuery({
                                 u: usr,
                                 m: mode,
                                 k: config.key
                             });
 
-                        case 19:
+                        case 20:
                             _context2.t3 = _context2.sent;
                             _context2.t4 = (0, _context2.t2)(_context2.t3);
 
                             _context2.t1.send.call(_context2.t1, _context2.t4);
 
-                            _context2.next = 27;
+                            _context2.next = 28;
                             break;
 
-                        case 24:
-                            _context2.prev = 24;
-                            _context2.t5 = _context2['catch'](14);
+                        case 25:
+                            _context2.prev = 25;
+                            _context2.t5 = _context2['catch'](15);
 
                             msg.send(_context2.t5.toString());
 
-                        case 27:
+                        case 28:
                         case 'end':
                             return _context2.stop();
                     }
                 }
-            }, _callee2, _this2, [[4, 11], [14, 24]]);
+            }, _callee2, _this2, [[5, 12], [15, 25]]);
         }))();
     }
 };
@@ -258,9 +259,7 @@ var recent = {
                         case 29:
                             _context3.prev = 29;
                             _context3.t1 = _context3['catch'](13);
-
-                            msg.send(_context3.t1.toString());
-                            return _context3.abrupt('return');
+                            throw _context3.t1;
 
                         case 33:
                         case 'end':

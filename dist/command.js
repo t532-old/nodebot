@@ -8,6 +8,10 @@ var _getIterator2 = require('babel-runtime/core-js/get-iterator');
 
 var _getIterator3 = _interopRequireDefault(_getIterator2);
 
+var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
+
+var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
+
 var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
@@ -17,8 +21,6 @@ var _createClass2 = require('babel-runtime/helpers/createClass');
 var _createClass3 = _interopRequireDefault(_createClass2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-a = { a: 1 };
 
 var Command = function () {
     /**
@@ -79,7 +81,9 @@ var Command = function () {
                 }),
                 group: args.filter(function (i) {
                     return i.match(/^\[.+\.{3,3}\]$/);
-                })[0].split(/\[|\.{3,3}\]/)[1]
+                })[0] ? args.filter(function (i) {
+                    return i.match(/^\[.+\.{3,3}\]$/);
+                })[0].split(/\[|\.{3,3}\]/)[1] : null
             };
             options = options.filter(function (i) {
                 return i.match(/^\*.+$/);
@@ -99,12 +103,16 @@ var Command = function () {
             var _this = this,
                 _list$name;
 
+            console.log(this);
             if (!this.prefix.test(command.charAt(0))) return;
-            command = command.slice(1).split(/[\r\n\s]/).reduce(function (target, value) {
-                if (target[target.length - 1] && target[target.length - 1].charAt(0) === '"' && target[target.length - 1].charAt(target[target.length - 1].length - 1) !== '"') target[target.length - 1] += value;else target.push(value);
+            command = command.trim().slice(1).split('"').map(function (i) {
+                return i.trim();
+            }).reduce(function (target, value, index) {
+                if (index % 2 == 0) target.push.apply(target, (0, _toConsumableArray3.default)(value.split(/[\r\n\s]/)));else target.push(value);
                 return target;
             }, []);
             var name = command.shift();
+            console.log(name);
 
             for (var _len = arguments.length, extraArgs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
                 extraArgs[_key - 1] = arguments[_key];
@@ -176,7 +184,8 @@ var Command = function () {
                 }
             }
 
-            args[this.list[name].args.group] = raw.group;
+            if (this.list[name].args.group) args[this.list[name].args.group] = raw.group;
+            console.log(args);
             (_list$name = this.list[name]).action.apply(_list$name, extraArgs.concat([args, options]));
         }
     }]);

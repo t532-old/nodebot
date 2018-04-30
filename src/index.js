@@ -16,6 +16,7 @@ if (!fs.existsSync('cache')) {
 app.use(body())
 
 app.use(async ctx => {
+    message.listen()
     message.handle(ctx.request.body)
 })
 

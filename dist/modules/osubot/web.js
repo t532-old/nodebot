@@ -3,6 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.res = exports.api = undefined;
+
+var _promise = require('babel-runtime/core-js/promise');
+
+var _promise2 = _interopRequireDefault(_promise);
 
 var _regenerator = require('babel-runtime/regenerator');
 
@@ -11,10 +16,6 @@ var _regenerator2 = _interopRequireDefault(_regenerator);
 var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
-
-var _promise = require('babel-runtime/core-js/promise');
-
-var _promise2 = _interopRequireDefault(_promise);
 
 /**
  * A GET request to the ppy api.
@@ -207,7 +208,7 @@ var mapQuery = function () {
 /**
  * A GET requrest that gets a file stream, and writes it to another stream
  * @param {string} url 
- * @param {fs.WriteStream} dest 
+ * @param {string} dest 
  */
 
 
@@ -228,11 +229,14 @@ var staticQuery = function () {
                     case 2:
                         res = _context5.sent;
 
-                        res.data.pipe(dest);
-                        _context5.next = 6;
-                        return promisifyStreamEvent(res.data, 'end');
+                        res.data.pipe(_fs2.default.createWriteStream(dest));
+                        return _context5.abrupt('return', new _promise2.default(function (resolve, reject) {
+                            res.data.on('end', resolve);
+                        }).catch(function (err) {
+                            throw err;
+                        }));
 
-                    case 6:
+                    case 5:
                     case 'end':
                         return _context5.stop();
                 }
@@ -252,13 +256,13 @@ var staticQuery = function () {
 
 
 var avatarQuery = function () {
-    var _ref6 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee6(uid) {
+    var _ref6 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee6(uid, dest) {
         return _regenerator2.default.wrap(function _callee6$(_context6) {
             while (1) {
                 switch (_context6.prev = _context6.next) {
                     case 0:
                         _context6.next = 2;
-                        return staticQuery('https://a.ppy.sh/' + uid);
+                        return staticQuery('https://a.ppy.sh/' + uid, dest);
 
                     case 2:
                     case 'end':
@@ -268,7 +272,7 @@ var avatarQuery = function () {
         }, _callee6, this);
     }));
 
-    return function avatarQuery(_x8) {
+    return function avatarQuery(_x8, _x9) {
         return _ref6.apply(this, arguments);
     };
 }();
@@ -280,13 +284,13 @@ var avatarQuery = function () {
 
 
 var bgQuery = function () {
-    var _ref7 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee7(sid) {
+    var _ref7 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee7(sid, dest) {
         return _regenerator2.default.wrap(function _callee7$(_context7) {
             while (1) {
                 switch (_context7.prev = _context7.next) {
                     case 0:
                         _context7.next = 2;
-                        return staticQuery('https://assets.ppy.sh/beatmaps/' + sid + '/covers/cover.jpg');
+                        return staticQuery('https://assets.ppy.sh/beatmaps/' + sid + '/covers/cover.jpg', dest);
 
                     case 2:
                     case 'end':
@@ -296,7 +300,7 @@ var bgQuery = function () {
         }, _callee7, this);
     }));
 
-    return function bgQuery(_x9) {
+    return function bgQuery(_x10, _x11) {
         return _ref7.apply(this, arguments);
     };
 }();
@@ -315,18 +319,5 @@ var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * promisify a stream event.
- * @param {fs.ReadStream} stream 
- * @param {string} event 
- */
-function promisifyStreamEvent(stream, event) {
-    return new _promise2.default(function (resolve, reject) {
-        stream.on(event, resolve);
-    }).catch(function (err) {
-        throw err;
-    });
-}exports.default = {
-    api: { query: apiQuery, statQuery: statQuery, recentQuery: recentQuery, mapQuery: mapQuery },
-    res: { query: staticQuery, avatarQuery: avatarQuery, bgQuery: bgQuery }
-};
+var api = exports.api = { query: apiQuery, statQuery: statQuery, recentQuery: recentQuery, mapQuery: mapQuery };
+var res = exports.res = { query: staticQuery, avatarQuery: avatarQuery, bgQuery: bgQuery };
