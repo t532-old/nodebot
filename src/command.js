@@ -1,5 +1,3 @@
-a = {a:1}
-
 class Command {
     /**
      * @constructor
@@ -51,11 +49,8 @@ class Command {
      */
     do(command, ...extraArgs) {
         if (!this.prefix.test(command.charAt(0))) return
-        command = command.slice(1).split(/[\r\n\s]/).reduce((target, value) => {
-            if (target[target.length - 1] &&
-                target[target.length - 1].charAt(0) === '"' &&
-                target[target.length - 1].charAt(target[target.length - 1].length - 1) !== '"')  
-                target[target.length - 1] += value
+        command = command.trim().slice(1).split('"').map(i => i.trim()).reduce((target, value, index) => {
+            if (index % 2 == 0) target.push(...value.split(/[\r\n\s]/))
             else target.push(value)
             return target
         }, [])
