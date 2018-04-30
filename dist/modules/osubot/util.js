@@ -12,12 +12,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = {
     modes: [['o', 's', '0', 'osu', 'std', 'osu!', 'standard'], ['t', '1', 'tk', 'taiko'], ['c', '2', 'ctb', 'catch', 'catchthebeat'], ['m', '3', 'mania']],
+    /**
+     * Convert a mode string to mode id.
+     * @param {string} mode The mode string that's going to be converted
+     */
     checkmode: function checkmode(mode) {
         mode = mode.toLowerCase();
         for (var i in this.modes) {
             if (this.modes[i].includes(mode)) return i;
         }return 0;
     },
+
+    /**
+     * Calculates a play's accuracy (f**k ppy).
+     * @param {object} data The recent play data
+     */
     accuracy: function accuracy(data) {
         var rec = this.copy(data);
         for (var i in rec) {
@@ -25,6 +34,12 @@ exports.default = {
         }var result = ((rec.count50 * 50 + rec.count100 * 100 + rec.count300 * 300) / ((rec.countmiss + rec.count50 + rec.count100 + rec.count300) * 300) * 100).toString();
         return result.slice(0, 3 + result.split('.')[0].length);
     },
+
+    /**
+     * separate a string with comma
+     * @param {string} score The string
+     * @param {number} sep The interval
+     */
     scorify: function scorify(score) {
         var sep = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 3;
 
@@ -35,6 +50,12 @@ exports.default = {
         }
         return result;
     },
+
+    /**
+     * increase a string's length to a specific one
+     * @param {string} num The string
+     * @param {number} len The length
+     */
     fillNumber: function fillNumber(num) {
         var len = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4;
 
@@ -42,6 +63,11 @@ exports.default = {
             num = '0' + num;
         }return num;
     },
+
+    /**
+     * Deep copy an object
+     * @param {object} obj The object that's being copied
+     */
     copy: function (_copy) {
         function copy(_x3) {
             return _copy.apply(this, arguments);
@@ -59,6 +85,11 @@ exports.default = {
         }
         return res;
     }),
+
+    /**
+     * flatten an array (f**k tc39).
+     * @param {array} arr Array to be flatten
+     */
     flatten: function flatten(arr) {
         var flat = [];
         var _iteratorNormalCompletion = true;

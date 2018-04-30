@@ -4,10 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
-
-var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
-
 var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
@@ -27,6 +23,10 @@ var _createClass3 = _interopRequireDefault(_createClass2);
 var _modules = require('./modules');
 
 var _modules2 = _interopRequireDefault(_modules);
+
+var _command = require('./command');
+
+var _command2 = _interopRequireDefault(_command);
 
 var _axios = require('axios');
 
@@ -119,21 +119,10 @@ var Message = function () {
 }();
 
 function handle(param) {
-  // Check if this is command format
-  if (!param.message.match(/^[>》][^]+$/m)) return;
   // This splits the command into parts
   var raw = unescape(param.message.replace(/&#(\d+);/g, function (match, str) {
     return '%' + parseInt(str).toString(16);
-  })).trim().slice(1).split(/[\r\n\s]/).filter(function (i) {
-    return i;
-  });
-  // Main & sub Command
-  var main = raw[0].toLowerCase();
-  var sub = raw.slice(1);
-  // The Message object
-  var msg = new Message(param);
-  // Is this an existing Command?
-  if (typeof _modules2.default[main] === 'function') _modules2.default[main].apply(_modules2.default, [msg].concat((0, _toConsumableArray3.default)(sub)));else send('Unknown Command!');
+  })).trim();
 }
 
 exports.default = { Message: Message, handle: handle };

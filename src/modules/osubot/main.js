@@ -12,16 +12,20 @@ const db = Monk('localhost:27017/botdb')
 const users = db.get('users')
 const config = yaml.safeLoad(fs.readFileSync('config.yml')).osubot
 
-/**
- * @description binds an osu! id with a QQ id.
- * @param {Message} msg The universal msg object
- * @param {array} account The account, use an array because username may include spaces
- */
-async function bind(msg, ...account) { 
-    users.insert({ qqid: msg.param.user_id, osuid: account.join(' ')})
-    msg.send('osubot: bind: bound successfully')
-}
 
+const bind = {
+    args: '<account>',
+    options: [],
+    /**
+     * @description binds an osu! id with a QQ id.
+     * @param {Message} msg The universal msg object
+     * @param {array} account The account, use an array because username may include spaces
+     */
+    action(msg, account) {
+        users.insert({ qqid: msg.param.user_id, osuid: account.join(' ')})
+        msg.send('osubot: bind: bound successfully')
+    }
+}
 /**
  * @description Fetch a user's status
  * @param {Message} msg The universal msg object
