@@ -18,7 +18,7 @@
 - Windows 7（在用Windows 10）或更高，docker我没试过，你们可以试试（
 - MongoDB
 - Nodejs 8.9（正在用的）& npm
-- 酷Q 5.x.x（现在在用5.11.12A）
+- 酷Q Pro （穷人的绝望）
 - GraphicsMagick
 
 **酷Q一定要装 [cqhttp](https://github.com/richardchien/coolq-http-api/releases)**
@@ -40,7 +40,7 @@ I didn't do compatibility tests. You can try if it can run in other environments
 - Windows 7 (Windows 10 in use) or higher
 - MongoDB
 - Node.js 8.9.x (8.9.3 in use) or higher & npm
-- CoolQ 5.x.x (5.11.12A in use) or higher
+- CoolQ Pro
 - GraphicsMagick
 
 **Be sure your CoolQ has already installed [cqhttp](https://github.com/richardchien/coolq-http-api/releases).**
