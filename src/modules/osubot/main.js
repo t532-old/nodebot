@@ -12,102 +12,126 @@ const db = Monk('localhost:27017/botdb')
 const users = db.get('users')
 const config = yaml.safeLoad(fs.readFileSync('config.yml')).osubot
 
-/**
- * @description binds an osu! id with a QQ id.
- * @param {Message} msg The universal msg object
- * @param {array} account The account, use an array because username may include spaces
- */
-async function bind(msg, ...account) { 
-    users.insert({ qqid: msg.param.user_id, osuid: account.join(' ')})
-    msg.send('osubot: bind: bound successfully')
+
+const bind = {
+    args: '<account>',
+    options: [],
+    /**
+     * @description binds an osu! id with a QQ id.
+     * @param {Message} msg The universal msg object
+     * @param {string} account The account, use an array because username may include spaces
+     */
+    async action(msg, { account }) {
+        users.insert({ qqid: msg.param.user_id, osuid: account.join(' ')})
+        msg.send('osubot: bind: bound successfully')
+    }
 }
 
-/**
- * @description Fetch a user's status
- * @param {Message} msg The universal msg object
- * @param {string} usr username that will be queried
- * @param {string} mode the mode that will be queried
- */
-async function stat(msg, usr = 'me', mode = 'o') {
-    mode = util.checkmode(mode)
-    let data = []
-    if (util.flatten(util.modes).includes(usr.toLowerCase())) {
-        mode = util.checkmode(usr)
-        usr = 'me'
-    }
-    if (usr === 'me') {
-        try {
-            const doc = await users.findOne({ qqid: msg.param.user_id })
-            usr = doc.osuid
-        } catch (err) {
-            msg.sender('osubot: recent: user does not exist')
+const stat = {
+    args: '<usr> [mode]',
+    options: [],
+    /**
+     * @description Fetch a user's status
+     * @param {Message} msg The universal msg object
+     * @param {string} usr username that will be queried
+     * @param {string} mode the mode that will be queried
+     */
+    async action(msg, { usr = 'me', mode = 'o' }) {
+        console.log(api)
+        mode = util.checkmode(mode)
+        let data = []
+        if (util.flatten(util.modes).includes(usr.toLowerCase())) {
+            mode = util.checkmode(usr)
+            usr = 'me'
         }
-    }
-    try { 
-        msg.send(JSON.stringify(await api.statQuery({
-            u: usr,
-            m: mode,
-            k: config.key
-        })))
-    } catch(err) {
-        msg.send(err.toString())
-    }
-}
-
-/**
- * @description Get a user's most recent play
- * @param {Message} msg The universal msg object
- * @param {string} usr The username that'll be queried
- */
-async function recent(msg, usr = 'me') {
-    let data = []
-    if (usr === 'me') {
-        try {
-            const doc = await users.findOne({ qqid: msg.param.user_id })
-            usr = doc.osuid
-        } catch (err) {
-            msg.sender('osubot: recent: user does not exist')
+        if (usr === 'me') {
+            try {
+                const doc = await users.findOne({ qqid: msg.param.user_id })
+                usr = doc.osuid
+            } catch (err) {
+                msg.send('osubot: recent: user does not exist')
+            }
+        }
+        try { 
+            const stat = await api.statQuery({
+                u: usr,
+                k: config.key
+            })
+            const path = await canvas.drawStat(stat)
+            msg.send([{
+                type: 'image',
+                data: {
+                    file: path,
+                }
+            }])
+        } catch(err) {
+            throw err
             return
         }
     }
-    try { 
-        const rec = await api.recentQuery({
-            u: usr,
-            limit: '1',
-            k: config.key
-        })
-        const map = await api.mapQuery({
-            b: rec.beatmap_id,
-            k: config.key
-        })
-        const stat = await api.statQuery({
-            u: usr,
-            k: config.key
-        })
-        const path = await canvas.drawRecent(rec, map, stat)
-        console.log(path)
-        msg.sender([{
-            type: 'image',
-            data: {
-                file: path,
+}
+
+const recent = {
+    args: '<usr>',
+    options: [],
+    /**
+     * @description Get a user's most recent play
+     * @param {Message} msg The universal msg object
+     * @param {string} usr The username that'll be queried
+     */
+    async action(msg, { usr = 'me' }) {
+        let data = []
+        if (usr === 'me') {
+            try {
+                const doc = await users.findOne({ qqid: msg.param.user_id })
+                usr = doc.osuid
+            } catch (err) {
+                msg.send('osubot: recent: user does not exist')
+                return
             }
-        }])
-    } catch(err) {
-        msg.sender(err.toString())
-        return
+        }
+        try { 
+            const rec = await api.recentQuery({
+                u: usr,
+                limit: '1',
+                k: config.key
+            })
+            const map = await api.mapQuery({
+                b: rec.beatmap_id,
+                k: config.key
+            })
+            const stat = await api.statQuery({
+                u: usr,
+                k: config.key
+            })
+            const path = await canvas.drawRecent(rec, map, stat)
+            msg.send([{
+                type: 'image',
+                data: {
+                    file: path,
+                }
+            }])
+        } catch(err) {
+            throw err
+            return
+        }
     }
 }
 
-/**
- * @description Gives a random result in a specific range (default 100)
- * @param {Message} msg The universal msg object
- * @param {string} range The rolling range
- */
-async function roll(msg, range = '100') {
-    if (typeof range === 'string' && !parseInt(range)) {
-        range = range.split(',')
-        msg.sender(range[Math.floor(Math.random() * range.length)])
-    } else msg.sender(Math.round(Math.random() * range).toString())
+const roll = {
+    args: '[range]',
+    options: [],
+    /**
+     * @description Gives a random result in a specific range (default 100)
+     * @param {Message} msg The universal msg object
+     * @param {string} range The rolling range
+     */
+    async action(msg, { range = '100' }) {
+        if (typeof range === 'string' && !parseInt(range)) {
+            range = range.split(',')
+            msg.send(range[Math.floor(Math.random() * range.length)])
+        } else msg.send(Math.round(Math.random() * range).toString())
+    }
 }
 
 export default { bind, stat, recent, roll }

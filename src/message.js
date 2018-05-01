@@ -1,5 +1,11 @@
 import botModules from './modules'
 import axios from 'axios'
+import Command from './command'
+
+const handler = new Command({
+    prefix: />|》/,
+    handler: msg => msg.send('Command not found!')
+})
 
 /**
  * A class that is uses to send message asynchronously.
@@ -30,19 +36,17 @@ class Message {
     static async 'group'(group_id, message) { return axios.post('http://localhost:5700/send_group_msg', { group_id, message }) }
 }
 
-function handle(param) {
-    // Check if this is command format
-    if (!param.message.match(/^[>》][^]+$/m)) return 
-    // This splits the command into parts
-    const raw = unescape(param.message.replace(/&#(\d+);/g, (match, str) => '%' + parseInt(str).toString(16))).trim().slice(1).split(/[\r\n\s]/).filter(i => i)
-    // Main & sub Command
-    const main = raw[0].toLowerCase()
-    const sub = raw.slice(1)
-    // The Message object
-    const msg = new Message(param)
-    // Is this an existing Command?
-    if (typeof botModules[main] === 'function') botModules[main](msg, ...sub)
-    else send('Unknown Command!')
+function listen() {
+    for (let i in botModules)
+        handler.on(i, botModules[i])
 }
 
-export default { Message, handle }
+function handle(param) {
+    const comm = unescape(param.message.replace(/&#(\d+);/g, (match, str) => '%' + parseInt(str).toString(16))).trim()
+    console.log(comm)
+    handler.do(comm, new Message(param))
+}
+
+export { Message }
+
+export default { listen, handle }

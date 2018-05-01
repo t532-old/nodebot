@@ -28,6 +28,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var app = new _koa2.default();
 
+if (!_fs2.default.existsSync('cache')) {
+    _fs2.default.mkdirSync('cache');
+    _fs2.default.mkdirSync('cache/osubot');
+    _fs2.default.mkdirSync('cache/osubot/avatar');
+    _fs2.default.mkdirSync('cache/osubot/recent');
+    _fs2.default.mkdirSync('cache/osubot/stat');
+}
+
 app.use((0, _koaBody2.default)());
 
 app.use(function () {
@@ -36,9 +44,10 @@ app.use(function () {
             while (1) {
                 switch (_context.prev = _context.next) {
                     case 0:
+                        _message2.default.listen();
                         _message2.default.handle(ctx.request.body);
 
-                    case 1:
+                    case 2:
                     case 'end':
                         return _context.stop();
                 }
