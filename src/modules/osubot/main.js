@@ -53,13 +53,20 @@ const stat = {
             }
         }
         try { 
-            msg.send(JSON.stringify(await api.statQuery({
+            const stat = await api.statQuery({
                 u: usr,
-                m: mode,
                 k: config.key
-            })))
+            })
+            const path = await canvas.drawStat(stat)
+            msg.send([{
+                type: 'image',
+                data: {
+                    file: path,
+                }
+            }])
         } catch(err) {
-            msg.send(err.toString())
+            throw err
+            return
         }
     }
 }
