@@ -40,6 +40,11 @@ async function drawRecent(rec, map, stat) {
             mods: parseInt(rec.enabled_mods)
         })
     })
+    const mods = osu.modbits.string(rec.enabled_mods).split('').reduce((target, value, index) => {
+        if (index % 2) target[target.length - 1] += value
+        else target.push(value)
+        return target
+    }, [])
     await res.avatarQuery(uid, avatarDest)
     await res.bgQuery(sid, dest)
     fs.copyFileSync(`assets${path.sep}image${path.sep}userbg${path.sep}crecent.jpg`, avatarBGDest)
@@ -95,13 +100,9 @@ async function drawRecent(rec, map, stat) {
         .fill('#fff')
         .font('assets/fonts/Exo2.0-Medium.otf')
         .fontSize(25)
-        .drawText(0, -175, Math.round(pp.total).toString() + 'pp')
+        .drawText(0, -185, Math.round(pp.total).toString() + 'pp')
         .fontSize(30)
-        .drawText(0, -145, stat.username)
-        .font('assets/fonts/Exo2.0-Bold.otf')
-        .fontSize(12)
-        .fill('#f69')
-        .drawText(0, 0, 'total score')
+        .drawText(0, -155, stat.username)
         .font('assets/fonts/Exo2.0-BoldItalic.otf')
         .fontSize(25)
         .fill('#3ad')
@@ -116,10 +117,6 @@ async function drawRecent(rec, map, stat) {
         .fill('#333')
         .drawText(-290, 20, 'max combo')
         .drawText(290, 20, 'accuracy')
-        .font('assets/fonts/Venera-500.otf')
-        .fontSize(50)
-        .fill('#f69')
-        .drawText(0, -25, util.scorify(rec.score))
         .font('assets/fonts/Exo2.0-Bold.otf')
         .fontSize(13)
         .fill('#999')
@@ -146,10 +143,32 @@ async function drawRecent(rec, map, stat) {
     await promisifyGM(
         gm(dest)
         .quality(100)
+        .gravity('Center')
+        .font('assets/fonts/Exo2.0-Bold.otf')
+        .fontSize(12)
+        .fill('#f69')
+        .drawText(0, 5, 'total score')
+        .font('assets/fonts/Venera-300.otf')
+        .fontSize(50)
+        .fill('#f69')
+        .drawText(0, -20, util.scorify(rec.score))
+    )
+    await promisifyGM(
+        gm(dest)
+        .quality(100)
         .composite('assets/image/rank/' + rec.rank + '.png')
         .gravity('North')
-        .geometry('+0+90')
+        .geometry('+0+80')
     )
+    for (let padding = -(mods.length - 1) * 10, i = 0; i < mods.length; padding += 20, i++) {
+        await promisifyGM(
+            gm(dest)
+            .quality(100)
+            .gravity('North')
+            .composite('assets/image/mods/' + mods[i] + '.png')
+            .geometry((padding >= 0 ? '+' : '') + padding + '+170')
+        )
+    }
     return 'file://' + process.cwd() + path.sep + dest
 }
 
@@ -232,7 +251,7 @@ async function drawStat(stat) {
         .fill('#333')
         .drawText(-290, 20, 'play count')
         .drawText(290, 20, 'accuracy')
-        .font('assets/fonts/Venera-500.otf')
+        .font('assets/fonts/Venera-300.otf')
         .fontSize(45)
         .fill('#f69')
         .drawText(0, -25, '#' + util.scorify(stat.pp_rank))
