@@ -4,10 +4,6 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _stringify = require('babel-runtime/core-js/json/stringify');
-
-var _stringify2 = _interopRequireDefault(_stringify);
-
 var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
@@ -97,7 +93,8 @@ var stat = {
             _ref2$mode = _ref2.mode,
             mode = _ref2$mode === undefined ? 'o' : _ref2$mode;
         return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2() {
-            var data, doc;
+            var data, doc, _stat, path;
+
             return _regenerator2.default.wrap(function _callee2$(_context2) {
                 while (1) {
                     switch (_context2.prev = _context2.next) {
@@ -135,31 +132,35 @@ var stat = {
 
                         case 15:
                             _context2.prev = 15;
-                            _context2.t1 = msg;
-                            _context2.t2 = _stringify2.default;
-                            _context2.next = 20;
+                            _context2.next = 18;
                             return _web.api.statQuery({
                                 u: usr,
-                                m: mode,
                                 k: config.key
                             });
 
-                        case 20:
-                            _context2.t3 = _context2.sent;
-                            _context2.t4 = (0, _context2.t2)(_context2.t3);
+                        case 18:
+                            _stat = _context2.sent;
+                            _context2.next = 21;
+                            return _canvas2.default.drawStat(_stat);
 
-                            _context2.t1.send.call(_context2.t1, _context2.t4);
+                        case 21:
+                            path = _context2.sent;
 
-                            _context2.next = 28;
+                            msg.send([{
+                                type: 'image',
+                                data: {
+                                    file: path
+                                }
+                            }]);
+                            _context2.next = 29;
                             break;
 
                         case 25:
                             _context2.prev = 25;
-                            _context2.t5 = _context2['catch'](15);
+                            _context2.t1 = _context2['catch'](15);
+                            throw _context2.t1;
 
-                            msg.send(_context2.t5.toString());
-
-                        case 28:
+                        case 29:
                         case 'end':
                             return _context2.stop();
                     }
@@ -183,7 +184,7 @@ var recent = {
         var _ref3$usr = _ref3.usr,
             usr = _ref3$usr === undefined ? 'me' : _ref3$usr;
         return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3() {
-            var data, doc, rec, map, _stat, path;
+            var data, doc, rec, map, _stat2, path;
 
             return _regenerator2.default.wrap(function _callee3$(_context3) {
                 while (1) {
@@ -240,9 +241,9 @@ var recent = {
                             });
 
                         case 22:
-                            _stat = _context3.sent;
+                            _stat2 = _context3.sent;
                             _context3.next = 25;
-                            return _canvas2.default.drawRecent(rec, map, _stat);
+                            return _canvas2.default.drawRecent(rec, map, _stat2);
 
                         case 25:
                             path = _context3.sent;

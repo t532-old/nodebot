@@ -305,6 +305,36 @@ var bgQuery = function () {
     };
 }();
 
+var mapFileQuery = function () {
+    var _ref8 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee8(bid) {
+        var parser, res;
+        return _regenerator2.default.wrap(function _callee8$(_context8) {
+            while (1) {
+                switch (_context8.prev = _context8.next) {
+                    case 0:
+                        parser = new _ojsama2.default.parser();
+                        _context8.next = 3;
+                        return _axios2.default.get('https://osu.ppy.sh/osu/' + bid);
+
+                    case 3:
+                        res = _context8.sent.data;
+
+                        parser.feed(res);
+                        return _context8.abrupt('return', parser.map);
+
+                    case 6:
+                    case 'end':
+                        return _context8.stop();
+                }
+            }
+        }, _callee8, this);
+    }));
+
+    return function mapFileQuery(_x12) {
+        return _ref8.apply(this, arguments);
+    };
+}();
+
 var _fs = require('fs');
 
 var _fs2 = _interopRequireDefault(_fs);
@@ -317,7 +347,11 @@ var _axios = require('axios');
 
 var _axios2 = _interopRequireDefault(_axios);
 
+var _ojsama = require('ojsama');
+
+var _ojsama2 = _interopRequireDefault(_ojsama);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var api = exports.api = { query: apiQuery, statQuery: statQuery, recentQuery: recentQuery, mapQuery: mapQuery };
-var res = exports.res = { query: staticQuery, avatarQuery: avatarQuery, bgQuery: bgQuery };
+var res = exports.res = { query: staticQuery, avatarQuery: avatarQuery, bgQuery: bgQuery, mapFileQuery: mapFileQuery };

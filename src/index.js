@@ -10,7 +10,9 @@ if (!fs.existsSync('cache')) {
     fs.mkdirSync('cache/osubot')
     fs.mkdirSync('cache/osubot/avatar')
     fs.mkdirSync('cache/osubot/recent')
+    fs.mkdirSync('cache/osubot/recentbg')
     fs.mkdirSync('cache/osubot/stat')
+    fs.mkdirSync('cache/osubot/statbg')
 }
 
 app.use(body())

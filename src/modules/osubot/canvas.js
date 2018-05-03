@@ -1,9 +1,8 @@
 // Import modules
 import gm from 'gm'
 import fs from 'fs'
-import url from 'url'
 import path from 'path'
-import axios from 'axios'
+import osu from 'ojsama'
 // Import local files
 import util from './util'
 import { res } from './web'
@@ -27,9 +26,20 @@ function promisifyGM(gmO) {
 async function drawRecent(rec, map, stat) {
     const uid = stat.user_id
     const sid = map.beatmapset_id
+    const bid = rec.beatmap_id
     const dest = `cache${path.sep}osubot${path.sep}recent${path.sep}${uid}.jpg`
     const avatarDest = `cache${path.sep}osubot${path.sep}avatar${path.sep}${uid}.jpg`
     const avatarBGDest = `cache${path.sep}osubot${path.sep}recentbg${path.sep}${uid}.jpg`
+    const mapFile = await res.mapFileQuery(bid)
+    const pp = osu.ppv2({
+        combo: parseInt(rec.maxcombo),
+        nmiss: parseInt(rec.countmiss),
+        acc_percent: parseFloat(util.accuracy(rec)),
+        stars: new osu.diff().calc({
+            map: mapFile,
+            mods: parseInt(rec.enabled_mods)
+        })
+    })
     await res.avatarQuery(uid, avatarDest)
     await res.bgQuery(sid, dest)
     fs.copyFileSync(`assets${path.sep}image${path.sep}userbg${path.sep}crecent.jpg`, avatarBGDest)
@@ -78,10 +88,14 @@ async function drawRecent(rec, map, stat) {
     )
     await promisifyGM(
         gm(dest)
+        .quality(100)
+        .gravity('Center')
         .fill('#aaaa')
         .drawEllipse(750, 250, 210, 210, -145, -35)
         .fill('#fff')
-        .font('assets/fonts/Exo2.0-Regular.otf')
+        .font('assets/fonts/Exo2.0-Medium.otf')
+        .fontSize(25)
+        .drawText(0, -175, Math.round(pp.total).toString() + 'pp')
         .fontSize(30)
         .drawText(0, -145, stat.username)
         .font('assets/fonts/Exo2.0-Bold.otf')
@@ -197,7 +211,7 @@ async function drawStat(stat) {
         .fill('#aaaa')
         .drawEllipse(375, 250, 210, 210, -145, -35)
         .fill('#fff')
-        .font('assets/fonts/Exo2.0-Regular.otf')
+        .font('assets/fonts/Exo2.0-Medium.otf')
         .fontSize(30)
         .drawText(0, -145, stat.username)
         .font('assets/fonts/Exo2.0-Bold.otf')
@@ -208,7 +222,7 @@ async function drawStat(stat) {
         .fontSize(25)
         .fill('#3ad')
         .drawText(0, 35, util.scorify(parseInt(stat.pp_raw).toString()) + 'pp')
-        .fontSize(13)
+        .fontSize(11)
         .drawText(0, 60, 'performance points')
         .font('assets/fonts/Exo2.0-Bold.otf')
         .fontSize(30)

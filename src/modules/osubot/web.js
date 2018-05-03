@@ -1,6 +1,7 @@
 import fs from 'fs'
 import url from 'url'
 import axios from 'axios'
+import osu from 'ojsama'
 
 /**
  * A GET request to the ppy api.
@@ -82,5 +83,12 @@ async function avatarQuery(uid, dest) { await staticQuery('https://a.ppy.sh/' + 
  */
 async function bgQuery(sid, dest) { await staticQuery('https://assets.ppy.sh/beatmaps/' + sid + '/covers/cover.jpg', dest) }
 
+async function mapFileQuery(bid) {
+    const parser = new osu.parser()
+    const res = (await axios.get('https://osu.ppy.sh/osu/' + bid)).data
+    parser.feed(res)
+    return parser.map
+}
+
 export const api = { query: apiQuery, statQuery, recentQuery, mapQuery }
-export const res = { query: staticQuery, avatarQuery, bgQuery }
+export const res = { query: staticQuery, avatarQuery, bgQuery, mapFileQuery }

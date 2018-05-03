@@ -26,7 +26,8 @@
     "js-yaml": "^3.11.0",
     "koa": "^2.5.0",
     "koa-body": "^2.5.0",
-    "monk": "^6.0.5"
+    "monk": "^6.0.5",
+    "ojsama": "^1.0.15"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
