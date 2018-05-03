@@ -257,10 +257,10 @@ async function drawStat(stat) {
         .drawText(0, -25, '#' + util.scorify(stat.pp_rank))
         .fontSize(13)
         .fill('#999')
-        .drawRectangle(300, 345, 450, 365)
+        .drawRectangle(325, 345, 425, 365)
         .font('assets/fonts/Exo2.0-Regular.otf')
         .fill('#fff')
-        .drawText(0, 105, stat.country + ' #' + util.scorify(stat.pp_country_rank))
+        .drawText(20, 105, '#' + util.scorify(stat.pp_country_rank))
         .fontSize(25)
         .fill('#aaa')
         .drawLine(275, 375, 475, 375)
@@ -274,6 +274,13 @@ async function drawStat(stat) {
         .drawText(-33, 160, 'S+')
         .drawText(33, 160, 'S')
         .drawText(100, 160, 'A')
+    )
+    await promisifyGM(
+        gm(dest)
+        .quality(100)
+        .composite('assets/image/flags/' + stat.country + '.png')
+        .gravity('North')
+        .geometry('-50+343')
     )
     return 'file://' + process.cwd() + path.sep + dest
 }
