@@ -13,6 +13,7 @@ if (!fs.existsSync('cache')) {
     fs.mkdirSync('cache/osubot/recentbg')
     fs.mkdirSync('cache/osubot/stat')
     fs.mkdirSync('cache/osubot/statbg')
+    fs.mkdirSync('cache/osubot/mapbg')
 }
 
 app.use(body())

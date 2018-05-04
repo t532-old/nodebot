@@ -36,6 +36,7 @@ if (!_fs2.default.existsSync('cache')) {
     _fs2.default.mkdirSync('cache/osubot/recentbg');
     _fs2.default.mkdirSync('cache/osubot/stat');
     _fs2.default.mkdirSync('cache/osubot/statbg');
+    _fs2.default.mkdirSync('cache/osubot/mapbg');
 }
 
 app.use((0, _koaBody2.default)());

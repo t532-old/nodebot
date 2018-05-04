@@ -28,6 +28,7 @@ async function drawRecent(rec, map, stat) {
     const sid = map.beatmapset_id
     const bid = rec.beatmap_id
     const dest = `cache${path.sep}osubot${path.sep}recent${path.sep}${uid}.jpg`
+    const bgDest = `cache${path.sep}osubot${path.sep}mapbg${path.sep}${sid}.jpg`
     const avatarDest = `cache${path.sep}osubot${path.sep}avatar${path.sep}${uid}.jpg`
     const avatarBGDest = `cache${path.sep}osubot${path.sep}recentbg${path.sep}${uid}.jpg`
     const mapFile = await res.mapFileQuery(bid)
@@ -45,9 +46,25 @@ async function drawRecent(rec, map, stat) {
         else target.push(value)
         return target
     }, [])
-    await res.avatarQuery(uid, avatarDest)
-    await res.bgQuery(sid, dest)
-    fs.copyFileSync(`assets${path.sep}image${path.sep}userbg${path.sep}crecent.jpg`, avatarBGDest)
+    if (!fs.existsSync(avatarDest)) {
+        fs.copyFileSync(`assets${path.sep}image${path.sep}userbg${path.sep}crecent.jpg`, avatarBGDest)
+        await res.avatarQuery(uid, avatarDest)
+        await promisifyGM(
+            gm(avatarDest)
+            .quality(100)
+            .resize(350, 350)
+        )
+        await promisifyGM(
+            gm(avatarBGDest)
+            .quality(100)
+            .composite(avatarDest)
+            .gravity('North')
+            .geometry('+0-50')
+        )
+    }
+    if (!fs.existsSync(bgDest))
+        await res.bgQuery(sid, bgDest)
+    fs.copyFileSync(bgDest, dest)
     await promisifyGM(
         gm(dest)
         .quality(100)
@@ -63,18 +80,6 @@ async function drawRecent(rec, map, stat) {
         .drawCircle(750, 250, 750, 620)
         .tile(dest)
         .drawCircle(750, 250, 750, 610)
-    )
-    await promisifyGM(
-        gm(avatarDest)
-        .quality(100)
-        .resize(350, 350)
-    )
-    await promisifyGM(
-        gm(avatarBGDest)
-        .quality(100)
-        .composite(avatarDest)
-        .gravity('North')
-        .geometry('+0-50')
     )
     await promisifyGM(
         gm(dest)
@@ -179,7 +184,22 @@ async function drawStat(stat) {
     const avatarBGDest = `cache${path.sep}osubot${path.sep}statbg${path.sep}${uid}.jpg`
     await res.avatarQuery(uid, avatarDest)
     fs.copyFileSync(`assets${path.sep}image${path.sep}userbg${path.sep}c${Math.ceil(Math.random() * 5)}.jpg`, dest)
-    fs.copyFileSync(`assets${path.sep}image${path.sep}userbg${path.sep}cstat.jpg`, avatarBGDest)
+    if (!fs.existsSync(avatarDest)) {
+        fs.copyFileSync(`assets${path.sep}image${path.sep}userbg${path.sep}cstat.jpg`, avatarBGDest)
+        await res.avatarQuery(uid, avatarDest)
+        await promisifyGM(
+            gm(avatarDest)
+            .quality(100)
+            .resize(350, 350)
+        )
+        await promisifyGM(
+            gm(avatarBGDest)
+            .quality(100)
+            .composite(avatarDest)
+            .gravity('North')
+            .geometry('+0-50')
+        )
+    }
     await promisifyGM(
         gm(dest)
         .quality(100)
@@ -194,18 +214,6 @@ async function drawStat(stat) {
         .drawCircle(750, 250, 750, 620)
         .tile(dest)
         .drawCircle(750, 250, 750, 610)
-    )
-    await promisifyGM(
-        gm(avatarDest)
-        .quality(100)
-        .resize(350, 350)
-    )
-    await promisifyGM(
-        gm(avatarBGDest)
-        .quality(100)
-        .composite(avatarDest)
-        .gravity('North')
-        .geometry('+0-50')
     )
     await promisifyGM(
         gm(dest)
@@ -285,4 +293,15 @@ async function drawStat(stat) {
     return 'file://' + process.cwd() + path.sep + dest
 }
 
-export default { drawRecent, drawStat }
+/**
+ * deletes a cached avatar. If uid is not specified, then delete all of them
+ * @param {string} uid 
+ */
+function clearCachedAvatars(uid) {
+    if (!uid)
+        for (let i of fs.readdirSync(`cache${path.sep}osubot${path.sep}avatar`))
+            fs.unlinkSync(`cache${path.sep}osubot${path.sep}avatar${path.sep}${i}.jpg`)
+    else fs.unlinkSync(`cache${path.sep}osubot${path.sep}avatar${path.sep}${uid}.jpg`)
+}
+
+export default { drawRecent, drawStat, clearCachedAvatars }
