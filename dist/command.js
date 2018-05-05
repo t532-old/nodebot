@@ -30,11 +30,12 @@ var Command = function () {
      */
     function Command(_ref) {
         var prefix = _ref.prefix,
-            handler = _ref.handler;
+            handlers = _ref.handlers;
         (0, _classCallCheck3.default)(this, Command);
 
         this.prefix = prefix;
-        this.defaultHandler = handler;
+        this.defaultHandler = handler.default;
+        this.invalidHandler = handler.invalid;
         this.list = {};
     }
     /**
@@ -118,7 +119,9 @@ var Command = function () {
                 extraArgs[_key - 1] = arguments[_key];
             }
 
-            if (!this.list[name]) this.defaultHandler.apply(this, extraArgs);
+            if (!this.list[name]) {
+                if (typeof this.defaultHandler === 'function') this.defaultHandler.apply(this, extraArgs);else throw new SyntaxError('No default handler for undefined command');
+            }
             var options = command.filter(function (i) {
                 return i.charAt(0) === '*';
             }).map(function (i) {
@@ -129,6 +132,9 @@ var Command = function () {
             command = command.filter(function (i) {
                 return i.charAt(0) !== '*';
             });
+            if (this.list[name].args.required.length > command.length) {
+                if (typeof this.invalidHandler === 'function') this.invalidHandler.apply(this, extraArgs);else throw new SyntaxError('No default handler for invalid arguments');
+            }
             var required = command.splice(0, this.list[name].args.required.length);
             var optional = command.splice(0, this.list[name].args.optional.length);
             var group = command;

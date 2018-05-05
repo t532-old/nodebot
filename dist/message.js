@@ -37,8 +37,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var handler = new _command2.default({
     prefix: />|》/,
-    handler: function handler(msg) {
-        return msg.send('Command not found!');
+    handler: {
+        default: function _default(msg) {
+            msg.send('Command not found!');
+        },
+        invalid: function invalid(msg) {
+            msg.send('Invalid argument(s)!');
+        }
     }
 });
 
@@ -137,7 +142,6 @@ function handle(param) {
     var comm = unescape(param.message.replace(/&#(\d+);/g, function (match, str) {
         return '%' + parseInt(str).toString(16);
     })).trim();
-    console.log(comm);
     handler.do(comm, new Message(param));
 }
 

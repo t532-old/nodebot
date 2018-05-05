@@ -4,9 +4,10 @@ class Command {
      * @param {regexp} prefix - The commands' prefix
      * @param {function} handler - do this when no avalible commands 
      */
-    constructor({prefix, handler}) { 
+    constructor({prefix, handlers}) { 
         this.prefix = prefix
-        this.defaultHandler = handler
+        this.defaultHandler = handler.default
+        this.invalidHandler = handler.invalid
         this.list = {}
     }
     /**
@@ -56,9 +57,18 @@ class Command {
         }, [])
         const name = command.shift()
         console.log(name)
-        if (!this.list[name]) this.defaultHandler(...extraArgs)
+        if (!this.list[name]) {
+            if (typeof this.defaultHandler === 'function')
+                this.defaultHandler(...extraArgs)
+            else throw new SyntaxError('No default handler for undefined command')
+        }
         const options = command.filter(i => i.charAt(0) === '*').map(i => i.slice(1)).filter(i => this.list[name].options.includes(i))
         command = command.filter(i => i.charAt(0) !== '*')
+        if (this.list[name].args.required.length > command.length) {
+            if (typeof this.invalidHandler === 'function')
+                this.invalidHandler(...extraArgs)
+            else throw new SyntaxError('No default handler for invalid arguments')
+        }
         const required = command.splice(0, this.list[name].args.required.length)
         const optional = command.splice(0, this.list[name].args.optional.length)
         const group = command

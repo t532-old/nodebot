@@ -28,15 +28,15 @@ const bind = {
 }
 
 const stat = {
-    args: '<usr> [mode]',
-    options: [],
+    args: '<usr>',
+    options: util.flatten(util.modes),
     /**
      * @description Fetch a user's status
      * @param {Message} msg The universal msg object
      * @param {string} usr username that will be queried
      * @param {string} mode the mode that will be queried
      */
-    async action(msg, { usr = 'me', mode = 'o' }) {
+    async action(msg, { usr = 'me' }, [ mode = 'o' ]) {
         console.log(api)
         mode = util.checkmode(mode)
         let data = []
@@ -130,20 +130,4 @@ const roll = {
     }
 }
 
-const statme = {
-    args: '[mode]',
-    options: [],
-    async action(msg, { mode = 'o' }) {
-        stat.action(msg, 'me', mode)
-    }
-}
-
-const recme = {
-    args: '',
-    options: [],
-    async action(msg) {
-        rec.action(msg, 'me')
-    }
-}
-
-export default { bind, stat, statme, rec, recme, roll }
+export default { bind, stat, rec, roll }

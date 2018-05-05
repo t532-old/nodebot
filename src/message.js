@@ -4,7 +4,10 @@ import Command from './command'
 
 const handler = new Command({
     prefix: />|》/,
-    handler: msg => msg.send('Command not found!')
+    handler: {
+        default(msg) { msg.send('Command not found!') },
+        invalid(msg) { msg.send('Invalid argument(s)!')}
+    }
 })
 
 /**
@@ -43,7 +46,6 @@ function listen() {
 
 function handle(param) {
     const comm = unescape(param.message.replace(/&#(\d+);/g, (match, str) => '%' + parseInt(str).toString(16))).trim()
-    console.log(comm)
     handler.do(comm, new Message(param))
 }
 

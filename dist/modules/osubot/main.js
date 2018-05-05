@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _slicedToArray2 = require('babel-runtime/helpers/slicedToArray');
+
+var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
+
 var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
@@ -77,21 +81,24 @@ var bind = {
 };
 
 var stat = {
-    args: '<usr> [mode]',
-    options: [],
+    args: '<usr>',
+    options: _util2.default.flatten(_util2.default.modes),
     /**
      * @description Fetch a user's status
      * @param {Message} msg The universal msg object
      * @param {string} usr username that will be queried
      * @param {string} mode the mode that will be queried
      */
-    action: function action(msg, _ref2) {
+    action: function action(msg, _ref2, _ref3) {
         var _this2 = this;
 
         var _ref2$usr = _ref2.usr,
-            usr = _ref2$usr === undefined ? 'me' : _ref2$usr,
-            _ref2$mode = _ref2.mode,
-            mode = _ref2$mode === undefined ? 'o' : _ref2$mode;
+            usr = _ref2$usr === undefined ? 'me' : _ref2$usr;
+
+        var _ref4 = (0, _slicedToArray3.default)(_ref3, 1),
+            _ref4$ = _ref4[0],
+            mode = _ref4$ === undefined ? 'o' : _ref4$;
+
         return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2() {
             var data, doc, _stat, path;
 
@@ -173,11 +180,11 @@ var rec = {
      * @param {Message} msg The universal msg object
      * @param {string} usr The username that'll be queried
      */
-    action: function action(msg, _ref3) {
+    action: function action(msg, _ref5) {
         var _this3 = this;
 
-        var _ref3$usr = _ref3.usr,
-            usr = _ref3$usr === undefined ? 'me' : _ref3$usr;
+        var _ref5$usr = _ref5.usr,
+            usr = _ref5$usr === undefined ? 'me' : _ref5$usr;
         return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3() {
             var data, doc, _rec, map, _stat2, path;
 
@@ -275,11 +282,11 @@ var roll = {
      * @param {Message} msg The universal msg object
      * @param {string} range The rolling range
      */
-    action: function action(msg, _ref4) {
+    action: function action(msg, _ref6) {
         var _this4 = this;
 
-        var _ref4$range = _ref4.range,
-            range = _ref4$range === undefined ? '100' : _ref4$range;
+        var _ref6$range = _ref6.range,
+            range = _ref6$range === undefined ? '100' : _ref6$range;
         return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4() {
             return _regenerator2.default.wrap(function _callee4$(_context4) {
                 while (1) {
@@ -300,52 +307,4 @@ var roll = {
     }
 };
 
-var statme = {
-    args: '[mode]',
-    options: [],
-    action: function action(msg, _ref5) {
-        var _this5 = this;
-
-        var _ref5$mode = _ref5.mode,
-            mode = _ref5$mode === undefined ? 'o' : _ref5$mode;
-        return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee5() {
-            return _regenerator2.default.wrap(function _callee5$(_context5) {
-                while (1) {
-                    switch (_context5.prev = _context5.next) {
-                        case 0:
-                            stat.action(msg, 'me', mode);
-
-                        case 1:
-                        case 'end':
-                            return _context5.stop();
-                    }
-                }
-            }, _callee5, _this5);
-        }))();
-    }
-};
-
-var recme = {
-    args: '',
-    options: [],
-    action: function action(msg) {
-        var _this6 = this;
-
-        return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee6() {
-            return _regenerator2.default.wrap(function _callee6$(_context6) {
-                while (1) {
-                    switch (_context6.prev = _context6.next) {
-                        case 0:
-                            rec.action(msg, 'me');
-
-                        case 1:
-                        case 'end':
-                            return _context6.stop();
-                    }
-                }
-            }, _callee6, _this6);
-        }))();
-    }
-};
-
-exports.default = { bind: bind, stat: stat, statme: statme, rec: rec, recme: recme, roll: roll };
+exports.default = { bind: bind, stat: stat, rec: rec, roll: roll };
