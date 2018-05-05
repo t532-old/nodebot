@@ -12,7 +12,7 @@ const test = {
      * @param {Message} msg The universal msg object
      * @param {array} txt The texts user sends
      */
-    async action(msg, { txt }) { console.log(txt); msg.send(txt.join(' ')) }
+    async action(msg, { txt }) { msg.send(txt.join(' ')) }
 }
 
 const about = {

@@ -37,7 +37,6 @@ const stat = {
      * @param {string} mode the mode that will be queried
      */
     async action(msg, { usr = 'me' }, [ mode = 'o' ]) {
-        console.log(api)
         mode = util.checkmode(mode)
         let data = []
         if (usr === 'me') {

@@ -48,7 +48,6 @@ class Command {
      * @param {string} command 
      */
     do(command, ...extraArgs) {
-        console.log(this)
         if (!this.prefix.test(command.charAt(0))) return
         command = command.trim().slice(1).split('"').map(i => i.trim()).reduce((target, value, index) => {
             if (index % 2 == 0) target.push(...value.split(/[\r\n\s]/))
@@ -56,7 +55,6 @@ class Command {
             return target
         }, [])
         const name = command.shift()
-        console.log(name)
         if (!this.list[name]) {
             if (typeof this.defaultHandler === 'function')
                 this.defaultHandler(...extraArgs)
@@ -79,7 +77,6 @@ class Command {
         for (let i of this.list[name].args.optional)
             args[i] = raw.optional.shift()
         if (this.list[name].args.group) args[this.list[name].args.group] = raw.group
-        console.log(args)
         this.list[name].action(...extraArgs, args, options)
     }
 }

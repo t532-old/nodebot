@@ -104,7 +104,6 @@ var Command = function () {
             var _this = this,
                 _list$name;
 
-            console.log(this);
             if (!this.prefix.test(command.charAt(0))) return;
             command = command.trim().slice(1).split('"').map(function (i) {
                 return i.trim();
@@ -113,7 +112,6 @@ var Command = function () {
                 return target;
             }, []);
             var name = command.shift();
-            console.log(name);
 
             for (var _len = arguments.length, extraArgs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
                 extraArgs[_key - 1] = arguments[_key];
@@ -191,7 +189,6 @@ var Command = function () {
             }
 
             if (this.list[name].args.group) args[this.list[name].args.group] = raw.group;
-            console.log(args);
             (_list$name = this.list[name]).action.apply(_list$name, extraArgs.concat([args, options]));
         }
     }]);

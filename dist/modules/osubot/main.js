@@ -106,46 +106,45 @@ var stat = {
                 while (1) {
                     switch (_context2.prev = _context2.next) {
                         case 0:
-                            console.log(_web.api);
                             mode = _util2.default.checkmode(mode);
                             data = [];
 
                             if (!(usr === 'me')) {
-                                _context2.next = 14;
+                                _context2.next = 13;
                                 break;
                             }
 
-                            _context2.prev = 4;
-                            _context2.next = 7;
+                            _context2.prev = 3;
+                            _context2.next = 6;
                             return users.findOne({ qqid: msg.param.user_id });
 
-                        case 7:
+                        case 6:
                             doc = _context2.sent;
 
                             usr = doc.osuid;
-                            _context2.next = 14;
+                            _context2.next = 13;
                             break;
 
-                        case 11:
-                            _context2.prev = 11;
-                            _context2.t0 = _context2['catch'](4);
+                        case 10:
+                            _context2.prev = 10;
+                            _context2.t0 = _context2['catch'](3);
 
                             msg.send('osubot: recent: user does not exist');
 
-                        case 14:
-                            _context2.prev = 14;
-                            _context2.next = 17;
+                        case 13:
+                            _context2.prev = 13;
+                            _context2.next = 16;
                             return _web.api.statQuery({
                                 u: usr,
                                 k: config.key
                             });
 
-                        case 17:
+                        case 16:
                             _stat = _context2.sent;
-                            _context2.next = 20;
+                            _context2.next = 19;
                             return _canvas2.default.drawStat(_stat);
 
-                        case 20:
+                        case 19:
                             path = _context2.sent;
 
                             msg.send([{
@@ -154,20 +153,20 @@ var stat = {
                                     file: path
                                 }
                             }]);
-                            _context2.next = 28;
+                            _context2.next = 27;
                             break;
 
-                        case 24:
-                            _context2.prev = 24;
-                            _context2.t1 = _context2['catch'](14);
+                        case 23:
+                            _context2.prev = 23;
+                            _context2.t1 = _context2['catch'](13);
                             throw _context2.t1;
 
-                        case 28:
+                        case 27:
                         case 'end':
                             return _context2.stop();
                     }
                 }
-            }, _callee2, _this2, [[4, 11], [14, 24]]);
+            }, _callee2, _this2, [[3, 10], [13, 23]]);
         }))();
     }
 };
