@@ -40,10 +40,6 @@ const stat = {
         console.log(api)
         mode = util.checkmode(mode)
         let data = []
-        if (util.flatten(util.modes).includes(usr.toLowerCase())) {
-            mode = util.checkmode(usr)
-            usr = 'me'
-        }
         if (usr === 'me') {
             try {
                 const doc = await users.findOne({ qqid: msg.param.user_id })
@@ -71,7 +67,7 @@ const stat = {
     }
 }
 
-const recent = {
+const rec = {
     args: '<usr>',
     options: [],
     /**
@@ -134,4 +130,20 @@ const roll = {
     }
 }
 
-export default { bind, stat, recent, roll }
+const statme = {
+    args: '[mode]',
+    options: [],
+    async action(msg, { mode = 'o' }) {
+        stat.action(msg, 'me', mode)
+    }
+}
+
+const recme = {
+    args: '',
+    options: [],
+    async action(msg) {
+        rec.action(msg, 'me')
+    }
+}
+
+export default { bind, stat, statme, rec, recme, roll }

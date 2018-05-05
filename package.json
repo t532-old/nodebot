@@ -4,7 +4,7 @@
   "description": "A bot",
   "main": "src/index.js",
   "scripts": {
-    "run": "npm run build && node dist/index.js",
+    "start": "npm run build && node dist/index.js",
     "build": "babel src -d dist",
     "test": "npm run build",
     "doc": "jsdoc src -r -d doc -R README.md"

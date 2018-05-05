@@ -103,47 +103,42 @@ var stat = {
                             mode = _util2.default.checkmode(mode);
                             data = [];
 
-                            if (_util2.default.flatten(_util2.default.modes).includes(usr.toLowerCase())) {
-                                mode = _util2.default.checkmode(usr);
-                                usr = 'me';
-                            }
-
                             if (!(usr === 'me')) {
-                                _context2.next = 15;
+                                _context2.next = 14;
                                 break;
                             }
 
-                            _context2.prev = 5;
-                            _context2.next = 8;
+                            _context2.prev = 4;
+                            _context2.next = 7;
                             return users.findOne({ qqid: msg.param.user_id });
 
-                        case 8:
+                        case 7:
                             doc = _context2.sent;
 
                             usr = doc.osuid;
-                            _context2.next = 15;
+                            _context2.next = 14;
                             break;
 
-                        case 12:
-                            _context2.prev = 12;
-                            _context2.t0 = _context2['catch'](5);
+                        case 11:
+                            _context2.prev = 11;
+                            _context2.t0 = _context2['catch'](4);
 
                             msg.send('osubot: recent: user does not exist');
 
-                        case 15:
-                            _context2.prev = 15;
-                            _context2.next = 18;
+                        case 14:
+                            _context2.prev = 14;
+                            _context2.next = 17;
                             return _web.api.statQuery({
                                 u: usr,
                                 k: config.key
                             });
 
-                        case 18:
+                        case 17:
                             _stat = _context2.sent;
-                            _context2.next = 21;
+                            _context2.next = 20;
                             return _canvas2.default.drawStat(_stat);
 
-                        case 21:
+                        case 20:
                             path = _context2.sent;
 
                             msg.send([{
@@ -152,25 +147,25 @@ var stat = {
                                     file: path
                                 }
                             }]);
-                            _context2.next = 29;
+                            _context2.next = 28;
                             break;
 
-                        case 25:
-                            _context2.prev = 25;
-                            _context2.t1 = _context2['catch'](15);
+                        case 24:
+                            _context2.prev = 24;
+                            _context2.t1 = _context2['catch'](14);
                             throw _context2.t1;
 
-                        case 29:
+                        case 28:
                         case 'end':
                             return _context2.stop();
                     }
                 }
-            }, _callee2, _this2, [[5, 12], [15, 25]]);
+            }, _callee2, _this2, [[4, 11], [14, 24]]);
         }))();
     }
 };
 
-var recent = {
+var rec = {
     args: '<usr>',
     options: [],
     /**
@@ -184,7 +179,7 @@ var recent = {
         var _ref3$usr = _ref3.usr,
             usr = _ref3$usr === undefined ? 'me' : _ref3$usr;
         return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3() {
-            var data, doc, rec, map, _stat2, path;
+            var data, doc, _rec, map, _stat2, path;
 
             return _regenerator2.default.wrap(function _callee3$(_context3) {
                 while (1) {
@@ -225,10 +220,10 @@ var recent = {
                             });
 
                         case 16:
-                            rec = _context3.sent;
+                            _rec = _context3.sent;
                             _context3.next = 19;
                             return _web.api.mapQuery({
-                                b: rec.beatmap_id,
+                                b: _rec.beatmap_id,
                                 k: config.key
                             });
 
@@ -243,7 +238,7 @@ var recent = {
                         case 22:
                             _stat2 = _context3.sent;
                             _context3.next = 25;
-                            return _canvas2.default.drawRecent(rec, map, _stat2);
+                            return _canvas2.default.drawRecent(_rec, map, _stat2);
 
                         case 25:
                             path = _context3.sent;
@@ -305,4 +300,52 @@ var roll = {
     }
 };
 
-exports.default = { bind: bind, stat: stat, recent: recent, roll: roll };
+var statme = {
+    args: '[mode]',
+    options: [],
+    action: function action(msg, _ref5) {
+        var _this5 = this;
+
+        var _ref5$mode = _ref5.mode,
+            mode = _ref5$mode === undefined ? 'o' : _ref5$mode;
+        return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee5() {
+            return _regenerator2.default.wrap(function _callee5$(_context5) {
+                while (1) {
+                    switch (_context5.prev = _context5.next) {
+                        case 0:
+                            stat.action(msg, 'me', mode);
+
+                        case 1:
+                        case 'end':
+                            return _context5.stop();
+                    }
+                }
+            }, _callee5, _this5);
+        }))();
+    }
+};
+
+var recme = {
+    args: '',
+    options: [],
+    action: function action(msg) {
+        var _this6 = this;
+
+        return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee6() {
+            return _regenerator2.default.wrap(function _callee6$(_context6) {
+                while (1) {
+                    switch (_context6.prev = _context6.next) {
+                        case 0:
+                            rec.action(msg, 'me');
+
+                        case 1:
+                        case 'end':
+                            return _context6.stop();
+                    }
+                }
+            }, _callee6, _this6);
+        }))();
+    }
+};
+
+exports.default = { bind: bind, stat: stat, statme: statme, rec: rec, recme: recme, roll: roll };
