@@ -33,8 +33,8 @@ class Message {
     static async 'private'(user_id, message) { return axios.post('http://localhost:5700/send_private_msg', { user_id, message }) }
     /**
      * Sends a group message
-     * @param {*} group_id The target qq group id.
-     * @param {*} message The message
+     * @param {string} group_id The target qq group id.
+     * @param {string|array} message The message
      */
     static async 'group'(group_id, message) { return axios.post('http://localhost:5700/send_group_msg', { group_id, message }) }
 }

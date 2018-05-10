@@ -24,7 +24,7 @@ const about = {
      */
     async action(msg) {
         msg.send(
-`Nodebot v${config.version.split(' ')[0]} "${config.version.split(' ')[1]}"
+`Nodebot v${config.version}
 powered by Node.js & cqhttp.
 ${new Date().getFullYear()} trustgit | under MIT License`
         )
