@@ -58,7 +58,7 @@ const stat = {
                 const doc = await users.findOne({ qqid: msg.param.user_id })
                 usr = doc.osuid
             } catch (err) {
-                msg.send('osubot: stat: you haven\'t bound your osu!id. use `>bind <id>\' to bind')
+                msg.send('osubot: stat: you haven\'t bound your osu!id. use `#bind <id>\' to bind')
                 return
             }
         }
@@ -97,7 +97,7 @@ const rec = {
                 const doc = await users.findOne({ qqid: msg.param.user_id })
                 usr = doc.osuid
             } catch (err) {
-                msg.send('osubot: recent: you haven\'t bound your osu!id. use `>bind <id>\' to bind')
+                msg.send('osubot: recent: you haven\'t bound your osu!id. use `#bind <id>\' to bind')
                 return
             }
         }

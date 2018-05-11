@@ -277,7 +277,7 @@ async function drawStat(stat) {
         .fill('#aaa')
         .drawLine(275, 375, 475, 375)
         .fill('#666')
-        .drawText(-100, 140, util.fillNumber(stat.count_rank_ssh + stat.count_rank_ss))
+        .drawText(-100, 140, util.fillNumber((parseInt(stat.count_rank_ssh) + parseInt(stat.count_rank_ss)).toString()))
         .drawText(-33, 140, util.fillNumber(stat.count_rank_sh))
         .drawText(33, 140, util.fillNumber(stat.count_rank_s))
         .drawText(100, 140, util.fillNumber(stat.count_rank_a))

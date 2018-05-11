@@ -158,7 +158,7 @@ var stat = {
                             _context3.prev = 10;
                             _context3.t0 = _context3['catch'](3);
 
-                            msg.send('osubot: stat: you haven\'t bound your osu!id. use `>bind <id>\' to bind');
+                            msg.send('osubot: stat: you haven\'t bound your osu!id. use `#bind <id>\' to bind');
                             return _context3.abrupt('return');
 
                         case 14:
@@ -246,7 +246,7 @@ var rec = {
                             _context4.prev = 9;
                             _context4.t0 = _context4['catch'](2);
 
-                            msg.send('osubot: recent: you haven\'t bound your osu!id. use `>bind <id>\' to bind');
+                            msg.send('osubot: recent: you haven\'t bound your osu!id. use `#bind <id>\' to bind');
                             return _context4.abrupt('return');
 
                         case 13:
