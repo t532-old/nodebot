@@ -69,7 +69,7 @@ var about = {
                 while (1) {
                     switch (_context2.prev = _context2.next) {
                         case 0:
-                            msg.send('Nodebot v' + config.version.split(' ')[0] + ' "' + config.version.split(' ')[1] + '"\npowered by Node.js & cqhttp.\n' + new Date().getFullYear() + ' trustgit | under MIT License');
+                            msg.send('Nodebot v' + config.version + '\npowered by Node.js & cqhttp.\n' + new Date().getFullYear() + ' trustgit | under MIT License');
 
                         case 1:
                         case 'end':

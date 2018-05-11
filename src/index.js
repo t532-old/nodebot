@@ -16,10 +16,11 @@ if (!fs.existsSync('cache')) {
     fs.mkdirSync('cache/osubot/mapbg')
 }
 
+message.listen()
+
 app.use(body())
 
 app.use(async ctx => {
-    message.listen()
     message.handle(ctx.request.body)
 })
 

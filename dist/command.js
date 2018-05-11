@@ -26,7 +26,7 @@ var Command = function () {
     /**
      * @constructor
      * @param {regexp} prefix - The commands' prefix
-     * @param {function} handler - do this when no avalible commands 
+     * @param {function} handlers - do this when no avalible commands 
      */
     function Command(_ref) {
         var prefix = _ref.prefix,
@@ -34,8 +34,8 @@ var Command = function () {
         (0, _classCallCheck3.default)(this, Command);
 
         this.prefix = prefix;
-        this.defaultHandler = handler.default;
-        this.invalidHandler = handler.invalid;
+        this.defaultHandler = handlers.default;
+        this.invalidHandler = handlers.invalid;
         this.list = {};
     }
     /**
@@ -86,11 +86,6 @@ var Command = function () {
                     return i.match(/^\[.+\.{3,3}\]$/);
                 })[0].split(/\[|\.{3,3}\]/)[1] : null
             };
-            options = options.filter(function (i) {
-                return i.match(/^\*.+$/);
-            }).map(function (i) {
-                return i.slice(1);
-            });
             this.list[name] = { args: args, options: options, action: action };
         }
         /**

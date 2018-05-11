@@ -39,6 +39,8 @@ if (!_fs2.default.existsSync('cache')) {
     _fs2.default.mkdirSync('cache/osubot/mapbg');
 }
 
+_message2.default.listen();
+
 app.use((0, _koaBody2.default)());
 
 app.use(function () {
@@ -47,10 +49,9 @@ app.use(function () {
             while (1) {
                 switch (_context.prev = _context.next) {
                     case 0:
-                        _message2.default.listen();
                         _message2.default.handle(ctx.request.body);
 
-                    case 2:
+                    case 1:
                     case 'end':
                         return _context.stop();
                 }

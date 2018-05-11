@@ -2,12 +2,12 @@ class Command {
     /**
      * @constructor
      * @param {regexp} prefix - The commands' prefix
-     * @param {function} handler - do this when no avalible commands 
+     * @param {function} handlers - do this when no avalible commands 
      */
     constructor({prefix, handlers}) { 
         this.prefix = prefix
-        this.defaultHandler = handler.default
-        this.invalidHandler = handler.invalid
+        this.defaultHandler = handlers.default
+        this.invalidHandler = handlers.invalid
         this.list = {}
     }
     /**
@@ -40,7 +40,6 @@ class Command {
                           .map(i => i.split(/\[|\]/)[1]),
             group: args.filter(i => i.match(/^\[.+\.{3,3}\]$/))[0] ? args.filter(i => i.match(/^\[.+\.{3,3}\]$/))[0].split(/\[|\.{3,3}\]/)[1] : null
         }
-        options = options.filter(i => i.match(/^\*.+$/)).map(i => i.slice(1))
         this.list[name] = { args, options, action }
     }
     /**

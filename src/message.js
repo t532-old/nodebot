@@ -4,7 +4,7 @@ import Command from './command'
 
 const handler = new Command({
     prefix: />|》/,
-    handler: {
+    handlers: {
         default(msg) { msg.send('Command not found!') },
         invalid(msg) { msg.send('Invalid argument(s)!')}
     }

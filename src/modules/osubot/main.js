@@ -22,13 +22,13 @@ const bind = {
      * @param {string} account The account, use an array because username may include spaces
      */
     async action(msg, { account }) {
-        users.insert({ qqid: msg.param.user_id, osuid: account.join(' ')})
+        users.insert({ qqid: msg.param.user_id, osuid: account })
         msg.send('osubot: bind: bound successfully')
     }
 }
 
 const stat = {
-    args: '<usr>',
+    args: '[usr]',
     options: util.flatten(util.modes),
     /**
      * @description Fetch a user's status
@@ -50,7 +50,8 @@ const stat = {
         try { 
             const stat = await api.statQuery({
                 u: usr,
-                k: config.key
+                k: config.key,
+                m: mode,
             })
             const path = await canvas.drawStat(stat)
             msg.send([{
@@ -60,14 +61,14 @@ const stat = {
                 }
             }])
         } catch(err) {
-            throw err
+            msg.send(err.toString())
             return
         }
     }
 }
 
 const rec = {
-    args: '<usr>',
+    args: '[usr]',
     options: [],
     /**
      * @description Get a user's most recent play
@@ -75,13 +76,14 @@ const rec = {
      * @param {string} usr The username that'll be queried
      */
     async action(msg, { usr = 'me' }) {
+        const time = Date.now()
         let data = []
         if (usr === 'me') {
             try {
                 const doc = await users.findOne({ qqid: msg.param.user_id })
                 usr = doc.osuid
             } catch (err) {
-                msg.send('osubot: recent: user does not exist')
+                msg.send('osubot: recent: didn\'t bind your osu!id. use `>bind <id>\' to bind')
                 return
             }
         }
@@ -100,6 +102,7 @@ const rec = {
                 k: config.key
             })
             const path = await canvas.drawRecent(rec, map, stat)
+            console.log(Date.now() - time)
             msg.send([{
                 type: 'image',
                 data: {
@@ -107,7 +110,7 @@ const rec = {
                 }
             }])
         } catch(err) {
-            throw err
+            msg.send(err.toString())
             return
         }
     }

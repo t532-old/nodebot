@@ -47,21 +47,21 @@ async function drawRecent(rec, map, stat) {
         return target
     }, [])
     if (!fs.existsSync(avatarDest)) {
-        fs.copyFileSync(`assets${path.sep}image${path.sep}userbg${path.sep}crecent.jpg`, avatarBGDest)
         await res.avatarQuery(uid, avatarDest)
         await promisifyGM(
             gm(avatarDest)
             .quality(100)
             .resize(350, 350)
         )
-        await promisifyGM(
-            gm(avatarBGDest)
-            .quality(100)
-            .composite(avatarDest)
-            .gravity('North')
-            .geometry('+0-50')
-        )
     }
+    fs.copyFileSync(`assets${path.sep}image${path.sep}userbg${path.sep}crecent.jpg`, avatarBGDest)
+    await promisifyGM(
+        gm(avatarBGDest)
+        .quality(100)
+        .composite(avatarDest)
+        .gravity('North')
+        .geometry('+0-50')
+    )
     if (!fs.existsSync(bgDest))
         await res.bgQuery(sid, bgDest)
     fs.copyFileSync(bgDest, dest)
@@ -143,7 +143,7 @@ async function drawRecent(rec, map, stat) {
         .drawText(-33, 160, 'Good')
         .drawText(33, 160, 'Meh')
         .drawText(100, 160, 'Miss')
-        .crop(1200, 500)
+        .crop(1000, 500)
     )
     await promisifyGM(
         gm(dest)
@@ -182,24 +182,23 @@ async function drawStat(stat) {
     const dest = `cache${path.sep}osubot${path.sep}stat${path.sep}${uid}.jpg`
     const avatarDest = `cache${path.sep}osubot${path.sep}avatar${path.sep}${uid}.jpg`
     const avatarBGDest = `cache${path.sep}osubot${path.sep}statbg${path.sep}${uid}.jpg`
-    await res.avatarQuery(uid, avatarDest)
     fs.copyFileSync(`assets${path.sep}image${path.sep}userbg${path.sep}c${Math.ceil(Math.random() * 5)}.jpg`, dest)
     if (!fs.existsSync(avatarDest)) {
-        fs.copyFileSync(`assets${path.sep}image${path.sep}userbg${path.sep}cstat.jpg`, avatarBGDest)
         await res.avatarQuery(uid, avatarDest)
         await promisifyGM(
             gm(avatarDest)
             .quality(100)
             .resize(350, 350)
         )
-        await promisifyGM(
-            gm(avatarBGDest)
-            .quality(100)
-            .composite(avatarDest)
-            .gravity('North')
-            .geometry('+0-50')
-        )
     }
+    fs.copyFileSync(`assets${path.sep}image${path.sep}userbg${path.sep}cstat.jpg`, avatarBGDest)
+    await promisifyGM(
+        gm(avatarBGDest)
+        .quality(100)
+        .composite(avatarDest)
+        .gravity('North')
+        .geometry('+0-50')
+    )
     await promisifyGM(
         gm(dest)
         .quality(100)

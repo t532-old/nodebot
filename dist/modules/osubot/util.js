@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
+
+var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
+
 var _getIterator2 = require('babel-runtime/core-js/get-iterator');
 
 var _getIterator3 = _interopRequireDefault(_getIterator2);
@@ -100,7 +104,7 @@ exports.default = {
             for (var _iterator = (0, _getIterator3.default)(arr), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                 var i = _step.value;
 
-                if (i instanceof Array) flat.push(this.flatten(i));else flat.push(i);
+                if (i instanceof Array) flat.push.apply(flat, (0, _toConsumableArray3.default)(this.flatten(i)));else flat.push(i);
             }
         } catch (err) {
             _didIteratorError = true;

@@ -60,19 +60,19 @@ var drawRecent = function () {
                         }, []);
 
                         if (_fs2.default.existsSync(avatarDest)) {
-                            _context.next = 20;
+                            _context.next = 17;
                             break;
                         }
 
-                        _fs2.default.copyFileSync('assets' + _path2.default.sep + 'image' + _path2.default.sep + 'userbg' + _path2.default.sep + 'crecent.jpg', avatarBGDest);
-                        _context.next = 16;
+                        _context.next = 15;
                         return _web.res.avatarQuery(uid, avatarDest);
 
-                    case 16:
-                        _context.next = 18;
+                    case 15:
+                        _context.next = 17;
                         return promisifyGM((0, _gm2.default)(avatarDest).quality(100).resize(350, 350));
 
-                    case 18:
+                    case 17:
+                        _fs2.default.copyFileSync('assets' + _path2.default.sep + 'image' + _path2.default.sep + 'userbg' + _path2.default.sep + 'crecent.jpg', avatarBGDest);
                         _context.next = 20;
                         return promisifyGM((0, _gm2.default)(avatarBGDest).quality(100).composite(avatarDest).gravity('North').geometry('+0-50'));
 
@@ -100,7 +100,7 @@ var drawRecent = function () {
 
                     case 30:
                         _context.next = 32;
-                        return promisifyGM((0, _gm2.default)(dest).quality(100).gravity('Center').fill('#aaaa').drawEllipse(750, 250, 210, 210, -145, -35).fill('#fff').font('assets/fonts/Exo2.0-Medium.otf').fontSize(25).drawText(0, -185, Math.round(pp.total).toString() + 'pp').fontSize(30).drawText(0, -155, stat.username).font('assets/fonts/Exo2.0-BoldItalic.otf').fontSize(25).fill('#3ad').drawText(0, 35, map.title.slice(0, 35) + (map.title.length > 35 ? '...' : '')).fontSize(17).drawText(0, 60, map.artist.slice(0, 50) + (map.artist.length > 50 ? '...' : '')).font('assets/fonts/Exo2.0-Bold.otf').fontSize(30).drawText(-300, 0, rec.maxcombo + 'x').drawText(300, 0, _util2.default.accuracy(rec) + '%').fontSize(12).fill('#333').drawText(-290, 20, 'max combo').drawText(290, 20, 'accuracy').font('assets/fonts/Exo2.0-Bold.otf').fontSize(13).fill('#999').drawText(0, 85, map.version + ' - mapped by ' + map.creator).drawRectangle(675, 345, 825, 365).font('assets/fonts/Exo2.0-Regular.otf').fill('#fff').drawText(0, 105, rec.date).fontSize(25).fill('#aaa').drawLine(650, 375, 850, 375).fill('#666').drawText(-100, 140, _util2.default.fillNumber(rec.count300)).drawText(-33, 140, _util2.default.fillNumber(rec.count100)).drawText(33, 140, _util2.default.fillNumber(rec.count50)).drawText(100, 140, _util2.default.fillNumber(rec.countmiss)).fontSize(12).drawText(-100, 160, 'Great').drawText(-33, 160, 'Good').drawText(33, 160, 'Meh').drawText(100, 160, 'Miss').crop(1200, 500));
+                        return promisifyGM((0, _gm2.default)(dest).quality(100).gravity('Center').fill('#aaaa').drawEllipse(750, 250, 210, 210, -145, -35).fill('#fff').font('assets/fonts/Exo2.0-Medium.otf').fontSize(25).drawText(0, -185, Math.round(pp.total).toString() + 'pp').fontSize(30).drawText(0, -155, stat.username).font('assets/fonts/Exo2.0-BoldItalic.otf').fontSize(25).fill('#3ad').drawText(0, 35, map.title.slice(0, 35) + (map.title.length > 35 ? '...' : '')).fontSize(17).drawText(0, 60, map.artist.slice(0, 50) + (map.artist.length > 50 ? '...' : '')).font('assets/fonts/Exo2.0-Bold.otf').fontSize(30).drawText(-300, 0, rec.maxcombo + 'x').drawText(300, 0, _util2.default.accuracy(rec) + '%').fontSize(12).fill('#333').drawText(-290, 20, 'max combo').drawText(290, 20, 'accuracy').font('assets/fonts/Exo2.0-Bold.otf').fontSize(13).fill('#999').drawText(0, 85, map.version + ' - mapped by ' + map.creator).drawRectangle(675, 345, 825, 365).font('assets/fonts/Exo2.0-Regular.otf').fill('#fff').drawText(0, 105, rec.date).fontSize(25).fill('#aaa').drawLine(650, 375, 850, 375).fill('#666').drawText(-100, 140, _util2.default.fillNumber(rec.count300)).drawText(-33, 140, _util2.default.fillNumber(rec.count100)).drawText(33, 140, _util2.default.fillNumber(rec.count50)).drawText(100, 140, _util2.default.fillNumber(rec.countmiss)).fontSize(12).drawText(-100, 160, 'Great').drawText(-33, 160, 'Good').drawText(33, 160, 'Meh').drawText(100, 160, 'Miss').crop(1000, 500));
 
                     case 32:
                         _context.next = 34;
@@ -154,53 +154,50 @@ var drawStat = function () {
                         dest = 'cache' + _path2.default.sep + 'osubot' + _path2.default.sep + 'stat' + _path2.default.sep + uid + '.jpg';
                         avatarDest = 'cache' + _path2.default.sep + 'osubot' + _path2.default.sep + 'avatar' + _path2.default.sep + uid + '.jpg';
                         avatarBGDest = 'cache' + _path2.default.sep + 'osubot' + _path2.default.sep + 'statbg' + _path2.default.sep + uid + '.jpg';
-                        _context2.next = 6;
-                        return _web.res.avatarQuery(uid, avatarDest);
 
-                    case 6:
                         _fs2.default.copyFileSync('assets' + _path2.default.sep + 'image' + _path2.default.sep + 'userbg' + _path2.default.sep + 'c' + Math.ceil(Math.random() * 5) + '.jpg', dest);
 
                         if (_fs2.default.existsSync(avatarDest)) {
-                            _context2.next = 15;
+                            _context2.next = 10;
                             break;
                         }
 
-                        _fs2.default.copyFileSync('assets' + _path2.default.sep + 'image' + _path2.default.sep + 'userbg' + _path2.default.sep + 'cstat.jpg', avatarBGDest);
-                        _context2.next = 11;
+                        _context2.next = 8;
                         return _web.res.avatarQuery(uid, avatarDest);
 
-                    case 11:
-                        _context2.next = 13;
+                    case 8:
+                        _context2.next = 10;
                         return promisifyGM((0, _gm2.default)(avatarDest).quality(100).resize(350, 350));
+
+                    case 10:
+                        _fs2.default.copyFileSync('assets' + _path2.default.sep + 'image' + _path2.default.sep + 'userbg' + _path2.default.sep + 'cstat.jpg', avatarBGDest);
+                        _context2.next = 13;
+                        return promisifyGM((0, _gm2.default)(avatarBGDest).quality(100).composite(avatarDest).gravity('North').geometry('+0-50'));
 
                     case 13:
                         _context2.next = 15;
-                        return promisifyGM((0, _gm2.default)(avatarBGDest).quality(100).composite(avatarDest).gravity('North').geometry('+0-50'));
+                        return promisifyGM((0, _gm2.default)(dest).quality(100).resize(2765, 768));
 
                     case 15:
                         _context2.next = 17;
-                        return promisifyGM((0, _gm2.default)(dest).quality(100).resize(2765, 768));
+                        return promisifyGM((0, _gm2.default)(dest).quality(100).gravity('Center').crop(1500, 500).fill('#888b').drawCircle(750, 250, 750, 620).tile(dest).drawCircle(750, 250, 750, 610));
 
                     case 17:
                         _context2.next = 19;
-                        return promisifyGM((0, _gm2.default)(dest).quality(100).gravity('Center').crop(1500, 500).fill('#888b').drawCircle(750, 250, 750, 620).tile(dest).drawCircle(750, 250, 750, 610));
+                        return promisifyGM((0, _gm2.default)(dest).quality(100).gravity('Center').crop(750, 500).fill('#fffa').drawCircle(375, 250, 375, 610).fill('#fff').drawCircle(375, 250, 375, 490).fill('#ccc').drawCircle(375, 250, 375, 470).fill('#fff').drawCircle(375, 250, 375, 460).tile(avatarBGDest).drawEllipse(375, 250, 210, 210, -145, -35));
 
                     case 19:
                         _context2.next = 21;
-                        return promisifyGM((0, _gm2.default)(dest).quality(100).gravity('Center').crop(750, 500).fill('#fffa').drawCircle(375, 250, 375, 610).fill('#fff').drawCircle(375, 250, 375, 490).fill('#ccc').drawCircle(375, 250, 375, 470).fill('#fff').drawCircle(375, 250, 375, 460).tile(avatarBGDest).drawEllipse(375, 250, 210, 210, -145, -35));
+                        return promisifyGM((0, _gm2.default)(dest).quality(100).gravity('Center').fill('#aaaa').drawEllipse(375, 250, 210, 210, -145, -35).fill('#fff').font('assets/fonts/Exo2.0-Medium.otf').fontSize(30).drawText(0, -145, stat.username).font('assets/fonts/Exo2.0-Bold.otf').fontSize(12).fill('#f69').drawText(0, 0, 'global rank').font('assets/fonts/Exo2.0-BoldItalic.otf').fontSize(25).fill('#3ad').drawText(0, 35, _util2.default.scorify(parseInt(stat.pp_raw).toString()) + 'pp').fontSize(11).drawText(0, 60, 'performance points').font('assets/fonts/Exo2.0-Bold.otf').fontSize(30).drawText(-300, 0, _util2.default.scorify(stat.playcount)).drawText(300, 0, stat.accuracy.slice(0, 3 + stat.accuracy.split('.').length) + '%').fontSize(12).fill('#333').drawText(-290, 20, 'play count').drawText(290, 20, 'accuracy').font('assets/fonts/Venera-300.otf').fontSize(45).fill('#f69').drawText(0, -25, '#' + _util2.default.scorify(stat.pp_rank)).fontSize(13).fill('#999').drawRectangle(325, 345, 425, 365).font('assets/fonts/Exo2.0-Regular.otf').fill('#fff').drawText(20, 105, '#' + _util2.default.scorify(stat.pp_country_rank)).fontSize(25).fill('#aaa').drawLine(275, 375, 475, 375).fill('#666').drawText(-100, 140, _util2.default.fillNumber(stat.count_rank_ssh + stat.count_rank_ss)).drawText(-33, 140, _util2.default.fillNumber(stat.count_rank_sh)).drawText(33, 140, _util2.default.fillNumber(stat.count_rank_s)).drawText(100, 140, _util2.default.fillNumber(stat.count_rank_a)).fontSize(12).drawText(-100, 160, 'SS(+)').drawText(-33, 160, 'S+').drawText(33, 160, 'S').drawText(100, 160, 'A'));
 
                     case 21:
                         _context2.next = 23;
-                        return promisifyGM((0, _gm2.default)(dest).quality(100).gravity('Center').fill('#aaaa').drawEllipse(375, 250, 210, 210, -145, -35).fill('#fff').font('assets/fonts/Exo2.0-Medium.otf').fontSize(30).drawText(0, -145, stat.username).font('assets/fonts/Exo2.0-Bold.otf').fontSize(12).fill('#f69').drawText(0, 0, 'global rank').font('assets/fonts/Exo2.0-BoldItalic.otf').fontSize(25).fill('#3ad').drawText(0, 35, _util2.default.scorify(parseInt(stat.pp_raw).toString()) + 'pp').fontSize(11).drawText(0, 60, 'performance points').font('assets/fonts/Exo2.0-Bold.otf').fontSize(30).drawText(-300, 0, _util2.default.scorify(stat.playcount)).drawText(300, 0, stat.accuracy.slice(0, 3 + stat.accuracy.split('.').length) + '%').fontSize(12).fill('#333').drawText(-290, 20, 'play count').drawText(290, 20, 'accuracy').font('assets/fonts/Venera-300.otf').fontSize(45).fill('#f69').drawText(0, -25, '#' + _util2.default.scorify(stat.pp_rank)).fontSize(13).fill('#999').drawRectangle(325, 345, 425, 365).font('assets/fonts/Exo2.0-Regular.otf').fill('#fff').drawText(20, 105, '#' + _util2.default.scorify(stat.pp_country_rank)).fontSize(25).fill('#aaa').drawLine(275, 375, 475, 375).fill('#666').drawText(-100, 140, _util2.default.fillNumber(stat.count_rank_ssh + stat.count_rank_ss)).drawText(-33, 140, _util2.default.fillNumber(stat.count_rank_sh)).drawText(33, 140, _util2.default.fillNumber(stat.count_rank_s)).drawText(100, 140, _util2.default.fillNumber(stat.count_rank_a)).fontSize(12).drawText(-100, 160, 'SS(+)').drawText(-33, 160, 'S+').drawText(33, 160, 'S').drawText(100, 160, 'A'));
-
-                    case 23:
-                        _context2.next = 25;
                         return promisifyGM((0, _gm2.default)(dest).quality(100).composite('assets/image/flags/' + stat.country + '.png').gravity('North').geometry('-50+343'));
 
-                    case 25:
+                    case 23:
                         return _context2.abrupt('return', 'file://' + process.cwd() + _path2.default.sep + dest);
 
-                    case 26:
+                    case 24:
                     case 'end':
                         return _context2.stop();
                 }

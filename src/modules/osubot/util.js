@@ -66,7 +66,7 @@ export default {
     flatten(arr) {
         const flat = []
         for (let i of arr) {
-            if (i instanceof Array) flat.push(this.flatten(i))
+            if (i instanceof Array) flat.push(...this.flatten(i))
             else flat.push(i)
         }
         return flat

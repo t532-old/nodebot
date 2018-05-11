@@ -67,7 +67,7 @@ var bind = {
                 while (1) {
                     switch (_context.prev = _context.next) {
                         case 0:
-                            users.insert({ qqid: msg.param.user_id, osuid: account.join(' ') });
+                            users.insert({ qqid: msg.param.user_id, osuid: account });
                             msg.send('osubot: bind: bound successfully');
 
                         case 2:
@@ -81,7 +81,7 @@ var bind = {
 };
 
 var stat = {
-    args: '<usr>',
+    args: '[usr]',
     options: _util2.default.flatten(_util2.default.modes),
     /**
      * @description Fetch a user's status
@@ -136,7 +136,8 @@ var stat = {
                             _context2.next = 16;
                             return _web.api.statQuery({
                                 u: usr,
-                                k: config.key
+                                k: config.key,
+                                m: mode
                             });
 
                         case 16:
@@ -159,7 +160,9 @@ var stat = {
                         case 23:
                             _context2.prev = 23;
                             _context2.t1 = _context2['catch'](13);
-                            throw _context2.t1;
+
+                            msg.send(_context2.t1.toString());
+                            return _context2.abrupt('return');
 
                         case 27:
                         case 'end':
@@ -172,7 +175,7 @@ var stat = {
 };
 
 var rec = {
-    args: '<usr>',
+    args: '[usr]',
     options: [],
     /**
      * @description Get a user's most recent play
@@ -185,90 +188,94 @@ var rec = {
         var _ref5$usr = _ref5.usr,
             usr = _ref5$usr === undefined ? 'me' : _ref5$usr;
         return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3() {
-            var data, doc, _rec, map, _stat2, path;
+            var time, data, doc, _rec, map, _stat2, path;
 
             return _regenerator2.default.wrap(function _callee3$(_context3) {
                 while (1) {
                     switch (_context3.prev = _context3.next) {
                         case 0:
+                            time = Date.now();
                             data = [];
 
                             if (!(usr === 'me')) {
-                                _context3.next = 13;
+                                _context3.next = 14;
                                 break;
                             }
 
-                            _context3.prev = 2;
-                            _context3.next = 5;
+                            _context3.prev = 3;
+                            _context3.next = 6;
                             return users.findOne({ qqid: msg.param.user_id });
 
-                        case 5:
+                        case 6:
                             doc = _context3.sent;
 
                             usr = doc.osuid;
-                            _context3.next = 13;
+                            _context3.next = 14;
                             break;
 
-                        case 9:
-                            _context3.prev = 9;
-                            _context3.t0 = _context3['catch'](2);
+                        case 10:
+                            _context3.prev = 10;
+                            _context3.t0 = _context3['catch'](3);
 
-                            msg.send('osubot: recent: user does not exist');
+                            msg.send('osubot: recent: didn\'t bind your osu!id. use `>bind <id>\' to bind');
                             return _context3.abrupt('return');
 
-                        case 13:
-                            _context3.prev = 13;
-                            _context3.next = 16;
+                        case 14:
+                            _context3.prev = 14;
+                            _context3.next = 17;
                             return _web.api.recentQuery({
                                 u: usr,
                                 limit: '1',
                                 k: config.key
                             });
 
-                        case 16:
+                        case 17:
                             _rec = _context3.sent;
-                            _context3.next = 19;
+                            _context3.next = 20;
                             return _web.api.mapQuery({
                                 b: _rec.beatmap_id,
                                 k: config.key
                             });
 
-                        case 19:
+                        case 20:
                             map = _context3.sent;
-                            _context3.next = 22;
+                            _context3.next = 23;
                             return _web.api.statQuery({
                                 u: usr,
                                 k: config.key
                             });
 
-                        case 22:
+                        case 23:
                             _stat2 = _context3.sent;
-                            _context3.next = 25;
+                            _context3.next = 26;
                             return _canvas2.default.drawRecent(_rec, map, _stat2);
 
-                        case 25:
+                        case 26:
                             path = _context3.sent;
 
+                            console.log(Date.now() - time);
                             msg.send([{
                                 type: 'image',
                                 data: {
                                     file: path
                                 }
                             }]);
-                            _context3.next = 33;
+                            _context3.next = 35;
                             break;
 
-                        case 29:
-                            _context3.prev = 29;
-                            _context3.t1 = _context3['catch'](13);
-                            throw _context3.t1;
+                        case 31:
+                            _context3.prev = 31;
+                            _context3.t1 = _context3['catch'](14);
 
-                        case 33:
+                            msg.send(_context3.t1.toString());
+                            return _context3.abrupt('return');
+
+                        case 35:
                         case 'end':
                             return _context3.stop();
                     }
                 }
-            }, _callee3, _this3, [[2, 9], [13, 29]]);
+            }, _callee3, _this3, [[3, 10], [14, 31]]);
         }))();
     }
 };

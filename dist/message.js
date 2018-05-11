@@ -37,7 +37,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var handler = new _command2.default({
     prefix: />|》/,
-    handler: {
+    handlers: {
         default: function _default(msg) {
             msg.send('Command not found!');
         },
@@ -100,8 +100,8 @@ var Message = function () {
         }()
         /**
          * Sends a group message
-         * @param {*} group_id The target qq group id.
-         * @param {*} message The message
+         * @param {string} group_id The target qq group id.
+         * @param {string|array} message The message
          */
 
     }, {

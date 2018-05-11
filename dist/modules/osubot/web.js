@@ -261,10 +261,9 @@ var avatarQuery = function () {
             while (1) {
                 switch (_context6.prev = _context6.next) {
                     case 0:
-                        _context6.next = 2;
-                        return staticQuery('https://a.ppy.sh/' + uid, dest);
+                        return _context6.abrupt('return', staticQuery('https://a.ppy.sh/' + uid, dest));
 
-                    case 2:
+                    case 1:
                     case 'end':
                         return _context6.stop();
                 }
@@ -289,10 +288,9 @@ var bgQuery = function () {
             while (1) {
                 switch (_context7.prev = _context7.next) {
                     case 0:
-                        _context7.next = 2;
-                        return staticQuery('https://assets.ppy.sh/beatmaps/' + sid + '/covers/cover.jpg', dest);
+                        return _context7.abrupt('return', staticQuery('https://assets.ppy.sh/beatmaps/' + sid + '/covers/cover.jpg', dest));
 
-                    case 2:
+                    case 1:
                     case 'end':
                         return _context7.stop();
                 }
