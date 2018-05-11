@@ -56,7 +56,7 @@ var bind = {
     /**
      * @description binds an osu! id with a QQ id.
      * @param {Message} msg The universal msg object
-     * @param {string} account The account, use an array because username may include spaces
+     * @param {string} account The account
      */
     action: function action(msg, _ref) {
         var _this = this;
@@ -80,6 +80,35 @@ var bind = {
     }
 };
 
+var unbind = {
+    args: '',
+    options: [],
+    /**
+     * @description unbinds an osu! id from a QQ id.
+     * @param {Message} msg The universal msg object
+     * @param {string} account The account
+     */
+    action: function action(msg) {
+        var _this2 = this;
+
+        return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2() {
+            return _regenerator2.default.wrap(function _callee2$(_context2) {
+                while (1) {
+                    switch (_context2.prev = _context2.next) {
+                        case 0:
+                            users.remove({ qqid: msg.param.user_id });
+                            msg.send('osubot: unbind: unbound successfully');
+
+                        case 2:
+                        case 'end':
+                            return _context2.stop();
+                    }
+                }
+            }, _callee2, _this2);
+        }))();
+    }
+};
+
 var stat = {
     args: '[usr]',
     options: _util2.default.flatten(_util2.default.modes),
@@ -90,7 +119,7 @@ var stat = {
      * @param {string} mode the mode that will be queried
      */
     action: function action(msg, _ref2, _ref3) {
-        var _this2 = this;
+        var _this3 = this;
 
         var _ref2$usr = _ref2.usr,
             usr = _ref2$usr === undefined ? 'me' : _ref2$usr;
@@ -99,102 +128,14 @@ var stat = {
             _ref4$ = _ref4[0],
             mode = _ref4$ === undefined ? 'o' : _ref4$;
 
-        return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2() {
-            var data, doc, _stat, path;
-
-            return _regenerator2.default.wrap(function _callee2$(_context2) {
-                while (1) {
-                    switch (_context2.prev = _context2.next) {
-                        case 0:
-                            mode = _util2.default.checkmode(mode);
-                            data = [];
-
-                            if (!(usr === 'me')) {
-                                _context2.next = 13;
-                                break;
-                            }
-
-                            _context2.prev = 3;
-                            _context2.next = 6;
-                            return users.findOne({ qqid: msg.param.user_id });
-
-                        case 6:
-                            doc = _context2.sent;
-
-                            usr = doc.osuid;
-                            _context2.next = 13;
-                            break;
-
-                        case 10:
-                            _context2.prev = 10;
-                            _context2.t0 = _context2['catch'](3);
-
-                            msg.send('osubot: recent: user does not exist');
-
-                        case 13:
-                            _context2.prev = 13;
-                            _context2.next = 16;
-                            return _web.api.statQuery({
-                                u: usr,
-                                k: config.key,
-                                m: mode
-                            });
-
-                        case 16:
-                            _stat = _context2.sent;
-                            _context2.next = 19;
-                            return _canvas2.default.drawStat(_stat);
-
-                        case 19:
-                            path = _context2.sent;
-
-                            msg.send([{
-                                type: 'image',
-                                data: {
-                                    file: path
-                                }
-                            }]);
-                            _context2.next = 27;
-                            break;
-
-                        case 23:
-                            _context2.prev = 23;
-                            _context2.t1 = _context2['catch'](13);
-
-                            msg.send(_context2.t1.toString());
-                            return _context2.abrupt('return');
-
-                        case 27:
-                        case 'end':
-                            return _context2.stop();
-                    }
-                }
-            }, _callee2, _this2, [[3, 10], [13, 23]]);
-        }))();
-    }
-};
-
-var rec = {
-    args: '[usr]',
-    options: [],
-    /**
-     * @description Get a user's most recent play
-     * @param {Message} msg The universal msg object
-     * @param {string} usr The username that'll be queried
-     */
-    action: function action(msg, _ref5) {
-        var _this3 = this;
-
-        var _ref5$usr = _ref5.usr,
-            usr = _ref5$usr === undefined ? 'me' : _ref5$usr;
         return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3() {
-            var time, data, doc, _rec, map, _stat2, path;
+            var data, doc, _stat, path;
 
             return _regenerator2.default.wrap(function _callee3$(_context3) {
                 while (1) {
                     switch (_context3.prev = _context3.next) {
                         case 0:
-                            time = Date.now();
+                            mode = _util2.default.checkmode(mode);
                             data = [];
 
                             if (!(usr === 'me')) {
@@ -217,65 +158,152 @@ var rec = {
                             _context3.prev = 10;
                             _context3.t0 = _context3['catch'](3);
 
-                            msg.send('osubot: recent: didn\'t bind your osu!id. use `>bind <id>\' to bind');
+                            msg.send('osubot: stat: you haven\'t bound your osu!id. use `>bind <id>\' to bind');
                             return _context3.abrupt('return');
 
                         case 14:
                             _context3.prev = 14;
                             _context3.next = 17;
-                            return _web.api.recentQuery({
+                            return _web.api.statQuery({
                                 u: usr,
-                                limit: '1',
-                                k: config.key
+                                k: config.key,
+                                m: mode
                             });
 
                         case 17:
-                            _rec = _context3.sent;
+                            _stat = _context3.sent;
                             _context3.next = 20;
-                            return _web.api.mapQuery({
-                                b: _rec.beatmap_id,
-                                k: config.key
-                            });
+                            return _canvas2.default.drawStat(_stat);
 
                         case 20:
-                            map = _context3.sent;
-                            _context3.next = 23;
-                            return _web.api.statQuery({
-                                u: usr,
-                                k: config.key
-                            });
-
-                        case 23:
-                            _stat2 = _context3.sent;
-                            _context3.next = 26;
-                            return _canvas2.default.drawRecent(_rec, map, _stat2);
-
-                        case 26:
                             path = _context3.sent;
 
-                            console.log(Date.now() - time);
                             msg.send([{
                                 type: 'image',
                                 data: {
                                     file: path
                                 }
                             }]);
-                            _context3.next = 35;
+                            _context3.next = 28;
                             break;
 
-                        case 31:
-                            _context3.prev = 31;
+                        case 24:
+                            _context3.prev = 24;
                             _context3.t1 = _context3['catch'](14);
 
                             msg.send(_context3.t1.toString());
                             return _context3.abrupt('return');
 
-                        case 35:
+                        case 28:
                         case 'end':
                             return _context3.stop();
                     }
                 }
-            }, _callee3, _this3, [[3, 10], [14, 31]]);
+            }, _callee3, _this3, [[3, 10], [14, 24]]);
+        }))();
+    }
+};
+
+var rec = {
+    args: '[usr]',
+    options: [],
+    /**
+     * @description Get a user's most recent play
+     * @param {Message} msg The universal msg object
+     * @param {string} usr The username that'll be queried
+     */
+    action: function action(msg, _ref5) {
+        var _this4 = this;
+
+        var _ref5$usr = _ref5.usr,
+            usr = _ref5$usr === undefined ? 'me' : _ref5$usr;
+        return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4() {
+            var data, doc, _rec, map, _stat2, path;
+
+            return _regenerator2.default.wrap(function _callee4$(_context4) {
+                while (1) {
+                    switch (_context4.prev = _context4.next) {
+                        case 0:
+                            data = [];
+
+                            if (!(usr === 'me')) {
+                                _context4.next = 13;
+                                break;
+                            }
+
+                            _context4.prev = 2;
+                            _context4.next = 5;
+                            return users.findOne({ qqid: msg.param.user_id });
+
+                        case 5:
+                            doc = _context4.sent;
+
+                            usr = doc.osuid;
+                            _context4.next = 13;
+                            break;
+
+                        case 9:
+                            _context4.prev = 9;
+                            _context4.t0 = _context4['catch'](2);
+
+                            msg.send('osubot: recent: you haven\'t bound your osu!id. use `>bind <id>\' to bind');
+                            return _context4.abrupt('return');
+
+                        case 13:
+                            _context4.prev = 13;
+                            _context4.next = 16;
+                            return _web.api.recentQuery({
+                                u: usr,
+                                limit: '1',
+                                k: config.key
+                            });
+
+                        case 16:
+                            _rec = _context4.sent;
+                            _context4.next = 19;
+                            return _web.api.mapQuery({
+                                b: _rec.beatmap_id,
+                                k: config.key
+                            });
+
+                        case 19:
+                            map = _context4.sent;
+                            _context4.next = 22;
+                            return _web.api.statQuery({
+                                u: usr,
+                                k: config.key
+                            });
+
+                        case 22:
+                            _stat2 = _context4.sent;
+                            _context4.next = 25;
+                            return _canvas2.default.drawRecent(_rec, map, _stat2);
+
+                        case 25:
+                            path = _context4.sent;
+
+                            msg.send([{
+                                type: 'image',
+                                data: {
+                                    file: path
+                                }
+                            }]);
+                            _context4.next = 33;
+                            break;
+
+                        case 29:
+                            _context4.prev = 29;
+                            _context4.t1 = _context4['catch'](13);
+
+                            msg.send(_context4.t1.toString());
+                            return _context4.abrupt('return');
+
+                        case 33:
+                        case 'end':
+                            return _context4.stop();
+                    }
+                }
+            }, _callee4, _this4, [[2, 9], [13, 29]]);
         }))();
     }
 };
@@ -289,14 +317,14 @@ var roll = {
      * @param {string} range The rolling range
      */
     action: function action(msg, _ref6) {
-        var _this4 = this;
+        var _this5 = this;
 
         var _ref6$range = _ref6.range,
             range = _ref6$range === undefined ? '100' : _ref6$range;
-        return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4() {
-            return _regenerator2.default.wrap(function _callee4$(_context4) {
+        return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee5() {
+            return _regenerator2.default.wrap(function _callee5$(_context5) {
                 while (1) {
-                    switch (_context4.prev = _context4.next) {
+                    switch (_context5.prev = _context5.next) {
                         case 0:
                             if (typeof range === 'string' && !parseInt(range)) {
                                 range = range.split(',');
@@ -305,12 +333,12 @@ var roll = {
 
                         case 1:
                         case 'end':
-                            return _context4.stop();
+                            return _context5.stop();
                     }
                 }
-            }, _callee4, _this4);
+            }, _callee5, _this5);
         }))();
     }
 };
 
-exports.default = { bind: bind, stat: stat, rec: rec, roll: roll };
+exports.default = { bind: bind, unbind: unbind, stat: stat, rec: rec, roll: roll };

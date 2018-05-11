@@ -19,11 +19,25 @@ const bind = {
     /**
      * @description binds an osu! id with a QQ id.
      * @param {Message} msg The universal msg object
-     * @param {string} account The account, use an array because username may include spaces
+     * @param {string} account The account
      */
     async action(msg, { account }) {
         users.insert({ qqid: msg.param.user_id, osuid: account })
         msg.send('osubot: bind: bound successfully')
+    }
+}
+
+const unbind = {
+    args: '',
+    options: [],
+    /**
+     * @description unbinds an osu! id from a QQ id.
+     * @param {Message} msg The universal msg object
+     * @param {string} account The account
+     */
+    async action(msg) {
+        users.remove({ qqid: msg.param.user_id })
+        msg.send('osubot: unbind: unbound successfully')
     }
 }
 
@@ -44,7 +58,8 @@ const stat = {
                 const doc = await users.findOne({ qqid: msg.param.user_id })
                 usr = doc.osuid
             } catch (err) {
-                msg.send('osubot: recent: user does not exist')
+                msg.send('osubot: stat: you haven\'t bound your osu!id. use `>bind <id>\' to bind')
+                return
             }
         }
         try { 
@@ -76,14 +91,13 @@ const rec = {
      * @param {string} usr The username that'll be queried
      */
     async action(msg, { usr = 'me' }) {
-        const time = Date.now()
         let data = []
         if (usr === 'me') {
             try {
                 const doc = await users.findOne({ qqid: msg.param.user_id })
                 usr = doc.osuid
             } catch (err) {
-                msg.send('osubot: recent: didn\'t bind your osu!id. use `>bind <id>\' to bind')
+                msg.send('osubot: recent: you haven\'t bound your osu!id. use `>bind <id>\' to bind')
                 return
             }
         }
@@ -102,7 +116,6 @@ const rec = {
                 k: config.key
             })
             const path = await canvas.drawRecent(rec, map, stat)
-            console.log(Date.now() - time)
             msg.send([{
                 type: 'image',
                 data: {
@@ -132,4 +145,4 @@ const roll = {
     }
 }
 
-export default { bind, stat, rec, roll }
+export default { bind, unbind, stat, rec, roll }

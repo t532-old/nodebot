@@ -3,7 +3,7 @@ import axios from 'axios'
 import Command from './command'
 
 const handler = new Command({
-    prefix: />|》/,
+    prefix: /#/,
     handlers: {
         default(msg) { msg.send('Command not found!') },
         invalid(msg) { msg.send('Invalid argument(s)!')}
