@@ -43,7 +43,9 @@ var test = {
                 while (1) {
                     switch (_context.prev = _context.next) {
                         case 0:
-                            msg.send(txt.join(' '));
+                            msg.send(txt.filter(function (i) {
+                                return i.trim();
+                            }).join(' '));
                         case 1:
                         case 'end':
                             return _context.stop();
@@ -81,4 +83,31 @@ var about = {
     }
 };
 
-exports.default = { test: test, about: about };
+var help = {
+    args: '',
+    options: [],
+    /**
+     * Send bot's help link.
+     * @param {Message} msg The universal msg object
+     */
+    action: function action(msg) {
+        var _this3 = this;
+
+        return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3() {
+            return _regenerator2.default.wrap(function _callee3$(_context3) {
+                while (1) {
+                    switch (_context3.prev = _context3.next) {
+                        case 0:
+                            msg.send('Find help at https://trustgit.github.io/nodebot');
+
+                        case 1:
+                        case 'end':
+                            return _context3.stop();
+                    }
+                }
+            }, _callee3, _this3);
+        }))();
+    }
+};
+
+exports.default = { test: test, about: about, help: help };

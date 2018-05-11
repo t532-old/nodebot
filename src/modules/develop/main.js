@@ -12,7 +12,7 @@ const test = {
      * @param {Message} msg The universal msg object
      * @param {array} txt The texts user sends
      */
-    async action(msg, { txt }) { msg.send(txt.join(' ')) }
+    async action(msg, { txt }) { msg.send(txt.filter(i => i.trim()).join(' ')) }
 }
 
 const about = {
@@ -31,4 +31,16 @@ ${new Date().getFullYear()} trustgit | under MIT License`
     }
 }
 
-export default { test, about }
+const help = {
+    args: '',
+    options: [],
+    /**
+     * Send bot's help link.
+     * @param {Message} msg The universal msg object
+     */
+    async action(msg) {
+        msg.send('Find help at https://trustgit.github.io/nodebot')
+    }
+}
+
+export default { test, about, help }

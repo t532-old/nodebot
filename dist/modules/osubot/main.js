@@ -301,7 +301,7 @@ var roll = {
                             if (typeof range === 'string' && !parseInt(range)) {
                                 range = range.split(',');
                                 msg.send(range[Math.floor(Math.random() * range.length)]);
-                            } else msg.send(Math.round(Math.random() * range).toString());
+                            } else msg.send(Math.round(Math.random() * parseInt(range)).toString());
 
                         case 1:
                         case 'end':

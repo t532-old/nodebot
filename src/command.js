@@ -55,16 +55,18 @@ class Command {
         }, [])
         const name = command.shift()
         if (!this.list[name]) {
-            if (typeof this.defaultHandler === 'function')
+            if (typeof this.defaultHandler === 'function') {
                 this.defaultHandler(...extraArgs)
-            else throw new SyntaxError('No default handler for undefined command')
+                return
+            } else throw new SyntaxError('No default handler for undefined command')
         }
         const options = command.filter(i => i.charAt(0) === '*').map(i => i.slice(1)).filter(i => this.list[name].options.includes(i))
         command = command.filter(i => i.charAt(0) !== '*')
         if (this.list[name].args.required.length > command.length) {
-            if (typeof this.invalidHandler === 'function')
+            if (typeof this.invalidHandler === 'function') {
                 this.invalidHandler(...extraArgs)
-            else throw new SyntaxError('No default handler for invalid arguments')
+                return
+            } else throw new SyntaxError('No default handler for invalid arguments')
         }
         const required = command.splice(0, this.list[name].args.required.length)
         const optional = command.splice(0, this.list[name].args.optional.length)

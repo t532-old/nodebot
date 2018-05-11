@@ -113,7 +113,10 @@ var Command = function () {
             }
 
             if (!this.list[name]) {
-                if (typeof this.defaultHandler === 'function') this.defaultHandler.apply(this, extraArgs);else throw new SyntaxError('No default handler for undefined command');
+                if (typeof this.defaultHandler === 'function') {
+                    this.defaultHandler.apply(this, extraArgs);
+                    return;
+                } else throw new SyntaxError('No default handler for undefined command');
             }
             var options = command.filter(function (i) {
                 return i.charAt(0) === '*';
@@ -126,7 +129,10 @@ var Command = function () {
                 return i.charAt(0) !== '*';
             });
             if (this.list[name].args.required.length > command.length) {
-                if (typeof this.invalidHandler === 'function') this.invalidHandler.apply(this, extraArgs);else throw new SyntaxError('No default handler for invalid arguments');
+                if (typeof this.invalidHandler === 'function') {
+                    this.invalidHandler.apply(this, extraArgs);
+                    return;
+                } else throw new SyntaxError('No default handler for invalid arguments');
             }
             var required = command.splice(0, this.list[name].args.required.length);
             var optional = command.splice(0, this.list[name].args.optional.length);
