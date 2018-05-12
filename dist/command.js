@@ -68,6 +68,7 @@ var Command = function () {
                 options = _ref2.options,
                 action = _ref2.action;
 
+            var str = this.prefix.toString().slice(1, -1) + name + ' ' + args;
             args = args.split(' ');
             args = {
                 required: args.filter(function (i) {
@@ -86,7 +87,7 @@ var Command = function () {
                     return i.match(/^\[.+\.{3,3}\]$/);
                 })[0].split(/\[|\.{3,3}\]/)[1] : null
             };
-            this.list[name] = { args: args, options: options, action: action };
+            this.list[name] = { args: args, options: options, action: action, str: str };
         }
         /**
          * do a command
@@ -114,7 +115,7 @@ var Command = function () {
 
             if (!this.list[name]) {
                 if (typeof this.defaultHandler === 'function') {
-                    this.defaultHandler.apply(this, extraArgs);
+                    this.defaultHandler.apply(this, extraArgs.concat([[name].concat((0, _toConsumableArray3.default)(command))]));
                     return;
                 } else throw new SyntaxError('No default handler for undefined command');
             }
@@ -130,7 +131,7 @@ var Command = function () {
             });
             if (this.list[name].args.required.length > command.length) {
                 if (typeof this.invalidHandler === 'function') {
-                    this.invalidHandler.apply(this, extraArgs);
+                    this.invalidHandler.apply(this, extraArgs.concat([[name].concat((0, _toConsumableArray3.default)(command))]));
                     return;
                 } else throw new SyntaxError('No default handler for invalid arguments');
             }

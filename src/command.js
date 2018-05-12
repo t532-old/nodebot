@@ -32,6 +32,7 @@ class Command {
      * })
      */
     on(name, {args, options, action}) {
+        const str = this.prefix.toString().slice(1, -1) + name + ' ' + args
         args = args.split(' ')
         args = {
             required: args.filter(i => i.match(/^<.+>$/))
@@ -40,7 +41,7 @@ class Command {
                           .map(i => i.split(/\[|\]/)[1]),
             group: args.filter(i => i.match(/^\[.+\.{3,3}\]$/))[0] ? args.filter(i => i.match(/^\[.+\.{3,3}\]$/))[0].split(/\[|\.{3,3}\]/)[1] : null
         }
-        this.list[name] = { args, options, action }
+        this.list[name] = { args, options, action, str }
     }
     /**
      * do a command
@@ -56,7 +57,7 @@ class Command {
         const name = command.shift()
         if (!this.list[name]) {
             if (typeof this.defaultHandler === 'function') {
-                this.defaultHandler(...extraArgs)
+                this.defaultHandler(...extraArgs, [name, ...command])
                 return
             } else throw new SyntaxError('No default handler for undefined command')
         }
@@ -64,7 +65,7 @@ class Command {
         command = command.filter(i => i.charAt(0) !== '*')
         if (this.list[name].args.required.length > command.length) {
             if (typeof this.invalidHandler === 'function') {
-                this.invalidHandler(...extraArgs)
+                this.invalidHandler(...extraArgs, [name, ...command])
                 return
             } else throw new SyntaxError('No default handler for invalid arguments')
         }

@@ -21,6 +21,10 @@ var _createClass2 = require('babel-runtime/helpers/createClass');
 
 var _createClass3 = _interopRequireDefault(_createClass2);
 
+var _slicedToArray2 = require('babel-runtime/helpers/slicedToArray');
+
+var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
+
 var _modules = require('./modules');
 
 var _modules2 = _interopRequireDefault(_modules);
@@ -38,11 +42,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var handler = new _command2.default({
     prefix: /-/,
     handlers: {
-        default: function _default(msg) {
-            msg.send('Command not found!');
-        },
-        invalid: function invalid(msg) {
-            msg.send('Invalid argument(s)!');
+        default: function _default() {},
+        invalid: function invalid(msg, _ref) {
+            var _ref2 = (0, _slicedToArray3.default)(_ref, 2),
+                name = _ref2[0],
+                commands = _ref2[1];
+
+            msg.send('Invalid argument(s)!\nShould be: ' + this.list[name].str);
         }
     }
 });
@@ -77,7 +83,7 @@ var Message = function () {
     (0, _createClass3.default)(Message, null, [{
         key: 'private',
         value: function () {
-            var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(user_id, message) {
+            var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(user_id, message) {
                 return _regenerator2.default.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
@@ -93,7 +99,7 @@ var Message = function () {
             }));
 
             function _private(_x, _x2) {
-                return _ref.apply(this, arguments);
+                return _ref3.apply(this, arguments);
             }
 
             return _private;
@@ -107,7 +113,7 @@ var Message = function () {
     }, {
         key: 'group',
         value: function () {
-            var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(group_id, message) {
+            var _ref4 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(group_id, message) {
                 return _regenerator2.default.wrap(function _callee2$(_context2) {
                     while (1) {
                         switch (_context2.prev = _context2.next) {
@@ -123,7 +129,7 @@ var Message = function () {
             }));
 
             function group(_x3, _x4) {
-                return _ref2.apply(this, arguments);
+                return _ref4.apply(this, arguments);
             }
 
             return group;

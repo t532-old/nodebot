@@ -5,8 +5,13 @@ import Command from './command'
 const handler = new Command({
     prefix: /-/,
     handlers: {
-        default(msg) { msg.send('Command not found!') },
-        invalid(msg) { msg.send('Invalid argument(s)!')}
+        default() { },
+        invalid(msg, [name, commands]) {
+            msg.send(
+`Invalid argument(s)!
+Should be: ${this.list[name].str}`
+            )
+        }
     }
 })
 
