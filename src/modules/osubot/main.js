@@ -11,7 +11,6 @@ import yaml from 'js-yaml'
 // Initialize settings
 const config = yaml.safeLoad(fs.readFileSync('config.yml')).osubot
 
-
 const bind = {
     args: '<account>',
     options: [],
@@ -55,11 +54,13 @@ const stat = {
      */
     async action(msg, { usr = 'me' }, [ mode = 'o' ]) {
         mode = util.checkmode(mode)
-        let data = []
+        let prevStat
         if (usr === 'me') {
             try {
-                const doc = await userdb.getByQQ(msg.param.user_id)
-                usr = doc.osuid
+                const bindDoc = await userdb.getByQQ(msg.param.user_id)
+                const statDoc = await statdb.getByQQ(msg.param.user_id)
+                usr = bindDoc.osuid
+                prevStat = statDoc.data[mode]
             } catch (err) {
                 msg.send('osubot: stat: 你还没有绑定你的osu!id。使用 `-bind <id>\' 来绑定')
                 return
@@ -71,7 +72,7 @@ const stat = {
                 k: config.key,
                 m: mode,
             })
-            const path = await canvas.drawStat(stat)
+            const path = await canvas.drawStat(stat, prevStat)
             msg.send([{
                 type: 'image',
                 data: {

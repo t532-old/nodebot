@@ -151,17 +151,17 @@ var stat = {
             mode = _ref4$ === undefined ? 'o' : _ref4$;
 
         return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3() {
-            var data, doc, _stat, path;
+            var prevStat, bindDoc, statDoc, _stat, path;
 
             return _regenerator2.default.wrap(function _callee3$(_context3) {
                 while (1) {
                     switch (_context3.prev = _context3.next) {
                         case 0:
                             mode = _util2.default.checkmode(mode);
-                            data = [];
+                            prevStat = void 0;
 
                             if (!(usr === 'me')) {
-                                _context3.next = 14;
+                                _context3.next = 18;
                                 break;
                             }
 
@@ -170,34 +170,40 @@ var stat = {
                             return _db.userdb.getByQQ(msg.param.user_id);
 
                         case 6:
-                            doc = _context3.sent;
+                            bindDoc = _context3.sent;
+                            _context3.next = 9;
+                            return _db.statdb.getByQQ(msg.param.user_id);
 
-                            usr = doc.osuid;
-                            _context3.next = 14;
+                        case 9:
+                            statDoc = _context3.sent;
+
+                            usr = bindDoc.osuid;
+                            prevStat = statDoc.data[mode];
+                            _context3.next = 18;
                             break;
 
-                        case 10:
-                            _context3.prev = 10;
+                        case 14:
+                            _context3.prev = 14;
                             _context3.t0 = _context3['catch'](3);
 
                             msg.send('osubot: stat: 你还没有绑定你的osu!id。使用 `-bind <id>\' 来绑定');
                             return _context3.abrupt('return');
 
-                        case 14:
-                            _context3.prev = 14;
-                            _context3.next = 17;
+                        case 18:
+                            _context3.prev = 18;
+                            _context3.next = 21;
                             return _web.api.statQuery({
                                 u: usr,
                                 k: config.key,
                                 m: mode
                             });
 
-                        case 17:
+                        case 21:
                             _stat = _context3.sent;
-                            _context3.next = 20;
-                            return _canvas2.default.drawStat(_stat);
+                            _context3.next = 24;
+                            return _canvas2.default.drawStat(_stat, prevStat);
 
-                        case 20:
+                        case 24:
                             path = _context3.sent;
 
                             msg.send([{
@@ -206,22 +212,22 @@ var stat = {
                                     file: path
                                 }
                             }]);
-                            _context3.next = 28;
+                            _context3.next = 32;
                             break;
 
-                        case 24:
-                            _context3.prev = 24;
-                            _context3.t1 = _context3['catch'](14);
+                        case 28:
+                            _context3.prev = 28;
+                            _context3.t1 = _context3['catch'](18);
 
                             msg.send(_context3.t1.toString());
                             return _context3.abrupt('return');
 
-                        case 28:
+                        case 32:
                         case 'end':
                             return _context3.stop();
                     }
                 }
-            }, _callee3, _this3, [[3, 10], [14, 24]]);
+            }, _callee3, _this3, [[3, 14], [18, 28]]);
         }))();
     }
 };

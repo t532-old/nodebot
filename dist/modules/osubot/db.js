@@ -21,6 +21,10 @@ var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
+/**
+ * reduce multi user information into one
+ * @param {string} qqid - The querying arg qqid
+ */
 var reduceSame = function () {
     var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(qqid) {
         var found, final;
@@ -52,6 +56,13 @@ var reduceSame = function () {
         return _ref.apply(this, arguments);
     };
 }();
+
+/**
+ * Adds a bound user to db
+ * @param {string} qqid - The querying arg qqid
+ * @param {string} osuid The querying arg osuid
+ */
+
 
 var newUser = function () {
     var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(qqid, osuid) {
@@ -93,6 +104,12 @@ var newUser = function () {
     };
 }();
 
+/**
+ * Remove a user from bound users' list in db
+ * @param {string} qqid - The querying arg qqid
+ */
+
+
 var delUser = function () {
     var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(qqid) {
         return _regenerator2.default.wrap(function _callee3$(_context3) {
@@ -113,6 +130,12 @@ var delUser = function () {
         return _ref3.apply(this, arguments);
     };
 }();
+
+/**
+ * inits a bound user's stat cache
+ * @param {string} osuid - THe querying arg osuid
+ */
+
 
 var initStat = function () {
     var _ref4 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(osuid) {
@@ -146,6 +169,12 @@ var initStat = function () {
         return _ref4.apply(this, arguments);
     };
 }();
+
+/**
+ * refreshes a bound user's stat cache
+ * @param {string} osuid - The querying arg osuid
+ */
+
 
 var refreshStat = function () {
     var _ref7 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee5(osuid) {
@@ -184,6 +213,12 @@ var refreshStat = function () {
     };
 }();
 
+/**
+ * Get bind info by QQid.
+ * @param {string} qqid - The querying arg qqid
+ */
+
+
 var getUserByQQ = function () {
     var _ref10 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee6(qqid) {
         return _regenerator2.default.wrap(function _callee6$(_context6) {
@@ -205,6 +240,12 @@ var getUserByQQ = function () {
     };
 }();
 
+/**
+ * Get bind info by OSUid.
+ * @param {string} osuid - The querying arg osuid
+ */
+
+
 var getUserByOSU = function () {
     var _ref11 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee7(osuid) {
         return _regenerator2.default.wrap(function _callee7$(_context7) {
@@ -225,6 +266,12 @@ var getUserByOSU = function () {
         return _ref11.apply(this, arguments);
     };
 }();
+
+/**
+ * Get stat cache by QQid.
+ * @param {string} qqid - The querying arg qqid
+ */
+
 
 var getStatByQQ = function () {
     var _ref12 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee8(qqid) {
@@ -252,6 +299,12 @@ var getStatByQQ = function () {
         return _ref12.apply(this, arguments);
     };
 }();
+
+/**
+ * Get stat cache by OSUid.
+ * @param {string} osuid - The querying arg osuid
+ */
+
 
 var getStatByOSU = function () {
     var _ref13 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee9(osuid) {
@@ -285,7 +338,5 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var db = (0, _monk2.default)('localhost:27017/botdb');
 var users = db.get('users');
 var stats = db.get('stats');
-var config = yaml.safeLoad(fs.readFileSync('config.yml')).osubot;
-
-var userdb = exports.userdb = { reduceSame: reduceSame, newUser: newUser, delUser: delUser, getByQQ: getUserByQQ, getByOSU: getUserByOSU };
+var config = yaml.safeLoad(fs.readFileSync('config.yml')).osubot;var userdb = exports.userdb = { reduceSame: reduceSame, newUser: newUser, delUser: delUser, getByQQ: getUserByQQ, getByOSU: getUserByOSU };
 var statdb = exports.statdb = { getByQQ: getStatByQQ, getByOSU: getStatByOSU, initStat: initStat, refreshStat: refreshStat };
