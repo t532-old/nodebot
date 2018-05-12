@@ -147,7 +147,7 @@ var drawRecent = function () {
 }();
 
 var drawStat = function () {
-    var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(stat) {
+    var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(stat, statPrev) {
         var uid, dest, avatarDest, avatarBGDest, avatarLargerDest;
         return _regenerator2.default.wrap(function _callee2$(_context2) {
             while (1) {
@@ -199,9 +199,12 @@ var drawStat = function () {
                         return promisifyGM((0, _gm2.default)(dest).quality(100).composite('assets/image/flags/' + stat.country + '.png').gravity('North').geometry('-50+343'));
 
                     case 24:
+                        if (statPrev) {
+                            // TODO: Draw the increasement
+                        }
                         return _context2.abrupt('return', 'file://' + process.cwd() + _path2.default.sep + dest);
 
-                    case 25:
+                    case 26:
                     case 'end':
                         return _context2.stop();
                 }
@@ -209,7 +212,7 @@ var drawStat = function () {
         }, _callee2, this);
     }));
 
-    return function drawStat(_x4) {
+    return function drawStat(_x4, _x5) {
         return _ref2.apply(this, arguments);
     };
 }();
@@ -255,7 +258,7 @@ var getAvatar = function () {
         }, _callee3, this, [[1, 13]]);
     }));
 
-    return function getAvatar(_x5, _x6, _x7) {
+    return function getAvatar(_x6, _x7, _x8) {
         return _ref3.apply(this, arguments);
     };
 }();

@@ -3,6 +3,7 @@ import { Message } from '../../message'
 import { api } from './web'
 import canvas from './canvas'
 import util from './util'
+import { userdb } from './db'
 // Imports from modules
 import fs from 'fs'
 import Monk from 'monk'
@@ -22,12 +23,11 @@ const bind = {
      * @param {string} account The account
      */
     async action(msg, { account }) {
-        const exists = await users.findOne({ qqid: msg.param.user_id })
-        if (exists) {
+        const result = await userdb.newUser(msg.param.user_id, account)
+        if (!result) {
             msg.send('osubot: bind: 你绑定过id了！如果想要重新绑定，请先输入 `-unbind\' 来解绑。')
             return
         }
-        users.insert({ qqid: msg.param.user_id, osuid: account })
         msg.send('osubot: bind: 绑定成功！\n请注意如果你的用户名包含空格，则要用英文双引号 " 将用户名括起来。\n如果绑定错误，想要重新绑定，请输入 `-unbind\' 解绑后再次使用本命令。')
     }
 }
@@ -41,7 +41,7 @@ const unbind = {
      * @param {string} account The account
      */
     async action(msg) {
-        users.remove({ qqid: msg.param.user_id })
+        await userdb.delUser(msg.param.user_id)
         msg.send('osubot: unbind: 解绑成功！')
     }
 }
@@ -60,7 +60,7 @@ const stat = {
         let data = []
         if (usr === 'me') {
             try {
-                const doc = await users.findOne({ qqid: msg.param.user_id })
+                const doc = await userdb.getByQQ(msg.param.user_id)
                 usr = doc.osuid
             } catch (err) {
                 msg.send('osubot: stat: 你还没有绑定你的osu!id。使用 `-bind <id>\' 来绑定')
@@ -99,7 +99,7 @@ const rec = {
         let data = []
         if (usr === 'me') {
             try {
-                const doc = await users.findOne({ qqid: msg.param.user_id })
+                const doc = await userdb.getByQQ(msg.param.user_id)
                 usr = doc.osuid
             } catch (err) {
                 msg.send('osubot: recent: 你还没有绑定你的osu!id。使用 `-bind <id>\' 来绑定')

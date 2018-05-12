@@ -186,7 +186,7 @@ async function drawRecent(rec, map, stat) {
     return 'file://' + process.cwd() + path.sep + dest
 }
 
-async function drawStat(stat) {
+async function drawStat(stat, statPrev) {
     const uid = stat.user_id
     const dest = `cache${path.sep}osubot${path.sep}stat${path.sep}${uid}.jpg`
     const avatarDest = `cache${path.sep}osubot${path.sep}avatar${path.sep}${uid}.jpg`
@@ -292,6 +292,9 @@ async function drawStat(stat) {
         .gravity('North')
         .geometry('-50+343')
     )
+    if (statPrev) {
+        // TODO: Draw the increasement
+    }
     return 'file://' + process.cwd() + path.sep + dest
 }
 

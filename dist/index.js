@@ -28,6 +28,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var app = new _koa2.default();
 
+/* Code for osubot */
 if (!_fs2.default.existsSync('cache')) {
     _fs2.default.mkdirSync('cache');
     _fs2.default.mkdirSync('cache/osubot');
@@ -40,6 +41,9 @@ if (!_fs2.default.existsSync('cache')) {
     _fs2.default.mkdirSync('cache/osubot/mapbg');
 }
 
+// TODO: Refresh every day 0:00
+
+/* General Code */
 _message2.default.listen();
 
 app.use((0, _koaBody2.default)());

@@ -28,6 +28,8 @@ var _util = require('./util');
 
 var _util2 = _interopRequireDefault(_util);
 
+var _db = require('./db');
+
 var _fs = require('fs');
 
 var _fs2 = _interopRequireDefault(_fs);
@@ -43,9 +45,9 @@ var _jsYaml2 = _interopRequireDefault(_jsYaml);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Initialize settings and database connection
+// Imports from local file
 var db = (0, _monk2.default)('localhost:27017/botdb');
 // Imports from modules
-// Imports from local file
 
 var users = db.get('users');
 var config = _jsYaml2.default.safeLoad(_fs2.default.readFileSync('config.yml')).osubot;
@@ -63,18 +65,18 @@ var bind = {
 
         var account = _ref.account;
         return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
-            var exists;
+            var result;
             return _regenerator2.default.wrap(function _callee$(_context) {
                 while (1) {
                     switch (_context.prev = _context.next) {
                         case 0:
                             _context.next = 2;
-                            return users.findOne({ qqid: msg.param.user_id });
+                            return _db.userdb.newUser(msg.param.user_id, account);
 
                         case 2:
-                            exists = _context.sent;
+                            result = _context.sent;
 
-                            if (!exists) {
+                            if (result) {
                                 _context.next = 6;
                                 break;
                             }
@@ -83,10 +85,9 @@ var bind = {
                             return _context.abrupt('return');
 
                         case 6:
-                            users.insert({ qqid: msg.param.user_id, osuid: account });
                             msg.send('osubot: bind: 绑定成功！\n请注意如果你的用户名包含空格，则要用英文双引号 " 将用户名括起来。\n如果绑定错误，想要重新绑定，请输入 `-unbind\' 解绑后再次使用本命令。');
 
-                        case 8:
+                        case 7:
                         case 'end':
                             return _context.stop();
                     }
@@ -112,10 +113,13 @@ var unbind = {
                 while (1) {
                     switch (_context2.prev = _context2.next) {
                         case 0:
-                            users.remove({ qqid: msg.param.user_id });
-                            msg.send('osubot: unbind: 解绑成功！');
+                            _context2.next = 2;
+                            return _db.userdb.delUser(msg.param.user_id);
 
                         case 2:
+                            msg.send('osubot: unbind: 解绑成功！');
+
+                        case 3:
                         case 'end':
                             return _context2.stop();
                     }
@@ -161,7 +165,7 @@ var stat = {
 
                             _context3.prev = 3;
                             _context3.next = 6;
-                            return users.findOne({ qqid: msg.param.user_id });
+                            return _db.userdb.getByQQ(msg.param.user_id);
 
                         case 6:
                             doc = _context3.sent;
@@ -249,7 +253,7 @@ var rec = {
 
                             _context4.prev = 2;
                             _context4.next = 5;
-                            return users.findOne({ qqid: msg.param.user_id });
+                            return _db.userdb.getByQQ(msg.param.user_id);
 
                         case 5:
                             doc = _context4.sent;
