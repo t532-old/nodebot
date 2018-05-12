@@ -36,7 +36,7 @@ var _command2 = _interopRequireDefault(_command);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var handler = new _command2.default({
-    prefix: /#/,
+    prefix: /-/,
     handlers: {
         default: function _default(msg) {
             msg.send('Command not found!');

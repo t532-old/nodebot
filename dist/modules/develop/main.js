@@ -98,7 +98,7 @@ var help = {
                 while (1) {
                     switch (_context3.prev = _context3.next) {
                         case 0:
-                            msg.send('Find help at https://trustgit.github.io/nodebot');
+                            msg.send('帮助页面： https://trustgit.github.io/nodebot');
 
                         case 1:
                         case 'end':

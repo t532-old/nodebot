@@ -18,16 +18,16 @@
 - Windows 7（在用Windows 10）或更高，docker我没试过，你们可以试试（
 - MongoDB
 - Nodejs 8.9（正在用的）& npm
-- 酷Q Pro （穷人的绝望）
+- 酷Q Pro
 - GraphicsMagick
 
 **酷Q一定要装 [cqhttp](https://github.com/richardchien/coolq-http-api/releases)**
 ## 运行
-根据config.template.yml创建一个config.yml文件，并在27017端口上运行mongod，在5700端口上运行cqhttp。然后在命令行中输入：
+根据 `config.template.yml` 创建一个 `config.yml` 文件，并在27017端口上运行mongod，在5700端口上运行cqhttp。然后在命令行中输入：
 ```sh
 $ cd <your-bot-directory>
 $ npm install
-$ npm run run
+$ npm start
 ```
 ## 其他命令
 - 转译(通过 Babel): `npm run build` (=> `babel src -d dist`)
@@ -49,7 +49,7 @@ Create a `config.yml` file based on the given `config.template.yml`, Run mongod 
 ```sh
 $ cd <your-bot-directory>
 $ npm install
-$ npm run run
+$ npm start
 ```
 ## Other commands
 - Compile(through Babel): `npm run build` (=> `babel src -d dist`)

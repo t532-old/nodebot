@@ -39,7 +39,7 @@ const help = {
      * @param {Message} msg The universal msg object
      */
     async action(msg) {
-        msg.send('Find help at https://trustgit.github.io/nodebot')
+        msg.send('帮助页面： https://trustgit.github.io/nodebot')
     }
 }
 

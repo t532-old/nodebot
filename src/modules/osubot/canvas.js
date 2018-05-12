@@ -11,7 +11,16 @@ import { res } from './web'
 function promisifyGM(gmO) {
     return new Promise(function(resolve, reject) {
         gmO.write(gmO.source, err => {
-            if (err) throw err
+            if (err) reject(err)
+            else resolve()
+        })
+    })
+}
+
+function promisify(fn, ...args) {
+    return new Promise((resolve, reject) => {
+        fn(...args, (err) => {
+            if (err) reject(err)
             else resolve()
         })
     })
@@ -30,6 +39,7 @@ async function drawRecent(rec, map, stat) {
     const dest = `cache${path.sep}osubot${path.sep}recent${path.sep}${uid}.jpg`
     const bgDest = `cache${path.sep}osubot${path.sep}mapbg${path.sep}${sid}.jpg`
     const avatarDest = `cache${path.sep}osubot${path.sep}avatar${path.sep}${uid}.jpg`
+    const avatarLargerDest = `cache${path.sep}osubot${path.sep}avatarl${path.sep}${uid}.jpg`
     const avatarBGDest = `cache${path.sep}osubot${path.sep}recentbg${path.sep}${uid}.jpg`
     const mapFile = await res.mapFileQuery(bid)
     const pp = osu.ppv2({
@@ -48,13 +58,20 @@ async function drawRecent(rec, map, stat) {
     }, [])
     if (!fs.existsSync(avatarDest)) {
         await res.avatarQuery(uid, avatarDest)
+        await promisify(fs.copyFile, avatarDest, avatarLargerDest)
         await promisifyGM(
             gm(avatarDest)
             .quality(100)
             .resize(350, 350)
         )
+        await promisifyGM(
+            gm(avatarLargerDest)
+            .quality(100)
+            .resize(421, 421)
+            .blur(5, 5)
+        )
     }
-    fs.copyFileSync(`assets${path.sep}image${path.sep}userbg${path.sep}crecent.jpg`, avatarBGDest)
+    await promisify(fs.copyFile, `assets${path.sep}image${path.sep}userbg${path.sep}crecent.jpg`, avatarBGDest)
     await promisifyGM(
         gm(avatarBGDest)
         .quality(100)
@@ -64,7 +81,7 @@ async function drawRecent(rec, map, stat) {
     )
     if (!fs.existsSync(bgDest))
         await res.bgQuery(sid, bgDest)
-    fs.copyFileSync(bgDest, dest)
+    await promisify(fs.copyFile, bgDest, dest)
     await promisifyGM(
         gm(dest)
         .quality(100)
@@ -75,7 +92,7 @@ async function drawRecent(rec, map, stat) {
         .quality(100)
         .gravity('Center')
         .crop(1500, 500)
-        .blur(50, 50)
+        .blur(10, 10)
         .fill('#888b')
         .drawCircle(750, 250, 750, 620)
         .tile(dest)
@@ -85,13 +102,13 @@ async function drawRecent(rec, map, stat) {
         gm(dest)
         .quality(100)
         .gravity('Center')
-        .fill('#fff8')
+        .fill('#fff5')
         .drawCircle(750, 250, 750, 610)
-        .fill('#fff8')
+        .fill('#fff5')
         .drawCircle(750, 250, 750, 490)
-        .fill('#ccc8')
+        .fill('#ccc5')
         .drawCircle(750, 250, 750, 470)
-        .fill('#fff8')
+        .fill('#fff5')
         .drawCircle(750, 250, 750, 460)
         .tile(avatarBGDest)
         .drawEllipse(750, 250, 210, 210, -145, -35)
@@ -187,22 +204,29 @@ async function drawStat(stat) {
     const dest = `cache${path.sep}osubot${path.sep}stat${path.sep}${uid}.jpg`
     const avatarDest = `cache${path.sep}osubot${path.sep}avatar${path.sep}${uid}.jpg`
     const avatarBGDest = `cache${path.sep}osubot${path.sep}statbg${path.sep}${uid}.jpg`
-    fs.copyFileSync(`assets${path.sep}image${path.sep}userbg${path.sep}c${Math.ceil(Math.random() * 5)}.jpg`, dest)
+    const avatarLargerDest = `cache${path.sep}osubot${path.sep}avatarl${path.sep}${uid}.jpg`
+    await promisify(fs.copyFile, `assets${path.sep}image${path.sep}userbg${path.sep}c${Math.ceil(Math.random() * 5)}.jpg`, dest)
     if (!fs.existsSync(avatarDest)) {
         await res.avatarQuery(uid, avatarDest)
+        await promisify(fs.copyFile, avatarDest, avatarLargerDest)
         await promisifyGM(
             gm(avatarDest)
             .quality(100)
             .resize(350, 350)
         )
+        await promisifyGM(
+            gm(avatarLargerDest)
+            .quality(100)
+            .resize(421, 421)
+            .blur(3, 3)
+        )
     }
-    fs.copyFileSync(`assets${path.sep}image${path.sep}userbg${path.sep}cstat.jpg`, avatarBGDest)
+    await promisify(fs.copyFile, `assets${path.sep}image${path.sep}userbg${path.sep}cstat.jpg`, avatarBGDest)
     await promisifyGM(
         gm(avatarBGDest)
         .quality(100)
-        .composite(avatarDest)
-        .gravity('North')
-        .geometry('+0-50')
+        .composite(avatarLargerDest)
+        .gravity('Center')
     )
     await promisifyGM(
         gm(dest)
@@ -224,23 +248,23 @@ async function drawStat(stat) {
         .quality(100)
         .gravity('Center')
         .crop(750, 500)
-        .fill('#fff8')
+        .fill('#fff5')
         .drawCircle(375, 250, 375, 610)
-        .fill('#fff8')
+        .fill('#fff5')
         .drawCircle(375, 250, 375, 490)
-        .fill('#ccc8')
+        .fill('#ccc5')
         .drawCircle(375, 250, 375, 470)
-        .fill('#fff8')
-        .drawCircle(375, 250, 375, 460)
         .tile(avatarBGDest)
-        .drawEllipse(375, 250, 210, 210, -145, -35)
+        .drawCircle(375, 250, 375, 460)
     )
     await promisifyGM(
         gm(dest)
         .quality(100)
         .gravity('Center')
-        .fill('#aaaa')
+        .fill('#888a')
         .drawEllipse(375, 250, 210, 210, -145, -35)
+        .fill('#fff8')
+        .drawCircle(375, 250, 375, 460)
         .fill('#fff')
         .font('assets/fonts/Exo2.0-Medium.otf')
         .fontSize(30)

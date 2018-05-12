@@ -32,6 +32,7 @@ if (!_fs2.default.existsSync('cache')) {
     _fs2.default.mkdirSync('cache');
     _fs2.default.mkdirSync('cache/osubot');
     _fs2.default.mkdirSync('cache/osubot/avatar');
+    _fs2.default.mkdirSync('cache/osubot/avatarl');
     _fs2.default.mkdirSync('cache/osubot/recent');
     _fs2.default.mkdirSync('cache/osubot/recentbg');
     _fs2.default.mkdirSync('cache/osubot/stat');
