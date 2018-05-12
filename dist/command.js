@@ -100,7 +100,7 @@ var Command = function () {
             var _this = this,
                 _list$name;
 
-            if (!this.prefix.test(command.charAt(0))) return;
+            if (!this.prefix.test(command[0])) return;
             command = command.trim().slice(1).split('"').map(function (i) {
                 return i.trim();
             }).reduce(function (target, value, index) {
@@ -120,14 +120,14 @@ var Command = function () {
                 } else throw new SyntaxError('No default handler for undefined command');
             }
             var options = command.filter(function (i) {
-                return i.charAt(0) === '*';
+                return i[0] === '*';
             }).map(function (i) {
                 return i.slice(1);
             }).filter(function (i) {
                 return _this.list[name].options.includes(i);
             });
             command = command.filter(function (i) {
-                return i.charAt(0) !== '*';
+                return i[0] !== '*';
             });
             if (this.list[name].args.required.length > command.length) {
                 if (typeof this.invalidHandler === 'function') {
