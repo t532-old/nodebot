@@ -24,11 +24,11 @@ const bind = {
     async action(msg, { account }) {
         const exists = await users.findOne({ qqid: msg.param.user_id })
         if (exists) {
-            msg.send('osubot: bind: 你绑定过id了！如果想要重新绑定，请先输入 `#unbind\' 来解绑。')
+            msg.send('osubot: bind: 你绑定过id了！如果想要重新绑定，请先输入 `-unbind\' 来解绑。')
             return
         }
         users.insert({ qqid: msg.param.user_id, osuid: account })
-        msg.send('osubot: bind: 绑定成功！\n请注意如果你的用户名包含空格，则要用英文双引号 " 将用户名括起来。\n如果绑定错误，想要重新绑定，请输入 `#unbind\' 解绑后再次使用本命令。')
+        msg.send('osubot: bind: 绑定成功！\n请注意如果你的用户名包含空格，则要用英文双引号 " 将用户名括起来。\n如果绑定错误，想要重新绑定，请输入 `-unbind\' 解绑后再次使用本命令。')
     }
 }
 
@@ -63,7 +63,7 @@ const stat = {
                 const doc = await users.findOne({ qqid: msg.param.user_id })
                 usr = doc.osuid
             } catch (err) {
-                msg.send('osubot: stat: 你还没有绑定你的osu!id。使用 `#bind <id>\' 来绑定')
+                msg.send('osubot: stat: 你还没有绑定你的osu!id。使用 `-bind <id>\' 来绑定')
                 return
             }
         }
@@ -102,7 +102,7 @@ const rec = {
                 const doc = await users.findOne({ qqid: msg.param.user_id })
                 usr = doc.osuid
             } catch (err) {
-                msg.send('osubot: recent: 你还没有绑定你的osu!id。使用 `#bind <id>\' 来绑定')
+                msg.send('osubot: recent: 你还没有绑定你的osu!id。使用 `-bind <id>\' 来绑定')
                 return
             }
         }

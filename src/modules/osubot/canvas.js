@@ -56,21 +56,8 @@ async function drawRecent(rec, map, stat) {
         else target.push(value)
         return target
     }, [])
-    if (!fs.existsSync(avatarDest)) {
-        await res.avatarQuery(uid, avatarDest)
-        await promisify(fs.copyFile, avatarDest, avatarLargerDest)
-        await promisifyGM(
-            gm(avatarDest)
-            .quality(100)
-            .resize(350, 350)
-        )
-        await promisifyGM(
-            gm(avatarLargerDest)
-            .quality(100)
-            .resize(421, 421)
-            .blur(5, 5)
-        )
-    }
+    if (!fs.existsSync(avatarDest))
+        await getAvatar(uid, avatarDest, avatarLargerDest)
     await promisify(fs.copyFile, `assets${path.sep}image${path.sep}userbg${path.sep}crecent.jpg`, avatarBGDest)
     await promisifyGM(
         gm(avatarBGDest)
@@ -206,21 +193,8 @@ async function drawStat(stat) {
     const avatarBGDest = `cache${path.sep}osubot${path.sep}statbg${path.sep}${uid}.jpg`
     const avatarLargerDest = `cache${path.sep}osubot${path.sep}avatarl${path.sep}${uid}.jpg`
     await promisify(fs.copyFile, `assets${path.sep}image${path.sep}userbg${path.sep}c${Math.ceil(Math.random() * 5)}.jpg`, dest)
-    if (!fs.existsSync(avatarDest)) {
-        await res.avatarQuery(uid, avatarDest)
-        await promisify(fs.copyFile, avatarDest, avatarLargerDest)
-        await promisifyGM(
-            gm(avatarDest)
-            .quality(100)
-            .resize(350, 350)
-        )
-        await promisifyGM(
-            gm(avatarLargerDest)
-            .quality(100)
-            .resize(421, 421)
-            .blur(3, 3)
-        )
-    }
+    if (!fs.existsSync(avatarDest))
+        await getAvatar(uid, avatarDest, avatarLargerDest)
     await promisify(fs.copyFile, `assets${path.sep}image${path.sep}userbg${path.sep}cstat.jpg`, avatarBGDest)
     await promisifyGM(
         gm(avatarBGDest)
@@ -321,15 +295,42 @@ async function drawStat(stat) {
     return 'file://' + process.cwd() + path.sep + dest
 }
 
+async function getAvatar(uid, avatarDest, avatarLargerDest) {
+    let errCount = 0;
+    try {
+        await res.avatarQuery(uid, avatarDest)
+        await promisify(fs.copyFile, avatarDest, avatarLargerDest)
+        await promisifyGM(
+            gm(avatarDest)
+            .quality(100)
+            .resize(350, 350)
+        )
+        await promisifyGM(
+            gm(avatarLargerDest)
+            .quality(100)
+            .resize(421, 421)
+            .blur(3, 3)
+        )
+        return true
+    } catch(err) {
+        clearCachedAvatars(uid)
+    }
+}
+
 /**
  * deletes a cached avatar. If uid is not specified, then delete all of them
  * @param {string} uid 
  */
 function clearCachedAvatars(uid) {
-    if (!uid)
+    if (!uid) {
         for (let i of fs.readdirSync(`cache${path.sep}osubot${path.sep}avatar`))
             fs.unlinkSync(`cache${path.sep}osubot${path.sep}avatar${path.sep}${i}.jpg`)
-    else fs.unlinkSync(`cache${path.sep}osubot${path.sep}avatar${path.sep}${uid}.jpg`)
+        for (let i of fs.readdirSync(`cache${path.sep}osubot${path.sep}avatarl`))
+            fs.unlinkSync(`cache${path.sep}osubot${path.sep}avatarl${path.sep}${i}.jpg`)
+    } else {
+        fs.unlinkSync(`cache${path.sep}osubot${path.sep}avatar${path.sep}${uid}.jpg`)
+        fs.unlinkSync(`cache${path.sep}osubot${path.sep}avatarl${path.sep}${uid}.jpg`)
+    }
 }
 
 export default { drawRecent, drawStat, clearCachedAvatars }

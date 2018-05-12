@@ -79,12 +79,12 @@ var bind = {
                                 break;
                             }
 
-                            msg.send('osubot: bind: 你绑定过id了！如果想要重新绑定，请先输入 `#unbind\' 来解绑。');
+                            msg.send('osubot: bind: 你绑定过id了！如果想要重新绑定，请先输入 `-unbind\' 来解绑。');
                             return _context.abrupt('return');
 
                         case 6:
                             users.insert({ qqid: msg.param.user_id, osuid: account });
-                            msg.send('osubot: bind: 绑定成功！\n请注意如果你的用户名包含空格，则要用英文双引号 " 将用户名括起来。\n如果绑定错误，想要重新绑定，请输入 `#unbind\' 解绑后再次使用本命令。');
+                            msg.send('osubot: bind: 绑定成功！\n请注意如果你的用户名包含空格，则要用英文双引号 " 将用户名括起来。\n如果绑定错误，想要重新绑定，请输入 `-unbind\' 解绑后再次使用本命令。');
 
                         case 8:
                         case 'end':
@@ -174,7 +174,7 @@ var stat = {
                             _context3.prev = 10;
                             _context3.t0 = _context3['catch'](3);
 
-                            msg.send('osubot: stat: 你还没有绑定你的osu!id。使用 `#bind <id>\' 来绑定');
+                            msg.send('osubot: stat: 你还没有绑定你的osu!id。使用 `-bind <id>\' 来绑定');
                             return _context3.abrupt('return');
 
                         case 14:
@@ -262,7 +262,7 @@ var rec = {
                             _context4.prev = 9;
                             _context4.t0 = _context4['catch'](2);
 
-                            msg.send('osubot: recent: 你还没有绑定你的osu!id。使用 `#bind <id>\' 来绑定');
+                            msg.send('osubot: recent: 你还没有绑定你的osu!id。使用 `-bind <id>\' 来绑定');
                             return _context4.abrupt('return');
 
                         case 13:
