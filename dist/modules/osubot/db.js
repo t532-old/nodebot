@@ -5,6 +5,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.statdb = exports.userdb = undefined;
 
+var _getIterator2 = require('babel-runtime/core-js/get-iterator');
+
+var _getIterator3 = _interopRequireDefault(_getIterator2);
+
 var _promise = require('babel-runtime/core-js/promise');
 
 var _promise2 = _interopRequireDefault(_promise);
@@ -213,6 +217,87 @@ var refreshStat = function () {
     };
 }();
 
+var refreshAllStat = function () {
+    var _ref10 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee6() {
+        var docs, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, user;
+
+        return _regenerator2.default.wrap(function _callee6$(_context6) {
+            while (1) {
+                switch (_context6.prev = _context6.next) {
+                    case 0:
+                        _context6.next = 2;
+                        return users.find();
+
+                    case 2:
+                        docs = _context6.sent;
+                        _iteratorNormalCompletion = true;
+                        _didIteratorError = false;
+                        _iteratorError = undefined;
+                        _context6.prev = 6;
+                        _iterator = (0, _getIterator3.default)(docs);
+
+                    case 8:
+                        if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
+                            _context6.next = 15;
+                            break;
+                        }
+
+                        user = _step.value;
+                        _context6.next = 12;
+                        return refreshStat(docs.osuid);
+
+                    case 12:
+                        _iteratorNormalCompletion = true;
+                        _context6.next = 8;
+                        break;
+
+                    case 15:
+                        _context6.next = 21;
+                        break;
+
+                    case 17:
+                        _context6.prev = 17;
+                        _context6.t0 = _context6['catch'](6);
+                        _didIteratorError = true;
+                        _iteratorError = _context6.t0;
+
+                    case 21:
+                        _context6.prev = 21;
+                        _context6.prev = 22;
+
+                        if (!_iteratorNormalCompletion && _iterator.return) {
+                            _iterator.return();
+                        }
+
+                    case 24:
+                        _context6.prev = 24;
+
+                        if (!_didIteratorError) {
+                            _context6.next = 27;
+                            break;
+                        }
+
+                        throw _iteratorError;
+
+                    case 27:
+                        return _context6.finish(24);
+
+                    case 28:
+                        return _context6.finish(21);
+
+                    case 29:
+                    case 'end':
+                        return _context6.stop();
+                }
+            }
+        }, _callee6, this, [[6, 17, 21, 29], [22,, 24, 28]]);
+    }));
+
+    return function refreshAllStat() {
+        return _ref10.apply(this, arguments);
+    };
+}();
+
 /**
  * Get bind info by QQid.
  * @param {string} qqid - The querying arg qqid
@@ -220,23 +305,23 @@ var refreshStat = function () {
 
 
 var getUserByQQ = function () {
-    var _ref10 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee6(qqid) {
-        return _regenerator2.default.wrap(function _callee6$(_context6) {
+    var _ref11 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee7(qqid) {
+        return _regenerator2.default.wrap(function _callee7$(_context7) {
             while (1) {
-                switch (_context6.prev = _context6.next) {
+                switch (_context7.prev = _context7.next) {
                     case 0:
-                        return _context6.abrupt('return', users.findOne({ qqid: qqid }));
+                        return _context7.abrupt('return', users.findOne({ qqid: qqid }));
 
                     case 1:
                     case 'end':
-                        return _context6.stop();
+                        return _context7.stop();
                 }
             }
-        }, _callee6, this);
+        }, _callee7, this);
     }));
 
     return function getUserByQQ(_x7) {
-        return _ref10.apply(this, arguments);
+        return _ref11.apply(this, arguments);
     };
 }();
 
@@ -247,23 +332,23 @@ var getUserByQQ = function () {
 
 
 var getUserByOSU = function () {
-    var _ref11 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee7(osuid) {
-        return _regenerator2.default.wrap(function _callee7$(_context7) {
+    var _ref12 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee8(osuid) {
+        return _regenerator2.default.wrap(function _callee8$(_context8) {
             while (1) {
-                switch (_context7.prev = _context7.next) {
+                switch (_context8.prev = _context8.next) {
                     case 0:
-                        return _context7.abrupt('return', users.findOne({ osuid: osuid }));
+                        return _context8.abrupt('return', users.findOne({ osuid: osuid }));
 
                     case 1:
                     case 'end':
-                        return _context7.stop();
+                        return _context8.stop();
                 }
             }
-        }, _callee7, this);
+        }, _callee8, this);
     }));
 
     return function getUserByOSU(_x8) {
-        return _ref11.apply(this, arguments);
+        return _ref12.apply(this, arguments);
     };
 }();
 
@@ -274,29 +359,29 @@ var getUserByOSU = function () {
 
 
 var getStatByQQ = function () {
-    var _ref12 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee8(qqid) {
+    var _ref13 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee9(qqid) {
         var osuid;
-        return _regenerator2.default.wrap(function _callee8$(_context8) {
+        return _regenerator2.default.wrap(function _callee9$(_context9) {
             while (1) {
-                switch (_context8.prev = _context8.next) {
+                switch (_context9.prev = _context9.next) {
                     case 0:
-                        _context8.next = 2;
+                        _context9.next = 2;
                         return users.findOne({ qqid: qqid });
 
                     case 2:
-                        osuid = _context8.sent.osuid;
-                        return _context8.abrupt('return', stats.findOne({ osuid: osuid }));
+                        osuid = _context9.sent.osuid;
+                        return _context9.abrupt('return', stats.findOne({ osuid: osuid }));
 
                     case 4:
                     case 'end':
-                        return _context8.stop();
+                        return _context9.stop();
                 }
             }
-        }, _callee8, this);
+        }, _callee9, this);
     }));
 
     return function getStatByQQ(_x9) {
-        return _ref12.apply(this, arguments);
+        return _ref13.apply(this, arguments);
     };
 }();
 
@@ -307,23 +392,23 @@ var getStatByQQ = function () {
 
 
 var getStatByOSU = function () {
-    var _ref13 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee9(osuid) {
-        return _regenerator2.default.wrap(function _callee9$(_context9) {
+    var _ref14 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee10(osuid) {
+        return _regenerator2.default.wrap(function _callee10$(_context10) {
             while (1) {
-                switch (_context9.prev = _context9.next) {
+                switch (_context10.prev = _context10.next) {
                     case 0:
-                        return _context9.abrupt('return', stats.findOne({ osuid: osuid }));
+                        return _context10.abrupt('return', stats.findOne({ osuid: osuid }));
 
                     case 1:
                     case 'end':
-                        return _context9.stop();
+                        return _context10.stop();
                 }
             }
-        }, _callee9, this);
+        }, _callee10, this);
     }));
 
     return function getStatByOSU(_x10) {
-        return _ref13.apply(this, arguments);
+        return _ref14.apply(this, arguments);
     };
 }();
 
@@ -339,4 +424,4 @@ var db = (0, _monk2.default)('localhost:27017/botdb');
 var users = db.get('users');
 var stats = db.get('stats');
 var config = yaml.safeLoad(fs.readFileSync('config.yml')).osubot;var userdb = exports.userdb = { reduceSame: reduceSame, newUser: newUser, delUser: delUser, getByQQ: getUserByQQ, getByOSU: getUserByOSU };
-var statdb = exports.statdb = { getByQQ: getStatByQQ, getByOSU: getStatByOSU, initStat: initStat, refreshStat: refreshStat };
+var statdb = exports.statdb = { getByQQ: getStatByQQ, getByOSU: getStatByOSU, initStat: initStat, refreshStat: refreshStat, refreshAllStat: refreshAllStat };

@@ -1,5 +1,9 @@
 'use strict';
 
+var _getIterator2 = require('babel-runtime/core-js/get-iterator');
+
+var _getIterator3 = _interopRequireDefault(_getIterator2);
+
 var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
@@ -24,26 +28,36 @@ var _message = require('./message');
 
 var _message2 = _interopRequireDefault(_message);
 
+var _init = require('./modules/init');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = new _koa2.default();
 
-/* Code for osubot */
-if (!_fs2.default.existsSync('cache')) {
-    _fs2.default.mkdirSync('cache');
-    _fs2.default.mkdirSync('cache/osubot');
-    _fs2.default.mkdirSync('cache/osubot/avatar');
-    _fs2.default.mkdirSync('cache/osubot/avatarl');
-    _fs2.default.mkdirSync('cache/osubot/recent');
-    _fs2.default.mkdirSync('cache/osubot/recentbg');
-    _fs2.default.mkdirSync('cache/osubot/stat');
-    _fs2.default.mkdirSync('cache/osubot/statbg');
-    _fs2.default.mkdirSync('cache/osubot/mapbg');
+var _iteratorNormalCompletion = true;
+var _didIteratorError = false;
+var _iteratorError = undefined;
+
+try {
+    for (var _iterator = (0, _getIterator3.default)(_init.inits), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var init = _step.value;
+        init();
+    }
+} catch (err) {
+    _didIteratorError = true;
+    _iteratorError = err;
+} finally {
+    try {
+        if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+        }
+    } finally {
+        if (_didIteratorError) {
+            throw _iteratorError;
+        }
+    }
 }
 
-// TODO: Refresh every day 0:00
-
-/* General Code */
 _message2.default.listen();
 
 app.use((0, _koaBody2.default)());

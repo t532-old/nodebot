@@ -67,6 +67,12 @@ async function refreshStat(osuid) {
     return stats.insert({ osuid, data: [osu, taiko, ctb, mania]})
 }
 
+async function refreshAllStat() {
+    const docs = await users.find()
+    for (let user of docs)
+        await refreshStat(docs.osuid)
+}
+
 /**
  * Get bind info by QQid.
  * @param {string} qqid - The querying arg qqid
@@ -101,4 +107,4 @@ async function getStatByOSU(osuid) {
 }
 
 export const userdb = { reduceSame, newUser, delUser, getByQQ: getUserByQQ, getByOSU: getUserByOSU }
-export const statdb = { getByQQ: getStatByQQ, getByOSU: getStatByOSU, initStat, refreshStat }
+export const statdb = { getByQQ: getStatByQQ, getByOSU: getStatByOSU, initStat, refreshStat, refreshAllStat }
