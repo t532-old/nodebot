@@ -3,14 +3,12 @@ import { Message } from '../../message'
 import { api } from './web'
 import canvas from './canvas'
 import util from './util'
-import { userdb } from './db'
+import { userdb, statdb } from './db'
 // Imports from modules
 import fs from 'fs'
 import Monk from 'monk'
 import yaml from 'js-yaml'
-// Initialize settings and database connection
-const db = Monk('localhost:27017/botdb')
-const users = db.get('users')
+// Initialize settings
 const config = yaml.safeLoad(fs.readFileSync('config.yml')).osubot
 
 
@@ -112,14 +110,16 @@ const rec = {
                 limit: '1',
                 k: config.key
             })
-            const map = await api.mapQuery({
-                b: rec.beatmap_id,
-                k: config.key
-            })
-            const stat = await api.statQuery({
-                u: usr,
-                k: config.key
-            })
+            const [map, stat] = await Promise.all([
+                api.mapQuery({
+                    b: rec.beatmap_id,
+                    k: config.key
+                }),
+                api.statQuery({
+                    u: usr,
+                    k: config.key
+                }),
+            ])
             const path = await canvas.drawRecent(rec, map, stat)
             msg.send([{
                 type: 'image',

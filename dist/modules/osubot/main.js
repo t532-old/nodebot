@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _promise = require('babel-runtime/core-js/promise');
+
+var _promise2 = _interopRequireDefault(_promise);
+
 var _slicedToArray2 = require('babel-runtime/helpers/slicedToArray');
 
 var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
@@ -44,13 +48,11 @@ var _jsYaml2 = _interopRequireDefault(_jsYaml);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// Initialize settings and database connection
+// Initialize settings
 // Imports from local file
-var db = (0, _monk2.default)('localhost:27017/botdb');
+var config = _jsYaml2.default.safeLoad(_fs2.default.readFileSync('config.yml')).osubot;
 // Imports from modules
 
-var users = db.get('users');
-var config = _jsYaml2.default.safeLoad(_fs2.default.readFileSync('config.yml')).osubot;
 
 var bind = {
     args: '<account>',
@@ -238,7 +240,7 @@ var rec = {
         var _ref5$usr = _ref5.usr,
             usr = _ref5$usr === undefined ? 'me' : _ref5$usr;
         return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4() {
-            var data, doc, _rec, map, _stat2, path;
+            var data, doc, _rec, _ref6, _ref7, map, _stat2, path;
 
             return _regenerator2.default.wrap(function _callee4$(_context4) {
                 while (1) {
@@ -281,21 +283,19 @@ var rec = {
                         case 16:
                             _rec = _context4.sent;
                             _context4.next = 19;
-                            return _web.api.mapQuery({
+                            return _promise2.default.all([_web.api.mapQuery({
                                 b: _rec.beatmap_id,
                                 k: config.key
-                            });
-
-                        case 19:
-                            map = _context4.sent;
-                            _context4.next = 22;
-                            return _web.api.statQuery({
+                            }), _web.api.statQuery({
                                 u: usr,
                                 k: config.key
-                            });
+                            })]);
 
-                        case 22:
-                            _stat2 = _context4.sent;
+                        case 19:
+                            _ref6 = _context4.sent;
+                            _ref7 = (0, _slicedToArray3.default)(_ref6, 2);
+                            map = _ref7[0];
+                            _stat2 = _ref7[1];
                             _context4.next = 25;
                             return _canvas2.default.drawRecent(_rec, map, _stat2);
 
@@ -336,11 +336,11 @@ var roll = {
      * @param {Message} msg The universal msg object
      * @param {string} range The rolling range
      */
-    action: function action(msg, _ref6) {
+    action: function action(msg, _ref8) {
         var _this5 = this;
 
-        var _ref6$range = _ref6.range,
-            range = _ref6$range === undefined ? '100' : _ref6$range;
+        var _ref8$range = _ref8.range,
+            range = _ref8$range === undefined ? '100' : _ref8$range;
         return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee5() {
             return _regenerator2.default.wrap(function _callee5$(_context5) {
                 while (1) {
