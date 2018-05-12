@@ -17,5 +17,5 @@ export default function() {
     setTimeout(async () => {
         statdb.refreshAll()
         setInterval(statdb.refreshAllStat, 86400000)
-    }, time - Date.now())
+    }, time.getTime() - Date.now())
 }

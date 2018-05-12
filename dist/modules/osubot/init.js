@@ -41,7 +41,7 @@ exports.default = function () {
                 }
             }
         }, _callee, _this);
-    })), time - Date.now());
+    })), time.getTime() - Date.now());
 };
 
 var _fs = require('fs');
