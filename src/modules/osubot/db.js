@@ -11,7 +11,7 @@ const config = yaml.safeLoad(fs.readFileSync('config.yml')).osubot
  * @param {string} qqid - The querying arg qqid
  */
 async function reduceSame(qqid) {
-    const found = await users.findOne({ qqid })
+    const found = await users.find({ qqid })
     const final = found[0]
     await users.remove({ qqid })
     return users.insert(final)
@@ -63,8 +63,7 @@ async function refreshStat(osuid) {
         api.statQuery({ u: osuid, k: config.key, m: 2 }),
         api.statQuery({ u: osuid, k: config.key, m: 3 }),
     ])
-    await stats.remove({ osuid })
-    return stats.insert({ osuid, data: [osu, taiko, ctb, mania]})
+    return stats.update({ osuid }, { data: [osu, taiko, ctb, mania] })
 }
 
 async function refreshAllStat() {
