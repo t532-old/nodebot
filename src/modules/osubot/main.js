@@ -79,8 +79,8 @@ const stat = {
                     file: path,
                 }
             }])
-        } catch(err) {
-            msg.send(err.toString())
+        } catch (err) {
+            msg.send(err.stack)
             return
         }
     }
@@ -128,8 +128,8 @@ const rec = {
                     file: path,
                 }
             }])
-        } catch(err) {
-            msg.send(err.toString())
+        } catch (err) {
+            msg.send(err.stack)
             return
         }
     }

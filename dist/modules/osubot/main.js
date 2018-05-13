@@ -219,7 +219,7 @@ var stat = {
                             _context3.prev = 28;
                             _context3.t1 = _context3['catch'](18);
 
-                            msg.send(_context3.t1.toString());
+                            msg.send(_context3.t1.stack);
                             return _context3.abrupt('return');
 
                         case 32:
@@ -321,7 +321,7 @@ var rec = {
                             _context4.prev = 29;
                             _context4.t1 = _context4['catch'](13);
 
-                            msg.send(_context4.t1.toString());
+                            msg.send(_context4.t1.stack);
                             return _context4.abrupt('return');
 
                         case 33:
