@@ -73,12 +73,14 @@ const stat = {
                 m: mode,
             })
             const path = await canvas.drawStat(stat, prevStat)
-            msg.send([{
-                type: 'image',
-                data: {
-                    file: path,
-                }
-            }])
+            if (path)
+                msg.send([{
+                    type: 'image',
+                    data: {
+                        file: path,
+                    }
+                }])
+            else msg.send('osubot: stat: 请过会重试！')
         } catch (err) {
             msg.send(err.stack)
             return
@@ -122,12 +124,14 @@ const rec = {
                 }),
             ])
             const path = await canvas.drawRecent(rec, map, stat)
-            msg.send([{
-                type: 'image',
-                data: {
-                    file: path,
-                }
-            }])
+            if (path)
+                msg.send([{
+                    type: 'image',
+                    data: {
+                        file: path,
+                    }
+                }])
+            else msg.send('osubot: rec: 请过会重试！')
         } catch (err) {
             msg.send(err.stack)
             return
