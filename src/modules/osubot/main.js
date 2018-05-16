@@ -69,7 +69,6 @@ const stat = {
         try { 
             const stat = await api.statQuery({
                 u: usr,
-                k: config.key,
                 m: mode,
             })
             const path = await canvas.drawStat(stat, prevStat)
@@ -111,17 +110,10 @@ const rec = {
             const rec = await api.recentQuery({
                 u: usr,
                 limit: '1',
-                k: config.key
             })
             const [map, stat] = await Promise.all([
-                api.mapQuery({
-                    b: rec.beatmap_id,
-                    k: config.key
-                }),
-                api.statQuery({
-                    u: usr,
-                    k: config.key
-                }),
+                api.mapQuery({ b: rec.beatmap_id }),
+                api.statQuery({ u: usr }),
             ])
             const path = await canvas.drawRecent(rec, map, stat)
             if (path)

@@ -3,6 +3,8 @@ import url from 'url'
 import axios from 'axios'
 import osu from 'ojsama'
 
+const config = yaml.safeLoad(fs.readFileSync('config.yml')).osubot
+
 /**
  * A GET request to the ppy api.
  * @param {string} name 
@@ -13,7 +15,7 @@ async function apiQuery(name, params) {
         protocol: 'https',
         host: 'osu.ppy.sh',
         pathname: `api/${name}`,
-        query: params
+        query: { ...params, k: config.key },
     }))
 }
 
