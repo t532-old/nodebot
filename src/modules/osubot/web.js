@@ -2,6 +2,7 @@ import fs from 'fs'
 import url from 'url'
 import axios from 'axios'
 import osu from 'ojsama'
+import yaml from 'js-yaml'
 
 const config = yaml.safeLoad(fs.readFileSync('config.yml')).osubot
 

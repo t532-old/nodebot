@@ -3,7 +3,7 @@ import Koa from 'koa'
 import body from 'koa-body'
 
 import message from './message'
-import { inits } from './modules/init'
+import inits from './modules/init'
 const app = new Koa()
 
 for (let init of inits) init()

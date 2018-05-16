@@ -67,34 +67,52 @@ var bind = {
 
         var account = _ref.account;
         return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
-            var result;
+            var user, result;
             return _regenerator2.default.wrap(function _callee$(_context) {
                 while (1) {
                     switch (_context.prev = _context.next) {
                         case 0:
-                            _context.next = 2;
-                            return _db.userdb.newUser(msg.param.user_id, account);
+                            user = void 0;
+                            _context.prev = 1;
+                            _context.next = 4;
+                            return _web.api.statQuery({ u: account });
 
-                        case 2:
+                        case 4:
+                            user = _context.sent;
+                            _context.next = 11;
+                            break;
+
+                        case 7:
+                            _context.prev = 7;
+                            _context.t0 = _context['catch'](1);
+
+                            msg.send('osubot: bind: 用户名无效或bot炸了！（请注意输入用户名时不用添加帮助中示例的尖括号<>）');
+                            return _context.abrupt('return');
+
+                        case 11:
+                            _context.next = 13;
+                            return _db.userdb.newUser(msg.param.user_id, user.user_id);
+
+                        case 13:
                             result = _context.sent;
 
                             if (result) {
-                                _context.next = 6;
+                                _context.next = 17;
                                 break;
                             }
 
                             msg.send('osubot: bind: 你绑定过id了！如果想要重新绑定，请先输入 `-unbind\' 来解绑。');
                             return _context.abrupt('return');
 
-                        case 6:
-                            msg.send('osubot: bind: 绑定成功！\n请注意如果你的用户名包含空格，则要用英文双引号 " 将用户名括起来。\n如果绑定错误，想要重新绑定，请输入 `-unbind\' 解绑后再次使用本命令。');
+                        case 17:
+                            msg.send('osubot: bind: 绑定成功！\n如果绑定错误，想要重新绑定，请输入 `-unbind\' 解绑后再次使用本命令。');
 
-                        case 7:
+                        case 18:
                         case 'end':
                             return _context.stop();
                     }
                 }
-            }, _callee, _this);
+            }, _callee, _this, [[1, 7]]);
         }))();
     }
 };
@@ -186,7 +204,7 @@ var stat = {
                             _context3.prev = 14;
                             _context3.t0 = _context3['catch'](3);
 
-                            msg.send('osubot: stat: 你还没有绑定你的osu!id。使用 `-bind <id>\' 来绑定');
+                            msg.send('osubot: stat: 你还没有绑定你的osu!id。\n使用 `-bind <id>\' 来绑定（*一定*要去掉两边的尖括号<>），\n如果用户名有空格请将用户名*整个*用英文引号 " 括起来！');
                             return _context3.abrupt('return');
 
                         case 18:
@@ -194,7 +212,6 @@ var stat = {
                             _context3.next = 21;
                             return _web.api.statQuery({
                                 u: usr,
-                                k: config.key,
                                 m: mode
                             });
 
@@ -206,12 +223,12 @@ var stat = {
                         case 24:
                             path = _context3.sent;
 
-                            msg.send([{
+                            if (path) msg.send([{
                                 type: 'image',
                                 data: {
                                     file: path
                                 }
-                            }]);
+                            }]);else msg.send('osubot: stat: 请过会重试！');
                             _context3.next = 32;
                             break;
 
@@ -274,7 +291,7 @@ var rec = {
                             _context4.prev = 9;
                             _context4.t0 = _context4['catch'](2);
 
-                            msg.send('osubot: recent: 你还没有绑定你的osu!id。使用 `-bind <id>\' 来绑定');
+                            msg.send('osubot: stat: 你还没有绑定你的osu!id。\n使用 `-bind <id>\' 来绑定（*不带*尖括号<>），\n如果用户名有空格请将用户名*整个*用英文引号 " 括起来！');
                             return _context4.abrupt('return');
 
                         case 13:
@@ -282,20 +299,13 @@ var rec = {
                             _context4.next = 16;
                             return _web.api.recentQuery({
                                 u: usr,
-                                limit: '1',
-                                k: config.key
+                                limit: '1'
                             });
 
                         case 16:
                             _rec = _context4.sent;
                             _context4.next = 19;
-                            return _promise2.default.all([_web.api.mapQuery({
-                                b: _rec.beatmap_id,
-                                k: config.key
-                            }), _web.api.statQuery({
-                                u: usr,
-                                k: config.key
-                            })]);
+                            return _promise2.default.all([_web.api.mapQuery({ b: _rec.beatmap_id }), _web.api.statQuery({ u: usr })]);
 
                         case 19:
                             _ref6 = _context4.sent;
@@ -308,12 +318,12 @@ var rec = {
                         case 25:
                             path = _context4.sent;
 
-                            msg.send([{
+                            if (path) msg.send([{
                                 type: 'image',
                                 data: {
                                     file: path
                                 }
-                            }]);
+                            }]);else msg.send('osubot: rec: 请过会重试！');
                             _context4.next = 33;
                             break;
 
@@ -367,4 +377,34 @@ var roll = {
     }
 };
 
-exports.default = { bind: bind, unbind: unbind, stat: stat, rec: rec, roll: roll };
+var avatar = {
+    args: '',
+    options: [],
+    action: function action(msg) {
+        var _this6 = this;
+
+        return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee6() {
+            var user;
+            return _regenerator2.default.wrap(function _callee6$(_context6) {
+                while (1) {
+                    switch (_context6.prev = _context6.next) {
+                        case 0:
+                            _context6.next = 2;
+                            return _db.userdb.getByQQ(msg.param.user_id);
+
+                        case 2:
+                            user = _context6.sent;
+
+                            _canvas2.default.clearCachedAvatars(user.osuid);
+
+                        case 4:
+                        case 'end':
+                            return _context6.stop();
+                    }
+                }
+            }, _callee6, _this6);
+        }))();
+    }
+};
+
+exports.default = { bind: bind, unbind: unbind, stat: stat, rec: rec, roll: roll, avatar: avatar };

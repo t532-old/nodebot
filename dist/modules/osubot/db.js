@@ -37,7 +37,7 @@ var reduceSame = function () {
                 switch (_context.prev = _context.next) {
                     case 0:
                         _context.next = 2;
-                        return users.findOne({ qqid: qqid });
+                        return users.find({ qqid: qqid });
 
                     case 2:
                         found = _context.sent;
@@ -198,13 +198,9 @@ var refreshStat = function () {
                         taiko = _ref9[1];
                         ctb = _ref9[2];
                         mania = _ref9[3];
-                        _context5.next = 10;
-                        return stats.remove({ osuid: osuid });
+                        return _context5.abrupt('return', stats.update({ osuid: osuid }, { data: [osu, taiko, ctb, mania] }));
 
-                    case 10:
-                        return _context5.abrupt('return', stats.insert({ osuid: osuid, data: [osu, taiko, ctb, mania] }));
-
-                    case 11:
+                    case 9:
                     case 'end':
                         return _context5.stop();
                 }
@@ -412,9 +408,17 @@ var getStatByOSU = function () {
     };
 }();
 
+var _fs = require('fs');
+
+var _fs2 = _interopRequireDefault(_fs);
+
 var _monk = require('monk');
 
 var _monk2 = _interopRequireDefault(_monk);
+
+var _jsYaml = require('js-yaml');
+
+var _jsYaml2 = _interopRequireDefault(_jsYaml);
 
 var _web = require('./web');
 
@@ -423,5 +427,5 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var db = (0, _monk2.default)('localhost:27017/botdb');
 var users = db.get('users');
 var stats = db.get('stats');
-var config = yaml.safeLoad(fs.readFileSync('config.yml')).osubot;var userdb = exports.userdb = { reduceSame: reduceSame, newUser: newUser, delUser: delUser, getByQQ: getUserByQQ, getByOSU: getUserByOSU };
+var config = _jsYaml2.default.safeLoad(_fs2.default.readFileSync('config.yml')).osubot;var userdb = exports.userdb = { reduceSame: reduceSame, newUser: newUser, delUser: delUser, getByQQ: getUserByQQ, getByOSU: getUserByOSU };
 var statdb = exports.statdb = { getByQQ: getStatByQQ, getByOSU: getStatByOSU, initStat: initStat, refreshStat: refreshStat, refreshAllStat: refreshAllStat };

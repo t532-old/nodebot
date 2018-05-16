@@ -30,6 +30,8 @@ var _message2 = _interopRequireDefault(_message);
 
 var _init = require('./modules/init');
 
+var _init2 = _interopRequireDefault(_init);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = new _koa2.default();
@@ -39,7 +41,7 @@ var _didIteratorError = false;
 var _iteratorError = undefined;
 
 try {
-    for (var _iterator = (0, _getIterator3.default)(_init.inits), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+    for (var _iterator = (0, _getIterator3.default)(_init2.default), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
         var init = _step.value;
         init();
     }

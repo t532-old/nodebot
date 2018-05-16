@@ -20,7 +20,7 @@ const bind = {
      * @param {string} account The account
      */
     async action(msg, { account }) {
-        const user
+        let user
         try { user = await api.statQuery({ u: account }) }
         catch (err) { 
             msg.send('osubot: bind: 用户名无效或bot炸了！（请注意输入用户名时不用添加帮助中示例的尖括号<>）') 

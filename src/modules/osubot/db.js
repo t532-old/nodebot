@@ -1,4 +1,6 @@
+import fs from 'fs'
 import Monk from 'monk'
+import yaml from 'js-yaml'
 import { api } from './web'
 
 const db = Monk('localhost:27017/botdb')

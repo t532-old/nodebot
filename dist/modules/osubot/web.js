@@ -13,6 +13,10 @@ var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
 var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
@@ -32,7 +36,7 @@ var apiQuery = function () {
                             protocol: 'https',
                             host: 'osu.ppy.sh',
                             pathname: 'api/' + name,
-                            query: params
+                            query: (0, _extends3.default)({}, params, { k: config.key })
                         })));
 
                     case 1:
@@ -349,7 +353,11 @@ var _ojsama = require('ojsama');
 
 var _ojsama2 = _interopRequireDefault(_ojsama);
 
+var _jsYaml = require('js-yaml');
+
+var _jsYaml2 = _interopRequireDefault(_jsYaml);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var api = exports.api = { query: apiQuery, statQuery: statQuery, recentQuery: recentQuery, mapQuery: mapQuery };
+var config = _jsYaml2.default.safeLoad(_fs2.default.readFileSync('config.yml')).osubot;var api = exports.api = { query: apiQuery, statQuery: statQuery, recentQuery: recentQuery, mapQuery: mapQuery };
 var res = exports.res = { query: staticQuery, avatarQuery: avatarQuery, bgQuery: bgQuery, mapFileQuery: mapFileQuery };
