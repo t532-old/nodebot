@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: sans-serif;
+        }
+
+        .mask {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            animation: slide-out 3s;
+            position: relative;
+            transform: rotateY(90deg);
+        }
+
+        .title {
+            width: 386px;
+            height: 74px;
+            margin: 0 auto;
+            position: relative;
+            bottom: 147px;
+            animation: slide-fade-in 4s;
+            color: white;
+        }
+
+        .title img {
+            width: 386px;
+            height: 74px;
+        }
+
+        .header {
+            width: 100vw;
+            height: 100vh;
+            padding-top: 30vh;
+            background-image: url("static/bg.jpg");
+            background-size: cover;
+        }
+        
+        .nav {
+            animation: fade-in 4s;
+            width: 420px;
+            height: 3em;
+            margin: 0 auto;
+        }
+
+        .nav a {
+            width: 11em;
+            height: 3em;
+            padding: 10px;
+            border: solid white 3px;
+            text-align: center;
+            letter-spacing: 7px;
+            font-weight: 300;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .nav-gh {
+            margin-right: 20px;
+            color: white;
+        }
+
+        .nav-hp {
+            margin-left: 20px;
+            background: white;
+            color: black;
+        }
+
+        .footer {
+            color: white;
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            font-size: 10px;
+        }
+
+        .main {
+            padding: 20px;
+            background: #fffff5;
+        }
+
+        .main img {
+            width: 70vw;
+        }
+
+        h2 small {
+            color: gray;
+        }
+
+        pre {
+            color: gray;
+            border-left: solid 2px gray;
+            padding: 10px;
+            font-family: Consolas, Menlo, Monaco, monospace;
+        }
+
+        @keyframes slide-out {
+            from {
+                right: 0;
+                transform: rotateY(0);
+            }
+            33% {
+                right: 0;
+                transform: rotateY(0);
+            }
+            to {
+                right: 400px;
+                transform: rotateY(90deg);
+            }
+        }
+
+        @keyframes slide-fade-in {
+            from {
+                right: 100px;
+                opacity: 0;
+            }
+            25% {
+                right: 100px;
+                opacity: 0;
+            }
+            to {
+                right: 0;
+                opacity: 1;
+            }
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+            33% {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @media all and (max-width: 420px) {
+            .nav {
+                width: 210px;
+            }
+            .nav a {
+                margin: 5px;
+            }
+            .title {
+                width: 193px;
+            }
+            .title img {
+                width: 193px;
+                height: 37px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="mask">
+            <svg class="icon" width="200px" height="200.00px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path fill="#ffffff" d="M487.893665 6.54199l-399.78117 231.676814c-14.933128 8.661214-24.063669 24.660994-24.021003 41.940757V743.683854c0 17.237096 9.173207 33.279542 24.063669 41.898091l399.78117 231.890145c14.933128 8.661214 33.279542 8.661214 48.21267 0l399.610506-231.804813a48.639331 48.639331 0 0 0 24.106335-41.89809V280.159561c0-17.237096-9.215873-33.279542-24.149001-41.983423L536.191667 6.499324a47.956674 47.956674 0 0 0-48.21267 0" /></svg>
+        </div>
+        <div class="title">
+            <img src="static/icon.png" alt="The icon of nodebot.">
+            The well-constructed(?) osu! bot
+        </div>
+        <div class="nav">
+            <a class="nav-gh" target="_blank" href="https://github.com/trustgit/nodebot">GITHUB仓库</a>
+            <a class="nav-hp" href="#manual">帮助文档</a>
+        </div>
+    </div>
+    <div class="main">
+        <a name="manual"></a>
+        <h1>帮助文档 - 指令</h1>
+
+        <ul>
+            <li><h2>Tips</h2></li>
+            <li>当你的用户名包含空格时，你需要使用英文双引号 " 来包裹用户名。</li>
+        </ul>
+
+        <h2>-test <small>[txt...]</small></h2>
+        <div>将发送出去的信息逐个分开（在空格和换行处），再用空格拼接起来。</div>
+        <pre>
+In  |-test a b
+    |c
+    |
+Out |a b c
+        </pre>
+
+        <h2>-about</h2>
+        <div>查看关于机器人的信息（版本，开发者等）。</div>
+        <pre>
+In  |-about
+    |
+Out |nodebot v1.0.0
+    |powered by Nodejs &amp; cqhttp.
+    |2018 trustgit | under MIT license
+        </pre>
+
+        <h2>-bind <small>&lt;accout&gt;</small></h2>
+        <div>将你的qq号与osu!id绑定。</div>
+        <pre>
+In  |-bind Trustless532
+    |
+Out |osubot: bind: bound successfully
+        </pre>
+
+        <h2>-unbind</h2>
+        <div>将你的qq号与osu!id解除绑定。</div>
+        <pre>
+In  |-unbind
+    |
+Out |osubot: unbind: unbound successfully
+        </pre>
+
+        <h2>-stat <small>&lt;user=me&gt; *std/taiko/ctb/mania</small></h2>
+        <div>查询你的（或者<code>&lt;user&gt;</code>的）用户信息，并且返回一张带有信息的，osu!lazer风格的图片。命令中的星号选项可选，星号后跟的单词为模式。</div>
+        <div>如果想要查询你自己，那就使用 <code>-stat</code>。</div>
+        <pre>
+In  |-stat -inter-
+    |
+Out |
+    <img src="static/sample-stat.jpg" alt="A sample osu!user status image.">
+        </pre>
+
+        <h2>-rec <small>&lt;user=me&gt;</small></h2>
+        <div>查询你的（或者<code>&lt;user&gt;</code>的）最近一张游玩的beatmap（包括中途fail或quit的），并且返回一张带有这次游玩信息的，osu!lazer风格的图片。仅支持std模式。</div>
+        <div>如果想要查询你自己，那就使用 <code>-rec</code>。</div>
+        <pre>
+In  |-rec -inter-
+    |
+Out |
+    <img src="static/sample-rec.jpg" alt="A sample osu!user recent play image.">
+        </pre>
+
+        <h2>-roll <small>[range]</small></h2>
+        <div>取一个随机数值。若没有指定range，则数值的区间为0-100；若range是一个数字，则数值区间为0-range；若range的格式为<code>a,b,c,d,...</code>，则可能的值在这个列表里选定。</div>
+        <pre>
+In  |-roll
+    |
+Out |37
+        </pre>
+        <pre>
+In  |-roll int100,kj415j45,interBot,Noerusagi
+    |
+Out |kj415j45
+        </pre>
+    </div>
+</body>
+</html>
