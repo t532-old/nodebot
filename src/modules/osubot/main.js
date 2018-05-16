@@ -23,7 +23,7 @@ const bind = {
         const user
         try { user = await api.statQuery({ u: account }) }
         catch (err) { 
-            msg.send('osubot: bind: 用户名无效或bot炸了！（请注意输入用户名时不用添加帮助中的尖括号<>）') 
+            msg.send('osubot: bind: 用户名无效或bot炸了！（请注意输入用户名时不用添加帮助中示例的尖括号<>）') 
             return
         }
         const result = await userdb.newUser(msg.param.user_id, user.user_id)
@@ -31,7 +31,7 @@ const bind = {
             msg.send('osubot: bind: 你绑定过id了！如果想要重新绑定，请先输入 `-unbind\' 来解绑。')
             return
         }
-        msg.send('osubot: bind: 绑定成功！\n请注意如果你的用户名包含空格，则要用英文双引号 " 将用户名括起来。\n如果绑定错误，想要重新绑定，请输入 `-unbind\' 解绑后再次使用本命令。')
+        msg.send('osubot: bind: 绑定成功！\n如果绑定错误，想要重新绑定，请输入 `-unbind\' 解绑后再次使用本命令。')
     }
 }
 
@@ -68,7 +68,7 @@ const stat = {
                 usr = bindDoc.osuid
                 prevStat = statDoc.data[mode]
             } catch (err) {
-                msg.send('osubot: stat: 你还没有绑定你的osu!id。使用 `-bind <id>\' 来绑定，如果用户名有空格请将用户名*整个*用英文引号 " 括起来！')
+                msg.send('osubot: stat: 你还没有绑定你的osu!id。\n使用 `-bind <id>\' 来绑定（*一定*要去掉两边的尖括号<>），\n如果用户名有空格请将用户名*整个*用英文引号 " 括起来！')
                 return
             }
         }
@@ -108,7 +108,7 @@ const rec = {
                 const doc = await userdb.getByQQ(msg.param.user_id)
                 usr = doc.osuid
             } catch (err) {
-                msg.send('osubot: stat: 你还没有绑定你的osu!id。使用 `-bind <id>\' 来绑定，如果用户名有空格请将用户名*整个*用英文引号 " 括起来！')
+                msg.send('osubot: stat: 你还没有绑定你的osu!id。\n使用 `-bind <id>\' 来绑定（*不带*尖括号<>），\n如果用户名有空格请将用户名*整个*用英文引号 " 括起来！')
                 return
             }
         }
