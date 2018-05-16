@@ -20,7 +20,13 @@ const bind = {
      * @param {string} account The account
      */
     async action(msg, { account }) {
-        const result = await userdb.newUser(msg.param.user_id, account)
+        const user
+        try { user = await api.statQuery({ u: account }) }
+        catch (err) { 
+            msg.send('osubot: bind: 用户名无效或bot炸了！（请注意输入用户名时不用添加帮助中的尖括号<>）') 
+            return
+        }
+        const result = await userdb.newUser(msg.param.user_id, user.user_id)
         if (!result) {
             msg.send('osubot: bind: 你绑定过id了！如果想要重新绑定，请先输入 `-unbind\' 来解绑。')
             return
@@ -62,7 +68,7 @@ const stat = {
                 usr = bindDoc.osuid
                 prevStat = statDoc.data[mode]
             } catch (err) {
-                msg.send('osubot: stat: 你还没有绑定你的osu!id。使用 `-bind <id>\' 来绑定')
+                msg.send('osubot: stat: 你还没有绑定你的osu!id。使用 `-bind <id>\' 来绑定，如果用户名有空格请将用户名*整个*用英文引号 " 括起来！')
                 return
             }
         }
@@ -102,7 +108,7 @@ const rec = {
                 const doc = await userdb.getByQQ(msg.param.user_id)
                 usr = doc.osuid
             } catch (err) {
-                msg.send('osubot: recent: 你还没有绑定你的osu!id。使用 `-bind <id>\' 来绑定')
+                msg.send('osubot: stat: 你还没有绑定你的osu!id。使用 `-bind <id>\' 来绑定，如果用户名有空格请将用户名*整个*用英文引号 " 括起来！')
                 return
             }
         }
@@ -147,4 +153,13 @@ const roll = {
     }
 }
 
-export default { bind, unbind, stat, rec, roll }
+const avatar = {
+    args: '',
+    options: [],
+    async action(msg) {
+        const user = await userdb.getByQQ(msg.param.user_id)
+        canvas.clearCachedAvatars(user.osuid)
+    }
+}
+
+export default { bind, unbind, stat, rec, roll, avatar }
