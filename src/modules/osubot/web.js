@@ -45,6 +45,18 @@ async function recentQuery(params) {
 }
 
 /**
+ * Simple sugar over apiQuery, queries user's best performance
+ * @param {object} params 
+ */
+async function bestQuery(params) {
+    let result
+    try { result = await apiQuery('get_user_best', params) }
+    catch (err) { throw new Error('bestQuery: bad network status') }
+    if (result.data === []) throw new Error('bestQuery: user does not exist or not played enough')
+    else return result.data
+}
+
+/**
  * Simple sugar over apiQuery, queries a map's info
  * @param {object} params 
  */
@@ -93,5 +105,5 @@ async function mapFileQuery(bid) {
     return parser.map
 }
 
-export const api = { query: apiQuery, statQuery, recentQuery, mapQuery }
+export const api = { query: apiQuery, statQuery, recentQuery, mapQuery, bestQuery }
 export const res = { query: staticQuery, avatarQuery, bgQuery, mapFileQuery }

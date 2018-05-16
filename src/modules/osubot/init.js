@@ -12,6 +12,7 @@ export default function() {
         fs.mkdirSync('cache/osubot/stat')
         fs.mkdirSync('cache/osubot/statbg')
         fs.mkdirSync('cache/osubot/mapbg')
+        fs.mkdirSync('cache/osubot/best')
     }
     const time = new Date(`${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate() + 1}`)
     setTimeout(async () => {

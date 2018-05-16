@@ -102,7 +102,6 @@ const rec = {
      * @param {string} usr The username that'll be queried
      */
     async action(msg, { usr = 'me' }) {
-        let data = []
         if (usr === 'me') {
             try {
                 const doc = await userdb.getByQQ(msg.param.user_id)
@@ -137,6 +136,52 @@ const rec = {
     }
 }
 
+const bp = {
+    args: '<order> [usr]',
+    options: [],
+    /**
+     * @description Get a user's best performance
+     * @param {Message} msg The universal msg object
+     * @param {string} order The username that'll be queried
+     * @param {string} usr The username that'll be queried
+     */
+    async action(msg, { order, usr = 'me' }) {
+        if (!parseInt(order) || parseInt(order) < 1 || parseInt(order) > 100)
+            msg.send('osubot: bp: 请指定一个bp序号(1-100)！')
+        if (usr === 'me') {
+            try {
+                const doc = await userdb.getByQQ(msg.param.user_id)
+                usr = doc.osuid
+            } catch (err) {
+                msg.send('osubot: bp: 你还没有绑定你的osu!id。\n使用 `-bind <id>\' 来绑定（*不带*尖括号<>），\n如果用户名有空格请将用户名*整个*用英文引号 " 括起来！')
+                return
+            }
+        }
+        try { 
+            const rec = (await api.bestQuery({
+                u: usr,
+                limit: order,
+            }))[order - 1]
+            const [map, stat] = await Promise.all([
+                api.mapQuery({ b: rec.beatmap_id }),
+                api.statQuery({ u: usr }),
+            ])
+            const path = await canvas.drawbest(rec, map, stat)
+            if (path)
+                msg.send([{
+                    type: 'image',
+                    data: {
+                        file: path,
+                    }
+                }])
+            else msg.send('osubot: bp: 请过会重试！')
+        } catch (err) {
+            msg.send(err.stack)
+            return
+        }
+    }
+}
+
 const roll = {
     args: '[range]',
     options: [],
@@ -162,4 +207,4 @@ const avatar = {
     }
 }
 
-export default { bind, unbind, stat, rec, roll, avatar }
+export default { bind, unbind, stat, rec, bp, roll, avatar }

@@ -263,59 +263,57 @@ var rec = {
         var _ref5$usr = _ref5.usr,
             usr = _ref5$usr === undefined ? 'me' : _ref5$usr;
         return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4() {
-            var data, doc, _rec, _ref6, _ref7, map, _stat2, path;
+            var doc, _rec, _ref6, _ref7, map, _stat2, path;
 
             return _regenerator2.default.wrap(function _callee4$(_context4) {
                 while (1) {
                     switch (_context4.prev = _context4.next) {
                         case 0:
-                            data = [];
-
                             if (!(usr === 'me')) {
-                                _context4.next = 13;
+                                _context4.next = 12;
                                 break;
                             }
 
-                            _context4.prev = 2;
-                            _context4.next = 5;
+                            _context4.prev = 1;
+                            _context4.next = 4;
                             return _db.userdb.getByQQ(msg.param.user_id);
 
-                        case 5:
+                        case 4:
                             doc = _context4.sent;
 
                             usr = doc.osuid;
-                            _context4.next = 13;
+                            _context4.next = 12;
                             break;
 
-                        case 9:
-                            _context4.prev = 9;
-                            _context4.t0 = _context4['catch'](2);
+                        case 8:
+                            _context4.prev = 8;
+                            _context4.t0 = _context4['catch'](1);
 
                             msg.send('osubot: stat: 你还没有绑定你的osu!id。\n使用 `-bind <id>\' 来绑定（*不带*尖括号<>），\n如果用户名有空格请将用户名*整个*用英文引号 " 括起来！');
                             return _context4.abrupt('return');
 
-                        case 13:
-                            _context4.prev = 13;
-                            _context4.next = 16;
+                        case 12:
+                            _context4.prev = 12;
+                            _context4.next = 15;
                             return _web.api.recentQuery({
                                 u: usr,
                                 limit: '1'
                             });
 
-                        case 16:
+                        case 15:
                             _rec = _context4.sent;
-                            _context4.next = 19;
+                            _context4.next = 18;
                             return _promise2.default.all([_web.api.mapQuery({ b: _rec.beatmap_id }), _web.api.statQuery({ u: usr })]);
 
-                        case 19:
+                        case 18:
                             _ref6 = _context4.sent;
                             _ref7 = (0, _slicedToArray3.default)(_ref6, 2);
                             map = _ref7[0];
                             _stat2 = _ref7[1];
-                            _context4.next = 25;
+                            _context4.next = 24;
                             return _canvas2.default.drawRecent(_rec, map, _stat2);
 
-                        case 25:
+                        case 24:
                             path = _context4.sent;
 
                             if (path) msg.send([{
@@ -324,22 +322,120 @@ var rec = {
                                     file: path
                                 }
                             }]);else msg.send('osubot: rec: 请过会重试！');
-                            _context4.next = 33;
+                            _context4.next = 32;
                             break;
 
-                        case 29:
-                            _context4.prev = 29;
-                            _context4.t1 = _context4['catch'](13);
+                        case 28:
+                            _context4.prev = 28;
+                            _context4.t1 = _context4['catch'](12);
 
                             msg.send(_context4.t1.stack);
                             return _context4.abrupt('return');
 
-                        case 33:
+                        case 32:
                         case 'end':
                             return _context4.stop();
                     }
                 }
-            }, _callee4, _this4, [[2, 9], [13, 29]]);
+            }, _callee4, _this4, [[1, 8], [12, 28]]);
+        }))();
+    }
+};
+
+var bp = {
+    args: '<order> [usr]',
+    options: [],
+    /**
+     * @description Get a user's best performance
+     * @param {Message} msg The universal msg object
+     * @param {string} order The username that'll be queried
+     * @param {string} usr The username that'll be queried
+     */
+    action: function action(msg, _ref8) {
+        var _this5 = this;
+
+        var order = _ref8.order,
+            _ref8$usr = _ref8.usr,
+            usr = _ref8$usr === undefined ? 'me' : _ref8$usr;
+        return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee5() {
+            var doc, _rec2, _ref9, _ref10, map, _stat3, path;
+
+            return _regenerator2.default.wrap(function _callee5$(_context5) {
+                while (1) {
+                    switch (_context5.prev = _context5.next) {
+                        case 0:
+                            if (!parseInt(order) || parseInt(order) < 1 || parseInt(order) > 100) msg.send('osubot: bp: 请指定一个bp序号(1-100)！');
+
+                            if (!(usr === 'me')) {
+                                _context5.next = 13;
+                                break;
+                            }
+
+                            _context5.prev = 2;
+                            _context5.next = 5;
+                            return _db.userdb.getByQQ(msg.param.user_id);
+
+                        case 5:
+                            doc = _context5.sent;
+
+                            usr = doc.osuid;
+                            _context5.next = 13;
+                            break;
+
+                        case 9:
+                            _context5.prev = 9;
+                            _context5.t0 = _context5['catch'](2);
+
+                            msg.send('osubot: bp: 你还没有绑定你的osu!id。\n使用 `-bind <id>\' 来绑定（*不带*尖括号<>），\n如果用户名有空格请将用户名*整个*用英文引号 " 括起来！');
+                            return _context5.abrupt('return');
+
+                        case 13:
+                            _context5.prev = 13;
+                            _context5.next = 16;
+                            return _web.api.bestQuery({
+                                u: usr,
+                                limit: order
+                            });
+
+                        case 16:
+                            _context5.t1 = order - 1;
+                            _rec2 = _context5.sent[_context5.t1];
+                            _context5.next = 20;
+                            return _promise2.default.all([_web.api.mapQuery({ b: _rec2.beatmap_id }), _web.api.statQuery({ u: usr })]);
+
+                        case 20:
+                            _ref9 = _context5.sent;
+                            _ref10 = (0, _slicedToArray3.default)(_ref9, 2);
+                            map = _ref10[0];
+                            _stat3 = _ref10[1];
+                            _context5.next = 26;
+                            return _canvas2.default.drawbest(_rec2, map, _stat3);
+
+                        case 26:
+                            path = _context5.sent;
+
+                            if (path) msg.send([{
+                                type: 'image',
+                                data: {
+                                    file: path
+                                }
+                            }]);else msg.send('osubot: bp: 请过会重试！');
+                            _context5.next = 34;
+                            break;
+
+                        case 30:
+                            _context5.prev = 30;
+                            _context5.t2 = _context5['catch'](13);
+
+                            msg.send(_context5.t2.stack);
+                            return _context5.abrupt('return');
+
+                        case 34:
+                        case 'end':
+                            return _context5.stop();
+                    }
+                }
+            }, _callee5, _this5, [[2, 9], [13, 30]]);
         }))();
     }
 };
@@ -352,15 +448,15 @@ var roll = {
      * @param {Message} msg The universal msg object
      * @param {string} range The rolling range
      */
-    action: function action(msg, _ref8) {
-        var _this5 = this;
+    action: function action(msg, _ref11) {
+        var _this6 = this;
 
-        var _ref8$range = _ref8.range,
-            range = _ref8$range === undefined ? '100' : _ref8$range;
-        return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee5() {
-            return _regenerator2.default.wrap(function _callee5$(_context5) {
+        var _ref11$range = _ref11.range,
+            range = _ref11$range === undefined ? '100' : _ref11$range;
+        return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee6() {
+            return _regenerator2.default.wrap(function _callee6$(_context6) {
                 while (1) {
-                    switch (_context5.prev = _context5.next) {
+                    switch (_context6.prev = _context6.next) {
                         case 0:
                             if (typeof range === 'string' && !parseInt(range)) {
                                 range = range.split(',');
@@ -368,36 +464,6 @@ var roll = {
                             } else msg.send(Math.round(Math.random() * parseInt(range)).toString());
 
                         case 1:
-                        case 'end':
-                            return _context5.stop();
-                    }
-                }
-            }, _callee5, _this5);
-        }))();
-    }
-};
-
-var avatar = {
-    args: '',
-    options: [],
-    action: function action(msg) {
-        var _this6 = this;
-
-        return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee6() {
-            var user;
-            return _regenerator2.default.wrap(function _callee6$(_context6) {
-                while (1) {
-                    switch (_context6.prev = _context6.next) {
-                        case 0:
-                            _context6.next = 2;
-                            return _db.userdb.getByQQ(msg.param.user_id);
-
-                        case 2:
-                            user = _context6.sent;
-
-                            _canvas2.default.clearCachedAvatars(user.osuid);
-
-                        case 4:
                         case 'end':
                             return _context6.stop();
                     }
@@ -407,4 +473,34 @@ var avatar = {
     }
 };
 
-exports.default = { bind: bind, unbind: unbind, stat: stat, rec: rec, roll: roll, avatar: avatar };
+var avatar = {
+    args: '',
+    options: [],
+    action: function action(msg) {
+        var _this7 = this;
+
+        return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee7() {
+            var user;
+            return _regenerator2.default.wrap(function _callee7$(_context7) {
+                while (1) {
+                    switch (_context7.prev = _context7.next) {
+                        case 0:
+                            _context7.next = 2;
+                            return _db.userdb.getByQQ(msg.param.user_id);
+
+                        case 2:
+                            user = _context7.sent;
+
+                            _canvas2.default.clearCachedAvatars(user.osuid);
+
+                        case 4:
+                        case 'end':
+                            return _context7.stop();
+                    }
+                }
+            }, _callee7, _this7);
+        }))();
+    }
+};
+
+exports.default = { bind: bind, unbind: unbind, stat: stat, rec: rec, bp: bp, roll: roll, avatar: avatar };

@@ -25,6 +25,7 @@ exports.default = function () {
         _fs2.default.mkdirSync('cache/osubot/stat');
         _fs2.default.mkdirSync('cache/osubot/statbg');
         _fs2.default.mkdirSync('cache/osubot/mapbg');
+        _fs2.default.mkdirSync('cache/osubot/best');
     }
     var time = new Date(new Date().getFullYear() + '-' + new Date().getMonth() + '-' + (new Date().getDate() + 1));
     setTimeout((0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
