@@ -31,7 +31,7 @@ $ npm start
 ```
 ## 其他命令
 - 转译(通过 Babel): `npm run build` (=> `babel src -d dist`)
-- 造个文档(通过 JSDoc): `npm run doc` (=> `jsdoc src -r -d doc -R README.md`)
+- 提交文档更改: `git subtree push --prefix=doc origin gh-pages`
 
 # English
 A bot developed for qureying osu! info.
@@ -53,4 +53,4 @@ $ npm start
 ```
 ## Other commands
 - Compile(through Babel): `npm run build` (=> `babel src -d dist`)
-- Build docs(through JSDoc): `npm run doc` (=> `jsdoc src -r -d doc -R README.md`)
+- Commit changes of docs: `git subtree push --prefix=doc origin gh-pages`
