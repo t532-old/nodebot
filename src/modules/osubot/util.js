@@ -48,6 +48,21 @@ export default {
         return num
     },
     /**
+     * Diffs the numbers in two objects
+     * @param {object} differ - The base comparing object
+     * @param {object} diffee - The substractors
+     */
+    objDiff(differ, diffee) {
+        const result = differ
+        for (i in Object.keys(differ))
+            if (typeof differ[i] === 'number' && typeof diffee[i] === 'number')
+                result[i] = differ[i] - diffee[i]
+            if (parseFloat(differ[i]) && parseFloat(diffee[i]))
+                result[i] = parseFloat(differ[i]) - parseFloat(diffee[i])
+            else delete result[i]
+        return result
+    },
+    /**
      * Deep copy an object
      * @param {object} obj The object that's being copied
      */
