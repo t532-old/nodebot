@@ -95,13 +95,14 @@ const stat = {
 
 const rec = {
     args: '[usr]',
-    options: [],
+    options: util.flatten(util.modes),
     /**
      * @description Get a user's most recent play
      * @param {Message} msg The universal msg object
      * @param {string} usr The username that'll be queried
      */
-    async action(msg, { usr = 'me' }) {
+    async action(msg, { usr = 'me' }, [ mode = 'o' ]) {
+        mode = util.checkmode(mode)
         if (usr === 'me') {
             try {
                 const doc = await userdb.getByQQ(msg.param.user_id)
@@ -115,6 +116,7 @@ const rec = {
             const rec = await api.recentQuery({
                 u: usr,
                 limit: '1',
+                m: mode,
             })
             const [map, stat] = await Promise.all([
                 api.mapQuery({ b: rec.beatmap_id }),
