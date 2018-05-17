@@ -53,7 +53,7 @@ export default {
      * @param {object} diffee - The substractors
      */
     objDiff(differ, diffee) {
-        const result = differ
+        const result = this.copy(differ)
         for (i in Object.keys(differ))
             if (typeof differ[i] === 'number' && typeof diffee[i] === 'number')
                 result[i] = differ[i] - diffee[i]
@@ -81,7 +81,7 @@ export default {
     flatten(arr) {
         const flat = []
         for (let i of arr) {
-            if (i instanceof Array) flat.push(...this.flatten(i))
+            if (i instanceof Array) flat = [...flat, ...this.flatten(i)]
             else flat.push(i)
         }
         return flat
