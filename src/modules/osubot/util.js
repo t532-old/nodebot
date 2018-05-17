@@ -79,7 +79,7 @@ export default {
      * @param {array} arr Array to be flatten
      */
     flatten(arr) {
-        const flat = []
+        let flat = []
         for (let i of arr) {
             if (i instanceof Array) flat = [...flat, ...this.flatten(i)]
             else flat.push(i)

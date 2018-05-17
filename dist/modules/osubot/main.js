@@ -251,69 +251,77 @@ var stat = {
 
 var rec = {
     args: '[usr]',
-    options: [],
+    options: _util2.default.flatten(_util2.default.modes),
     /**
      * @description Get a user's most recent play
      * @param {Message} msg The universal msg object
      * @param {string} usr The username that'll be queried
      */
-    action: function action(msg, _ref5) {
+    action: function action(msg, _ref5, _ref6) {
         var _this4 = this;
 
         var _ref5$usr = _ref5.usr,
             usr = _ref5$usr === undefined ? 'me' : _ref5$usr;
+
+        var _ref7 = (0, _slicedToArray3.default)(_ref6, 1),
+            _ref7$ = _ref7[0],
+            mode = _ref7$ === undefined ? 'o' : _ref7$;
+
         return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4() {
-            var doc, _rec, _ref6, _ref7, map, _stat2, path;
+            var doc, _rec, _ref8, _ref9, map, _stat2, path;
 
             return _regenerator2.default.wrap(function _callee4$(_context4) {
                 while (1) {
                     switch (_context4.prev = _context4.next) {
                         case 0:
+                            mode = _util2.default.checkmode(mode);
+
                             if (!(usr === 'me')) {
-                                _context4.next = 12;
+                                _context4.next = 13;
                                 break;
                             }
 
-                            _context4.prev = 1;
-                            _context4.next = 4;
+                            _context4.prev = 2;
+                            _context4.next = 5;
                             return _db.userdb.getByQQ(msg.param.user_id);
 
-                        case 4:
+                        case 5:
                             doc = _context4.sent;
 
                             usr = doc.osuid;
-                            _context4.next = 12;
+                            _context4.next = 13;
                             break;
 
-                        case 8:
-                            _context4.prev = 8;
-                            _context4.t0 = _context4['catch'](1);
+                        case 9:
+                            _context4.prev = 9;
+                            _context4.t0 = _context4['catch'](2);
 
                             msg.send('osubot: stat: 你还没有绑定你的osu!id。\n使用 `-bind <id>\' 来绑定（*不带*尖括号<>），\n如果用户名有空格请将用户名*整个*用英文引号 " 括起来！');
                             return _context4.abrupt('return');
 
-                        case 12:
-                            _context4.prev = 12;
-                            _context4.next = 15;
+                        case 13:
+                            _context4.prev = 13;
+                            _context4.next = 16;
                             return _web.api.recentQuery({
                                 u: usr,
-                                limit: '1'
+                                limit: '1',
+                                m: mode
                             });
 
-                        case 15:
+                        case 16:
                             _rec = _context4.sent;
-                            _context4.next = 18;
+                            _context4.next = 19;
                             return _promise2.default.all([_web.api.mapQuery({ b: _rec.beatmap_id }), _web.api.statQuery({ u: usr })]);
 
-                        case 18:
-                            _ref6 = _context4.sent;
-                            _ref7 = (0, _slicedToArray3.default)(_ref6, 2);
-                            map = _ref7[0];
-                            _stat2 = _ref7[1];
-                            _context4.next = 24;
+                        case 19:
+                            _ref8 = _context4.sent;
+                            _ref9 = (0, _slicedToArray3.default)(_ref8, 2);
+                            map = _ref9[0];
+                            _stat2 = _ref9[1];
+                            _context4.next = 25;
                             return _canvas2.default.drawRecent(_rec, map, _stat2);
 
-                        case 24:
+                        case 25:
                             path = _context4.sent;
 
                             if (path) msg.send([{
@@ -322,22 +330,22 @@ var rec = {
                                     file: path
                                 }
                             }]);else msg.send('osubot: rec: 请过会重试！');
-                            _context4.next = 32;
+                            _context4.next = 33;
                             break;
 
-                        case 28:
-                            _context4.prev = 28;
-                            _context4.t1 = _context4['catch'](12);
+                        case 29:
+                            _context4.prev = 29;
+                            _context4.t1 = _context4['catch'](13);
 
                             msg.send(_context4.t1.stack);
                             return _context4.abrupt('return');
 
-                        case 32:
+                        case 33:
                         case 'end':
                             return _context4.stop();
                     }
                 }
-            }, _callee4, _this4, [[1, 8], [12, 28]]);
+            }, _callee4, _this4, [[2, 9], [13, 29]]);
         }))();
     }
 };
@@ -351,14 +359,14 @@ var bp = {
      * @param {string} order The username that'll be queried
      * @param {string} usr The username that'll be queried
      */
-    action: function action(msg, _ref8) {
+    action: function action(msg, _ref10) {
         var _this5 = this;
 
-        var order = _ref8.order,
-            _ref8$usr = _ref8.usr,
-            usr = _ref8$usr === undefined ? 'me' : _ref8$usr;
+        var order = _ref10.order,
+            _ref10$usr = _ref10.usr,
+            usr = _ref10$usr === undefined ? 'me' : _ref10$usr;
         return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee5() {
-            var doc, _rec2, _ref9, _ref10, map, _stat3, path;
+            var doc, _rec2, _ref11, _ref12, map, _stat3, path;
 
             return _regenerator2.default.wrap(function _callee5$(_context5) {
                 while (1) {
@@ -404,10 +412,10 @@ var bp = {
                             return _promise2.default.all([_web.api.mapQuery({ b: _rec2.beatmap_id }), _web.api.statQuery({ u: usr })]);
 
                         case 20:
-                            _ref9 = _context5.sent;
-                            _ref10 = (0, _slicedToArray3.default)(_ref9, 2);
-                            map = _ref10[0];
-                            _stat3 = _ref10[1];
+                            _ref11 = _context5.sent;
+                            _ref12 = (0, _slicedToArray3.default)(_ref11, 2);
+                            map = _ref12[0];
+                            _stat3 = _ref12[1];
                             _context5.next = 26;
                             return _canvas2.default.drawbest(_rec2, map, _stat3);
 
@@ -448,11 +456,11 @@ var roll = {
      * @param {Message} msg The universal msg object
      * @param {string} range The rolling range
      */
-    action: function action(msg, _ref11) {
+    action: function action(msg, _ref13) {
         var _this6 = this;
 
-        var _ref11$range = _ref11.range,
-            range = _ref11$range === undefined ? '100' : _ref11$range;
+        var _ref13$range = _ref13.range,
+            range = _ref13$range === undefined ? '100' : _ref13$range;
         return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee6() {
             return _regenerator2.default.wrap(function _callee6$(_context6) {
                 while (1) {
@@ -491,7 +499,10 @@ var avatar = {
                         case 2:
                             user = _context7.sent;
 
-                            _canvas2.default.clearCachedAvatars(user.osuid);
+                            if (user) {
+                                _canvas2.default.clearCachedAvatars(user.osuid);
+                                msg.send('osubot: avatar: 清除头像缓存成功！');
+                            } else msg.send('osubot: avatar: 你还没有绑定你的osu!id。\n使用 `-bind <id>\' 来绑定（*不带*尖括号<>），\n如果用户名有空格请将用户名*整个*用英文引号 " 括起来！');
 
                         case 4:
                         case 'end':
