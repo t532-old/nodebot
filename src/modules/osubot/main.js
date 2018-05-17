@@ -205,7 +205,10 @@ const avatar = {
     options: [],
     async action(msg) {
         const user = await userdb.getByQQ(msg.param.user_id)
-        canvas.clearCachedAvatars(user.osuid)
+        if (user) {
+            canvas.clearCachedAvatars(user.osuid)
+            msg.send('osubot: avatar: 清除头像缓存成功！')
+        } else msg.send('osubot: avatar: 你还没有绑定你的osu!id。\n使用 `-bind <id>\' 来绑定（*不带*尖括号<>），\n如果用户名有空格请将用户名*整个*用英文引号 " 括起来！')
     }
 }
 
