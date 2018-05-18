@@ -43,6 +43,8 @@
             padding-top: 30vh;
             background-image: url("static/bg.jpg");
             background-size: cover;
+            text-shadow: 0 0 5px black;
+            font-weight: bold;
         }
         
         .nav {
@@ -94,15 +96,34 @@
 
         h2 small {
             color: gray;
+            font-size: 70%;
         }
 
         pre {
             color: gray;
             border-left: solid 2px gray;
             padding: 10px;
-            font-family: Consolas, Menlo, Monaco, monospace;
+            font-family: Consolas, Menlo, Monaco, Courier, monospace;
         }
 
+        .main h2 {
+            font-family: Consolas, Menlo, Monaco, Courier, monospace;
+            border-top: solid #ddd 1px;
+            padding: 10px;
+        }
+
+        code {
+            background-color: #aaa;
+            color: #fff;
+            font-family: Consolas, Menlo, Monaco, Courier, monospace;
+            border-radius: 3px;
+            padding: 0 5px;
+        }
+
+        .copyright {
+            color: #aaa;
+            text-align: center;
+        }
         @keyframes slide-out {
             from {
                 right: 0;
@@ -182,7 +203,7 @@
 
         <ul>
             <li><h2>Tips</h2></li>
-            <li>当你的用户名包含空格时，你需要使用英文双引号 " 来包裹用户名。</li>
+            <li>当你的用户名包含空格时，你需要使用英文双引号 <code>""</code> 来包裹用户名。</li>
         </ul>
 
         <h2>-test <small>[txt...]</small></h2>
@@ -240,7 +261,7 @@ Out |
     <img src="static/sample-rec.jpg" alt="A sample osu!user recent play image.">
         </pre>
 
-        <h2>-rec <small>&lt;order&gt; &lt;user=me&gt; *std/taiko/ctb/mania</small></h2>
+        <h2>-bp <small>&lt;order&gt; &lt;user=me&gt; *std/taiko/ctb/mania</small></h2>
         <div>查询你的（或者<code>&lt;user&gt;</code>的）排名第<code>&lt;order&gt;</code>的bp并且返回一张带有该bp游玩信息的，osu!lazer风格的图片。命令中的星号选项可选，星号后跟的单词为模式。</div>
         <div>如果想要查询你自己，那就使用 <code>-bp &lt;order&gt;</code>。</div>
         <pre>
@@ -262,6 +283,11 @@ In  |-roll int100,kj415j45,interBot,Noerusagi
     |
 Out |kj415j45
         </pre>
+
+        <div class="copyright">
+            Copyright &copy; trustgit 2018 · MIT License<br>
+            Built with &hearts; in Suzhou
+        </div>
     </div>
 </body>
 </html>
