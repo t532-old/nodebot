@@ -71,10 +71,7 @@ const stat = {
             try {
                 const statDoc = await statdb.getByQQ(msg.param.user_id)
                 prevStat = statDoc.data[mode]
-            } catch (err) {
-                msg.send('osubot: stat: 数据库波动，请稍后再试！')
-                return
-            }
+            } catch (err) { prevStat = undefined }
         }
         try { 
             const stat = await api.statQuery({
