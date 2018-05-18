@@ -240,6 +240,16 @@ Out |
     <img src="static/sample-rec.jpg" alt="A sample osu!user recent play image.">
         </pre>
 
+        <h2>-rec <small>&lt;order&gt; &lt;user=me&gt; *std/taiko/ctb/mania</small></h2>
+        <div>查询你的（或者<code>&lt;user&gt;</code>的）排名第<code>&lt;order&gt;</code>的bp并且返回一张带有该bp游玩信息的，osu!lazer风格的图片。命令中的星号选项可选，星号后跟的单词为模式。</div>
+        <div>如果想要查询你自己，那就使用 <code>-bp &lt;order&gt;</code>。</div>
+        <pre>
+In  |-bp 1 -inter-
+    |
+Out |
+    <img src="static/sample-bp.jpg" alt="A sample osu!user bp image.">
+        </pre>
+
         <h2>-roll <small>[range]</small></h2>
         <div>取一个随机数值。若没有指定range，则数值的区间为0-100；若range是一个数字，则数值区间为0-range；若range的格式为<code>a,b,c,d,...</code>，则可能的值在这个列表里选定。</div>
         <pre>
