@@ -215,12 +215,9 @@ var drawStat = function () {
                         return promisifyGM((0, _gm2.default)(dest).quality(100).composite('assets/image/flags/' + stat.country + '.png').gravity('North').geometry('-50+343'));
 
                     case 26:
-                        if (statPrev) {
-                            // TODO: Draw the increasement
-                        }
                         return _context2.abrupt('return', 'file://' + process.cwd() + _path2.default.sep + dest);
 
-                    case 28:
+                    case 27:
                     case 'end':
                         return _context2.stop();
                 }

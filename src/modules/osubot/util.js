@@ -54,12 +54,13 @@ export default {
      */
     objDiff(differ, diffee) {
         const result = this.copy(differ)
-        for (i in Object.keys(differ))
+        for (let i in Object.keys(differ)) {
             if (typeof differ[i] === 'number' && typeof diffee[i] === 'number')
                 result[i] = differ[i] - diffee[i]
-            if (parseFloat(differ[i]) && parseFloat(diffee[i]))
+            else if (parseFloat(differ[i]) && parseFloat(diffee[i]))
                 result[i] = parseFloat(differ[i]) - parseFloat(diffee[i])
             else delete result[i]
+        }
         return result
     },
     /**
@@ -69,7 +70,7 @@ export default {
     copy(obj) {
         let res = new obj.constructor()
         for (let i in obj) {
-            if (obj[i] instanceof Object) res[i] = copy(obj[i])
+            if (obj[i] instanceof Object) res[i] = this.copy(obj[i])
             else res[i] = obj[i]
         }
         return res
@@ -85,5 +86,5 @@ export default {
             else flat.push(i)
         }
         return flat
-    }
+    },
 }

@@ -6,7 +6,6 @@ import util from './util'
 import { userdb, statdb } from './db'
 // Imports from modules
 import fs from 'fs'
-import Monk from 'monk'
 import yaml from 'js-yaml'
 // Initialize settings
 const config = yaml.safeLoad(fs.readFileSync('config.yml')).osubot
@@ -64,11 +63,16 @@ const stat = {
         if (usr === 'me') {
             try {
                 const bindDoc = await userdb.getByQQ(msg.param.user_id)
-                const statDoc = await statdb.getByQQ(msg.param.user_id)
                 usr = bindDoc.osuid
-                prevStat = statDoc.data[mode]
             } catch (err) {
                 msg.send('osubot: stat: 你还没有绑定你的osu!id。\n使用 `-bind <id>\' 来绑定（*一定*要去掉两边的尖括号<>），\n如果用户名有空格请将用户名*整个*用英文引号 " 括起来！')
+                return
+            }
+            try {
+                const statDoc = await statdb.getByQQ(msg.param.user_id)
+                prevStat = statDoc.data[mode]
+            } catch (err) {
+                msg.send('osubot: stat: 数据库波动，请稍后再试！')
                 return
             }
         }
@@ -87,7 +91,8 @@ const stat = {
                 }])
             else msg.send('osubot: stat: 请过会重试！')
         } catch (err) {
-            msg.send(err.stack)
+            console.log(err)
+            msg.send(err.toString())
             return
         }
     }
@@ -132,7 +137,7 @@ const rec = {
                 }])
             else msg.send('osubot: rec: 请过会重试！')
         } catch (err) {
-            msg.send(err.stack)
+            msg.send(err.toString())
             return
         }
     }
@@ -168,7 +173,7 @@ const bp = {
                 api.mapQuery({ b: rec.beatmap_id }),
                 api.statQuery({ u: usr }),
             ])
-            const path = await canvas.drawbest(rec, map, stat)
+            const path = await canvas.drawBest(rec, map, stat)
             if (path)
                 msg.send([{
                     type: 'image',
@@ -178,7 +183,7 @@ const bp = {
                 }])
             else msg.send('osubot: bp: 请过会重试！')
         } catch (err) {
-            msg.send(err.stack)
+            msg.send(err.toString())
             return
         }
     }

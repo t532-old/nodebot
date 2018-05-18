@@ -38,10 +38,6 @@ var _fs = require('fs');
 
 var _fs2 = _interopRequireDefault(_fs);
 
-var _monk = require('monk');
-
-var _monk2 = _interopRequireDefault(_monk);
-
 var _jsYaml = require('js-yaml');
 
 var _jsYaml2 = _interopRequireDefault(_jsYaml);
@@ -49,9 +45,9 @@ var _jsYaml2 = _interopRequireDefault(_jsYaml);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Initialize settings
-// Imports from local file
-var config = _jsYaml2.default.safeLoad(_fs2.default.readFileSync('config.yml')).osubot;
+
 // Imports from modules
+var config = _jsYaml2.default.safeLoad(_fs2.default.readFileSync('config.yml')).osubot; // Imports from local file
 
 
 var bind = {
@@ -179,7 +175,7 @@ var stat = {
                             prevStat = void 0;
 
                             if (!(usr === 'me')) {
-                                _context3.next = 18;
+                                _context3.next = 25;
                                 break;
                             }
 
@@ -189,38 +185,51 @@ var stat = {
 
                         case 6:
                             bindDoc = _context3.sent;
-                            _context3.next = 9;
-                            return _db.statdb.getByQQ(msg.param.user_id);
-
-                        case 9:
-                            statDoc = _context3.sent;
 
                             usr = bindDoc.osuid;
-                            prevStat = statDoc.data[mode];
-                            _context3.next = 18;
+                            _context3.next = 14;
                             break;
 
-                        case 14:
-                            _context3.prev = 14;
+                        case 10:
+                            _context3.prev = 10;
                             _context3.t0 = _context3['catch'](3);
 
                             msg.send('osubot: stat: 你还没有绑定你的osu!id。\n使用 `-bind <id>\' 来绑定（*一定*要去掉两边的尖括号<>），\n如果用户名有空格请将用户名*整个*用英文引号 " 括起来！');
                             return _context3.abrupt('return');
 
-                        case 18:
-                            _context3.prev = 18;
-                            _context3.next = 21;
+                        case 14:
+                            _context3.prev = 14;
+                            _context3.next = 17;
+                            return _db.statdb.getByQQ(msg.param.user_id);
+
+                        case 17:
+                            statDoc = _context3.sent;
+
+                            prevStat = statDoc.data[mode];
+                            _context3.next = 25;
+                            break;
+
+                        case 21:
+                            _context3.prev = 21;
+                            _context3.t1 = _context3['catch'](14);
+
+                            msg.send('osubot: stat: 数据库波动，请稍后再试！');
+                            return _context3.abrupt('return');
+
+                        case 25:
+                            _context3.prev = 25;
+                            _context3.next = 28;
                             return _web.api.statQuery({
                                 u: usr,
                                 m: mode
                             });
 
-                        case 21:
+                        case 28:
                             _stat = _context3.sent;
-                            _context3.next = 24;
+                            _context3.next = 31;
                             return _canvas2.default.drawStat(_stat, prevStat);
 
-                        case 24:
+                        case 31:
                             path = _context3.sent;
 
                             if (path) msg.send([{
@@ -229,22 +238,23 @@ var stat = {
                                     file: path
                                 }
                             }]);else msg.send('osubot: stat: 请过会重试！');
-                            _context3.next = 32;
+                            _context3.next = 40;
                             break;
 
-                        case 28:
-                            _context3.prev = 28;
-                            _context3.t1 = _context3['catch'](18);
+                        case 35:
+                            _context3.prev = 35;
+                            _context3.t2 = _context3['catch'](25);
 
-                            msg.send(_context3.t1.stack);
+                            console.log(_context3.t2);
+                            msg.send(_context3.t2.toString());
                             return _context3.abrupt('return');
 
-                        case 32:
+                        case 40:
                         case 'end':
                             return _context3.stop();
                     }
                 }
-            }, _callee3, _this3, [[3, 14], [18, 28]]);
+            }, _callee3, _this3, [[3, 10], [14, 21], [25, 35]]);
         }))();
     }
 };
@@ -337,7 +347,7 @@ var rec = {
                             _context4.prev = 29;
                             _context4.t1 = _context4['catch'](13);
 
-                            msg.send(_context4.t1.stack);
+                            msg.send(_context4.t1.toString());
                             return _context4.abrupt('return');
 
                         case 33:
@@ -417,7 +427,7 @@ var bp = {
                             map = _ref12[0];
                             _stat3 = _ref12[1];
                             _context5.next = 26;
-                            return _canvas2.default.drawbest(_rec2, map, _stat3);
+                            return _canvas2.default.drawBest(_rec2, map, _stat3);
 
                         case 26:
                             path = _context5.sent;
@@ -435,7 +445,7 @@ var bp = {
                             _context5.prev = 30;
                             _context5.t2 = _context5['catch'](13);
 
-                            msg.send(_context5.t2.stack);
+                            msg.send(_context5.t2.toString());
                             return _context5.abrupt('return');
 
                         case 34:

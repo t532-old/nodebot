@@ -292,9 +292,18 @@ async function drawStat(stat, statPrev) {
         .gravity('North')
         .geometry('-50+343')
     )
-    if (statPrev) {
-        // TODO: Draw the increasement
-    }
+    /*if (statPrev) {
+        const diff = util.objDiff(stat, statPrev)
+        await promisifyGM(
+            gm(dest)
+            .quality(100)
+            .gravity('Center')
+            .font('assets/fonts/Exo2.0-Regular.otf')
+            .fill('#888')
+            .fontSize(13)
+            .drawText()
+        )
+    }*/
     return 'file://' + process.cwd() + path.sep + dest
 }
 

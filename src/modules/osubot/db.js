@@ -5,18 +5,20 @@ import { api } from './web'
 
 const db = Monk('localhost:27017/botdb')
 const users = db.get('users')
-const stats = db.get('stats')
+const stats = db.get('userstats')
 const config = yaml.safeLoad(fs.readFileSync('config.yml')).osubot
 
-/**
- * reduce multi user information into one
- * @param {string} qqid - The querying arg qqid
- */
-async function reduceSame(qqid) {
-    const found = await users.find({ qqid })
-    const final = found[0]
-    await users.remove({ qqid })
-    return users.insert(final)
+async function reduceAll() {
+    let docs = await users.find()
+    for (let i of docs) {
+        let user
+        try { user = await api.statQuery({ u: i.osuid }) }
+        catch (err) { 
+            await users.remove({ osuid: i.osuid })
+            continue
+        }
+        await users.update({ osuid: i.osuid }, { osuid: user.user_id })
+    }
 }
 
 /**
@@ -29,7 +31,7 @@ async function newUser(qqid, osuid) {
     if (exists)
         return false
     await users.insert({ qqid, osuid })
-    initStat(uid)
+    return refreshStat(osuid)
 }
 
 /**
@@ -41,37 +43,27 @@ async function delUser(qqid) {
 }
 
 /**
- * inits a bound user's stat cache
- * @param {string} osuid - THe querying arg osuid
- */
-async function initStat(osuid) {
-    const [osu, taiko, ctb, mania] = await Promise.all([
-        api.statQuery({ u: osuid, k: config.key, m: 0 }),
-        api.statQuery({ u: osuid, k: config.key, m: 1 }),
-        api.statQuery({ u: osuid, k: config.key, m: 2 }),
-        api.statQuery({ u: osuid, k: config.key, m: 3 }),
-    ])
-    return stats.insert({ osuid, data: [osu, taiko, ctb, mania]})
-}
-
-/**
  * refreshes a bound user's stat cache
  * @param {string} osuid - The querying arg osuid
  */
 async function refreshStat(osuid) {
-    const [osu, taiko, ctb, mania] = await Promise.all([
-        api.statQuery({ u: osuid, k: config.key, m: 0 }),
-        api.statQuery({ u: osuid, k: config.key, m: 1 }),
-        api.statQuery({ u: osuid, k: config.key, m: 2 }),
-        api.statQuery({ u: osuid, k: config.key, m: 3 }),
-    ])
-    return stats.update({ osuid }, { data: [osu, taiko, ctb, mania] })
+    let osu, taiko, ctb, mania
+    try {
+        [osu, taiko, ctb, mania] = await Promise.all([
+            api.statQuery({ u: osuid, m: 0 }),
+            api.statQuery({ u: osuid, m: 1 }),
+            api.statQuery({ u: osuid, m: 2 }),
+            api.statQuery({ u: osuid, m: 3 }),
+        ])
+    } catch (err) { return }
+    if (await stats.findOne({ osuid })) return stats.update({ osuid }, { data: [osu, taiko, ctb, mania] })
+    else return stats.insert({ osuid, data: [osu, taiko, ctb, mania] })
 }
 
 async function refreshAllStat() {
     const docs = await users.find()
     for (let user of docs)
-        await refreshStat(docs.osuid)
+        await refreshStat(user.osuid)
 }
 
 /**
@@ -107,5 +99,5 @@ async function getStatByOSU(osuid) {
     return stats.findOne({ osuid })
 }
 
-export const userdb = { reduceSame, newUser, delUser, getByQQ: getUserByQQ, getByOSU: getUserByOSU }
-export const statdb = { getByQQ: getStatByQQ, getByOSU: getStatByOSU, initStat, refreshStat, refreshAllStat }
+export const userdb = { newUser, delUser, getByQQ: getUserByQQ, getByOSU: getUserByOSU, reduceAll }
+export const statdb = { getByQQ: getStatByQQ, getByOSU: getStatByOSU, refreshStat, refreshAllStat }

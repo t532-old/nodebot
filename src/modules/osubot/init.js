@@ -1,22 +1,25 @@
 import fs from 'fs'
-import { statdb } from './db'
+import { statdb, userdb } from './db'
+
+const initPaths = [
+    'cache',
+    'cache/osubot',
+    'cache/osubot/avatar',
+    'cache/osubot/avatarl',
+    'cache/osubot/recent',
+    'cache/osubot/recentbg',
+    'cache/osubot/stat',
+    'cache/osubot/statbg',
+    'cache/osubot/mapbg',
+    'cache/osubot/best',
+]
 
 export default function() {
-    if (!fs.existsSync('cache')) {
-        fs.mkdirSync('cache')
-        fs.mkdirSync('cache/osubot')
-        fs.mkdirSync('cache/osubot/avatar')
-        fs.mkdirSync('cache/osubot/avatarl')
-        fs.mkdirSync('cache/osubot/recent')
-        fs.mkdirSync('cache/osubot/recentbg')
-        fs.mkdirSync('cache/osubot/stat')
-        fs.mkdirSync('cache/osubot/statbg')
-        fs.mkdirSync('cache/osubot/mapbg')
-        fs.mkdirSync('cache/osubot/best')
-    }
-    const time = new Date(`${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate() + 1}`)
-    setTimeout(async () => {
-        statdb.refreshAll()
+    for (let i of initPaths)
+        if (!fs.existsSync(i)) fs.mkdirSync(i)
+    const time = new Date(`${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate() + 1}`)
+    setTimeout(() => {
+        statdb.refreshAllStat()
         setInterval(statdb.refreshAllStat, 86400000)
     }, time.getTime() - Date.now())
 }

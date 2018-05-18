@@ -26,8 +26,8 @@ exports.default = {
      */
     checkmode: function checkmode(mode) {
         mode = mode.toLowerCase();
-        for (var _i in this.modes) {
-            if (this.modes[_i].includes(mode)) return _i;
+        for (var i in this.modes) {
+            if (this.modes[i].includes(mode)) return i;
         }return 0;
     },
 
@@ -37,8 +37,8 @@ exports.default = {
      */
     accuracy: function accuracy(data) {
         var rec = this.copy(data);
-        for (var _i2 in rec) {
-            rec[_i2] = parseInt(rec[_i2]);
+        for (var i in rec) {
+            rec[i] = parseInt(rec[i]);
         }var result = ((rec.count50 * 50 + rec.count100 * 100 + rec.count300 * 300) / ((rec.countmiss + rec.count50 + rec.count100 + rec.count300) * 300) * 100).toString();
         return result.slice(0, 3 + result.split('.')[0].length);
     },
@@ -52,9 +52,9 @@ exports.default = {
         var sep = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 3;
 
         var result = '';
-        for (var _i3 = score.length - 1; _i3 >= 0; _i3--) {
-            if ((score.length - _i3 - 1) % sep === 0 && _i3 !== score.length - 1) result = ',' + result;
-            result = score[_i3] + result;
+        for (var i = score.length - 1; i >= 0; i--) {
+            if ((score.length - i - 1) % sep === 0 && i !== score.length - 1) result = ',' + result;
+            result = score[i] + result;
         }
         return result;
     },
@@ -79,9 +79,9 @@ exports.default = {
      */
     objDiff: function objDiff(differ, diffee) {
         var result = this.copy(differ);
-        for (i in (0, _keys2.default)(differ)) {
-            if (typeof differ[i] === 'number' && typeof diffee[i] === 'number') result[i] = differ[i] - diffee[i];
-        }if (parseFloat(differ[i]) && parseFloat(diffee[i])) result[i] = parseFloat(differ[i]) - parseFloat(diffee[i]);else delete result[i];
+        for (var i in (0, _keys2.default)(differ)) {
+            if (typeof differ[i] === 'number' && typeof diffee[i] === 'number') result[i] = differ[i] - diffee[i];else if (parseFloat(differ[i]) && parseFloat(diffee[i])) result[i] = parseFloat(differ[i]) - parseFloat(diffee[i]);else delete result[i];
+        }
         return result;
     },
 
@@ -89,23 +89,13 @@ exports.default = {
      * Deep copy an object
      * @param {object} obj The object that's being copied
      */
-    copy: function (_copy) {
-        function copy(_x3) {
-            return _copy.apply(this, arguments);
-        }
-
-        copy.toString = function () {
-            return _copy.toString();
-        };
-
-        return copy;
-    }(function (obj) {
+    copy: function copy(obj) {
         var res = new obj.constructor();
-        for (var _i4 in obj) {
-            if (obj[_i4] instanceof Object) res[_i4] = copy(obj[_i4]);else res[_i4] = obj[_i4];
+        for (var i in obj) {
+            if (obj[i] instanceof Object) res[i] = this.copy(obj[i]);else res[i] = obj[i];
         }
         return res;
-    }),
+    },
 
     /**
      * flatten an array (f**k tc39).
@@ -119,9 +109,9 @@ exports.default = {
 
         try {
             for (var _iterator = (0, _getIterator3.default)(arr), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                var _i5 = _step.value;
+                var i = _step.value;
 
-                if (_i5 instanceof Array) flat = [].concat((0, _toConsumableArray3.default)(flat), (0, _toConsumableArray3.default)(this.flatten(_i5)));else flat.push(_i5);
+                if (i instanceof Array) flat = [].concat((0, _toConsumableArray3.default)(flat), (0, _toConsumableArray3.default)(this.flatten(i)));else flat.push(i);
             }
         } catch (err) {
             _didIteratorError = true;
