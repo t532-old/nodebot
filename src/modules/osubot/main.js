@@ -71,7 +71,10 @@ const stat = {
             try {
                 const statDoc = await statdb.getByQQ(msg.param.user_id)
                 prevStat = statDoc.data[mode]
-            } catch (err) { prevStat = undefined }
+            } catch (err) { 
+                console.log('prevStat not found')
+                prevStat = undefined
+            }
         }
         try { 
             const stat = await api.statQuery({

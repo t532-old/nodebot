@@ -175,7 +175,7 @@ var stat = {
                             prevStat = void 0;
 
                             if (!(usr === 'me')) {
-                                _context3.next = 24;
+                                _context3.next = 25;
                                 break;
                             }
 
@@ -206,28 +206,30 @@ var stat = {
                             statDoc = _context3.sent;
 
                             prevStat = statDoc.data[mode];
-                            _context3.next = 24;
+                            _context3.next = 25;
                             break;
 
                         case 21:
                             _context3.prev = 21;
                             _context3.t1 = _context3['catch'](14);
+
+                            console.log('prevStat not found');
                             prevStat = undefined;
 
-                        case 24:
-                            _context3.prev = 24;
-                            _context3.next = 27;
+                        case 25:
+                            _context3.prev = 25;
+                            _context3.next = 28;
                             return _web.api.statQuery({
                                 u: usr,
                                 m: mode
                             });
 
-                        case 27:
+                        case 28:
                             _stat = _context3.sent;
-                            _context3.next = 30;
+                            _context3.next = 31;
                             return _canvas2.default.drawStat(_stat, prevStat);
 
-                        case 30:
+                        case 31:
                             path = _context3.sent;
 
                             if (path) msg.send([{
@@ -236,23 +238,23 @@ var stat = {
                                     file: path
                                 }
                             }]);else msg.send('osubot: stat: 请过会重试！');
-                            _context3.next = 39;
+                            _context3.next = 40;
                             break;
 
-                        case 34:
-                            _context3.prev = 34;
-                            _context3.t2 = _context3['catch'](24);
+                        case 35:
+                            _context3.prev = 35;
+                            _context3.t2 = _context3['catch'](25);
 
                             console.log(_context3.t2);
                             msg.send(_context3.t2.toString());
                             return _context3.abrupt('return');
 
-                        case 39:
+                        case 40:
                         case 'end':
                             return _context3.stop();
                     }
                 }
-            }, _callee3, _this3, [[3, 10], [14, 21], [24, 34]]);
+            }, _callee3, _this3, [[3, 10], [14, 21], [25, 35]]);
         }))();
     }
 };

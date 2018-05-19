@@ -250,7 +250,7 @@ async function drawStat(stat, statPrev) {
         .font('assets/fonts/Exo2.0-BoldItalic.otf')
         .fontSize(25)
         .fill('#3ad')
-        .drawText(0, 35, util.scorify(stat.pp_raw.split('.')[0]) + '.' + util.fillNumberReversed(stat.pp_raw.split('.')[1].slice(0, 2), 2))
+        .drawText(0, 35, util.scorify(stat.pp_raw.split('.')[0]) + (stat.pp_raw.split('.')[1] ? ('.' + util.fillNumberReversed(stat.pp_raw.split('.')[1].slice(0, 2), 2)) : ''))
         .fontSize(11)
         .drawText(0, 60, 'performance points')
         .font('assets/fonts/Exo2.0-Bold.otf')

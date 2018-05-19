@@ -18,6 +18,8 @@ export default async function() {
     for (let i of initPaths)
         if (!fs.existsSync(i)) fs.mkdirSync(i)
     const time = new Date(`${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate() + 1}`)
+    await statdb.refreshAllStat()
+    console.log('Refreshed user status')
     setTimeout(async () => {
         await statdb.refreshAllStat()
         console.log('Refreshed user status')

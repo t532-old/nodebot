@@ -5,21 +5,7 @@ import { api } from './web'
 
 const db = Monk('localhost:27017/botdb')
 const users = db.get('users')
-const stats = db.get('userstats')
 const config = yaml.safeLoad(fs.readFileSync('config.yml')).osubot
-
-async function reduceAll() {
-    let docs = await users.find()
-    for (let i of docs) {
-        let user
-        try { user = await api.statQuery({ u: i.osuid }) }
-        catch (err) { 
-            await users.remove({ osuid: i.osuid })
-            continue
-        }
-        await users.update({ osuid: i.osuid }, { osuid: user.user_id })
-    }
-}
 
 /**
  * Adds a bound user to db
@@ -28,10 +14,20 @@ async function reduceAll() {
  */
 async function newUser(qqid, osuid) {
     const exists = await users.findOne({ qqid })
+    let osu, taiko, ctb, mania
     if (exists)
         return false
-    await users.insert({ qqid, osuid })
-    return refreshStat(osuid)
+    try {
+        [osu, taiko, ctb, mania] = await Promise.all([
+            api.statQuery({ u: osuid, m: 0 }),
+            api.statQuery({ u: osuid, m: 1 }),
+            api.statQuery({ u: osuid, m: 2 }),
+            api.statQuery({ u: osuid, m: 3 }),
+        ])
+    } catch (err) { 
+        return false
+    }
+    return users.insert({ qqid, osuid, data: [osu, taiko, ctb, mania] })
 }
 
 /**
@@ -46,7 +42,8 @@ async function delUser(qqid) {
  * refreshes a bound user's stat cache
  * @param {string} osuid - The querying arg osuid
  */
-async function refreshStat(osuid) {
+async function refreshStat(qqid) {
+    const osuid = (await users.findOne({ qqid })).osuid
     let osu, taiko, ctb, mania
     try {
         [osu, taiko, ctb, mania] = await Promise.all([
@@ -55,22 +52,24 @@ async function refreshStat(osuid) {
             api.statQuery({ u: osuid, m: 2 }),
             api.statQuery({ u: osuid, m: 3 }),
         ])
-    } catch (err) { return }
-    if (await stats.findOne({ osuid })) return stats.update({ osuid }, { data: [osu, taiko, ctb, mania] })
-    else return stats.insert({ osuid, data: [osu, taiko, ctb, mania] })
+    } catch (err) { 
+        console.log('Not found')
+        return 
+    }
+    return users.update({ qqid }, { data: [osu, taiko, ctb, mania] })
 }
 
 async function refreshAllStat() {
     const docs = await users.find()
     for (let user of docs)
-        await refreshStat(user.osuid)
+        await refreshStat(user.qqid)
 }
 
 /**
  * Get bind info by QQid.
  * @param {string} qqid - The querying arg qqid
  */
-async function getUserByQQ(qqid) {
+async function getByQQ(qqid) {
     return users.findOne({ qqid })
 }
 
@@ -78,26 +77,9 @@ async function getUserByQQ(qqid) {
  * Get bind info by OSUid.
  * @param {string} osuid - The querying arg osuid
  */
-async function getUserByOSU(osuid) {
+async function getByOSU(osuid) {
     return users.findOne({ osuid })
 }
 
-/**
- * Get stat cache by QQid.
- * @param {string} qqid - The querying arg qqid
- */
-async function getStatByQQ(qqid) {
-    const osuid = (await users.findOne({ qqid })).osuid
-    return stats.findOne({ osuid })
-}
-
-/**
- * Get stat cache by OSUid.
- * @param {string} osuid - The querying arg osuid
- */
-async function getStatByOSU(osuid) {
-    return stats.findOne({ osuid })
-}
-
-export const userdb = { newUser, delUser, getByQQ: getUserByQQ, getByOSU: getUserByOSU, reduceAll }
-export const statdb = { getByQQ: getStatByQQ, getByOSU: getStatByOSU, refreshStat, refreshAllStat }
+export const userdb = { newUser, delUser, getByQQ, getByOSU }
+export const statdb = { getByQQ, getByOSU, refreshStat, refreshAllStat }
