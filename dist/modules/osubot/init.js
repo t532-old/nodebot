@@ -79,11 +79,7 @@ exports.default = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.de
 
                 case 19:
                     time = new Date(new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + (new Date().getDate() + 1));
-                    _context3.next = 22;
-                    return _db.statdb.refreshAllStat();
 
-                case 22:
-                    console.log('Refreshed user status');
                     setTimeout((0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2() {
                         return _regenerator2.default.wrap(function _callee2$(_context2) {
                             while (1) {
@@ -121,7 +117,7 @@ exports.default = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.de
                         }, _callee2, _this);
                     })), time.getTime() - Date.now());
 
-                case 24:
+                case 21:
                 case 'end':
                     return _context3.stop();
             }
