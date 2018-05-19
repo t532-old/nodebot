@@ -62,3 +62,6 @@ config.yml
 
 # bot caches
 cache/
+
+# compiled JS
+dist/
