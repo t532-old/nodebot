@@ -20,6 +20,10 @@ export default function() {
     const time = new Date(`${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate() + 1}`)
     setTimeout(() => {
         statdb.refreshAllStat()
-        setInterval(statdb.refreshAllStat, 86400000)
+        console.log('Refreshing user status')
+        setInterval(() => {
+            statdb.refreshAllStat()
+            console.log('Refreshing user status')
+        }, 86400000)
     }, time.getTime() - Date.now())
 }

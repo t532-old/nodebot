@@ -37,7 +37,11 @@ exports.default = function () {
     var time = new Date(new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + (new Date().getDate() + 1));
     setTimeout(function () {
         _db.statdb.refreshAllStat();
-        setInterval(_db.statdb.refreshAllStat, 86400000);
+        console.log('Refreshing user status');
+        setInterval(function () {
+            _db.statdb.refreshAllStat();
+            console.log('Refreshing user status');
+        }, 86400000);
     }, time.getTime() - Date.now());
 };
 

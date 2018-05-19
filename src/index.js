@@ -13,7 +13,8 @@ message.listen()
 app.use(body())
 
 app.use(async ctx => {
-    message.handle(ctx.request.body)
+    if (ctx.request.body.message_type)
+        message.handle(ctx.request.body)
 })
 
 app.listen(8080)
