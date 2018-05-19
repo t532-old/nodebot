@@ -156,7 +156,7 @@ var drawRecent = function () {
 
 var drawStat = function () {
     var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(stat, statPrev) {
-        var uid, dest, avatarDest, avatarBGDest, avatarLargerDest;
+        var uid, dest, avatarDest, avatarBGDest, avatarLargerDest, diff;
         return _regenerator2.default.wrap(function _callee2$(_context2) {
             while (1) {
                 switch (_context2.prev = _context2.next) {
@@ -208,16 +208,26 @@ var drawStat = function () {
 
                     case 22:
                         _context2.next = 24;
-                        return promisifyGM((0, _gm2.default)(dest).quality(100).gravity('Center').fill('#888a').drawEllipse(375, 250, 210, 210, -145, -35).fill('#fff8').drawCircle(375, 250, 375, 460).fill('#fff').font('assets/fonts/Exo2.0-Medium.otf').fontSize(30).drawText(0, -145, stat.username).font('assets/fonts/Exo2.0-Bold.otf').fontSize(12).fill('#f69').drawText(0, 0, 'global rank').font('assets/fonts/Exo2.0-BoldItalic.otf').fontSize(25).fill('#3ad').drawText(0, 35, _util2.default.scorify(parseInt(stat.pp_raw).toString()) + 'pp').fontSize(11).drawText(0, 60, 'performance points').font('assets/fonts/Exo2.0-Bold.otf').fontSize(30).drawText(-300, 0, _util2.default.scorify(stat.playcount)).drawText(300, 0, stat.accuracy.slice(0, 3 + stat.accuracy.split('.').length) + '%').fontSize(12).fill('#333').drawText(-290, 20, 'play count').drawText(290, 20, 'accuracy').font('assets/fonts/Venera-300.otf').fontSize(45).fill('#f69').drawText(0, -25, '#' + _util2.default.scorify(stat.pp_rank)).fontSize(13).fill('#999').drawRectangle(325, 345, 425, 365).font('assets/fonts/Exo2.0-Regular.otf').fill('#fff').drawText(20, 105, '#' + _util2.default.scorify(stat.pp_country_rank)).fontSize(25).fill('#aaa').drawLine(275, 375, 475, 375).fill('#666').drawText(-100, 140, _util2.default.fillNumber((parseInt(stat.count_rank_ssh) + parseInt(stat.count_rank_ss)).toString())).drawText(-33, 140, _util2.default.fillNumber(stat.count_rank_sh)).drawText(33, 140, _util2.default.fillNumber(stat.count_rank_s)).drawText(100, 140, _util2.default.fillNumber(stat.count_rank_a)).fontSize(12).drawText(-100, 160, 'SS(+)').drawText(-33, 160, 'S+').drawText(33, 160, 'S').drawText(100, 160, 'A'));
+                        return promisifyGM((0, _gm2.default)(dest).quality(100).gravity('Center').fill('#888a').drawEllipse(375, 250, 210, 210, -145, -35).fill('#fff8').drawCircle(375, 250, 375, 460).fill('#fff').font('assets/fonts/Exo2.0-Medium.otf').fontSize(30).drawText(0, -145, stat.username).font('assets/fonts/Exo2.0-Bold.otf').fontSize(12).fill('#f69').drawText(0, 0, 'global rank').font('assets/fonts/Exo2.0-BoldItalic.otf').fontSize(25).fill('#3ad').drawText(0, 35, _util2.default.scorify(stat.pp_raw.split('.')[0]) + '.' + _util2.default.fillNumberReversed(stat.pp_raw.split('.')[1].slice(0, 2), 2)).fontSize(11).drawText(0, 60, 'performance points').font('assets/fonts/Exo2.0-Bold.otf').fontSize(30).drawText(-300, 0, _util2.default.scorify(stat.playcount)).drawText(300, 0, stat.accuracy.slice(0, 3 + stat.accuracy.split('.')[0].length) + '%').fontSize(12).fill('#333').drawText(-290, 20, 'play count').drawText(290, 20, 'accuracy').font('assets/fonts/Venera-300.otf').fontSize(45).fill('#f69').drawText(0, -25, '#' + _util2.default.scorify(stat.pp_rank)).fontSize(13).fill('#999').drawRectangle(325, 345, 425, 365).font('assets/fonts/Exo2.0-Regular.otf').fill('#fff').drawText(20, 105, '#' + _util2.default.scorify(stat.pp_country_rank)).fontSize(25).fill('#aaa').drawLine(275, 375, 475, 375).fill('#666').drawText(-100, 140, _util2.default.fillNumber((parseInt(stat.count_rank_ssh) + parseInt(stat.count_rank_ss)).toString())).drawText(-33, 140, _util2.default.fillNumber(stat.count_rank_sh)).drawText(33, 140, _util2.default.fillNumber(stat.count_rank_s)).drawText(100, 140, _util2.default.fillNumber(stat.count_rank_a)).fontSize(12).font('assets/fonts/Exo2.0-ExtraBold.otf').fill('#079').drawText(-100, 160, 'SS(+)').fill('#666').drawText(-33, 160, 'S+').fill('#ff0').drawText(33, 160, 'S').fill('#0d5').drawText(100, 160, 'A'));
 
                     case 24:
                         _context2.next = 26;
                         return promisifyGM((0, _gm2.default)(dest).quality(100).composite('assets/image/flags/' + stat.country + '.png').gravity('North').geometry('-50+343'));
 
                     case 26:
+                        if (!statPrev) {
+                            _context2.next = 30;
+                            break;
+                        }
+
+                        diff = _util2.default.objDiff(stat, statPrev);
+                        _context2.next = 30;
+                        return promisifyGM((0, _gm2.default)(dest).quality(100).gravity('Center').font('assets/fonts/Exo2.0-Medium.otf').fill('#888').fontSize(15).drawText(0, 15, (parseInt(diff.pp_raw) >= 0 ? '+' : '') + diff.pp_raw.slice(0, 3 + diff.pp_raw.split('.')[0].length)).drawText(-300, -20, '+' + parseInt(diff.playcount).toString()).drawText(300, -20, (parseInt(diff.accuracy) >= 0 ? '+' : '') + diff.accuracy.slice(0, 3 + diff.accuracy.split('.').length) + '%').drawText(0, -55, (parseInt(diff.pp_rank) >= 0 ? '+' : '') + diff.pp_rank).drawText(-100, 175, (parseInt(diff.count_rank_ssh) + parseInt(diff.count_rank_ss) >= 0 ? '+' : '') + (parseInt(diff.count_rank_ssh) + parseInt(diff.count_rank_ss)).toString()).drawText(-33, 175, (parseInt(diff.count_rank_sh) >= 0 ? '+' : '') + diff.count_rank_sh).drawText(33, 175, (parseInt(diff.count_rank_s) >= 0 ? '+' : '') + diff.count_rank_s).drawText(100, 175, (parseInt(diff.count_rank_a) >= 0 ? '+' : '') + diff.count_rank_a));
+
+                    case 30:
                         return _context2.abrupt('return', 'file://' + process.cwd() + _path2.default.sep + dest);
 
-                    case 27:
+                    case 31:
                     case 'end':
                         return _context2.stop();
                 }

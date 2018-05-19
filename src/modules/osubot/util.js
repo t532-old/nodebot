@@ -48,17 +48,26 @@ export default {
         return num
     },
     /**
+     * increase a string's length to a specific one, but add 0s at the back of the number
+     * @param {string} num The string
+     * @param {number} len The length
+     */
+    fillNumberReversed(num, len = 4) {
+        while (num.length < len) num = num + '0'
+        return num
+    },
+    /**
      * Diffs the numbers in two objects
      * @param {object} differ - The base comparing object
      * @param {object} diffee - The substractors
      */
     objDiff(differ, diffee) {
         const result = this.copy(differ)
-        for (let i in Object.keys(differ)) {
+        for (let i of Object.keys(differ)) {
             if (typeof differ[i] === 'number' && typeof diffee[i] === 'number')
-                result[i] = differ[i] - diffee[i]
+                result[i] = (differ[i] - diffee[i]).toString()
             else if (parseFloat(differ[i]) && parseFloat(diffee[i]))
-                result[i] = parseFloat(differ[i]) - parseFloat(diffee[i])
+                result[i] = (parseFloat(differ[i]) - parseFloat(diffee[i])).toString()
             else delete result[i]
         }
         return result

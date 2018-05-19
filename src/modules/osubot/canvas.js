@@ -250,13 +250,13 @@ async function drawStat(stat, statPrev) {
         .font('assets/fonts/Exo2.0-BoldItalic.otf')
         .fontSize(25)
         .fill('#3ad')
-        .drawText(0, 35, util.scorify(parseInt(stat.pp_raw).toString()) + 'pp')
+        .drawText(0, 35, util.scorify(stat.pp_raw.split('.')[0]) + '.' + util.fillNumberReversed(stat.pp_raw.split('.')[1].slice(0, 2), 2))
         .fontSize(11)
         .drawText(0, 60, 'performance points')
         .font('assets/fonts/Exo2.0-Bold.otf')
         .fontSize(30)
         .drawText(-300, 0, util.scorify(stat.playcount))
-        .drawText(300, 0, stat.accuracy.slice(0, 3 + stat.accuracy.split('.').length) + '%')
+        .drawText(300, 0, stat.accuracy.slice(0, 3 + stat.accuracy.split('.')[0].length) + '%')
         .fontSize(12)
         .fill('#333')
         .drawText(-290, 20, 'play count')
@@ -280,9 +280,14 @@ async function drawStat(stat, statPrev) {
         .drawText(33, 140, util.fillNumber(stat.count_rank_s))
         .drawText(100, 140, util.fillNumber(stat.count_rank_a))
         .fontSize(12)
+        .font('assets/fonts/Exo2.0-ExtraBold.otf')
+        .fill('#079')
         .drawText(-100, 160, 'SS(+)')
+        .fill('#666')
         .drawText(-33, 160, 'S+')
+        .fill('#ff0')
         .drawText(33, 160, 'S')
+        .fill('#0d5')
         .drawText(100, 160, 'A')
     )
     await promisifyGM(
@@ -292,18 +297,25 @@ async function drawStat(stat, statPrev) {
         .gravity('North')
         .geometry('-50+343')
     )
-    /*if (statPrev) {
+    if (statPrev) {
         const diff = util.objDiff(stat, statPrev)
         await promisifyGM(
             gm(dest)
             .quality(100)
             .gravity('Center')
-            .font('assets/fonts/Exo2.0-Regular.otf')
+            .font('assets/fonts/Exo2.0-Medium.otf')
             .fill('#888')
-            .fontSize(13)
-            .drawText()
+            .fontSize(15)
+            .drawText(0, 15, (parseInt(diff.pp_raw) >= 0 ? '+' : '') + diff.pp_raw.slice(0, 3 + diff.pp_raw.split('.')[0].length))
+            .drawText(-300, -20, '+' + parseInt(diff.playcount).toString())
+            .drawText(300, -20, (parseInt(diff.accuracy) >= 0 ? '+' : '') + diff.accuracy.slice(0, 3 + diff.accuracy.split('.').length) + '%')
+            .drawText(0, -55, (parseInt(diff.pp_rank) >= 0 ? '+' : '') + diff.pp_rank)
+            .drawText(-100, 175, (parseInt(diff.count_rank_ssh) + parseInt(diff.count_rank_ss) >= 0 ? '+' : '') + (parseInt(diff.count_rank_ssh) + parseInt(diff.count_rank_ss)).toString())
+            .drawText(-33, 175, (parseInt(diff.count_rank_sh) >= 0 ? '+' : '') + diff.count_rank_sh)
+            .drawText(33, 175, (parseInt(diff.count_rank_s) >= 0 ? '+' : '') + diff.count_rank_s)
+            .drawText(100, 175, (parseInt(diff.count_rank_a) >= 0 ? '+' : '') + diff.count_rank_a)
         )
-    }*/
+    }
     return 'file://' + process.cwd() + path.sep + dest
 }
 

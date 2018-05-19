@@ -8,13 +8,13 @@ var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
 
 var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
 
-var _getIterator2 = require('babel-runtime/core-js/get-iterator');
-
-var _getIterator3 = _interopRequireDefault(_getIterator2);
-
 var _keys = require('babel-runtime/core-js/object/keys');
 
 var _keys2 = _interopRequireDefault(_keys);
+
+var _getIterator2 = require('babel-runtime/core-js/get-iterator');
+
+var _getIterator3 = _interopRequireDefault(_getIterator2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -73,15 +73,50 @@ exports.default = {
     },
 
     /**
+     * increase a string's length to a specific one, but add 0s at the back of the number
+     * @param {string} num The string
+     * @param {number} len The length
+     */
+    fillNumberReversed: function fillNumberReversed(num) {
+        var len = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4;
+
+        while (num.length < len) {
+            num = num + '0';
+        }return num;
+    },
+
+    /**
      * Diffs the numbers in two objects
      * @param {object} differ - The base comparing object
      * @param {object} diffee - The substractors
      */
     objDiff: function objDiff(differ, diffee) {
         var result = this.copy(differ);
-        for (var i in (0, _keys2.default)(differ)) {
-            if (typeof differ[i] === 'number' && typeof diffee[i] === 'number') result[i] = differ[i] - diffee[i];else if (parseFloat(differ[i]) && parseFloat(diffee[i])) result[i] = parseFloat(differ[i]) - parseFloat(diffee[i]);else delete result[i];
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+            for (var _iterator = (0, _getIterator3.default)((0, _keys2.default)(differ)), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                var i = _step.value;
+
+                if (typeof differ[i] === 'number' && typeof diffee[i] === 'number') result[i] = (differ[i] - diffee[i]).toString();else if (parseFloat(differ[i]) && parseFloat(diffee[i])) result[i] = (parseFloat(differ[i]) - parseFloat(diffee[i])).toString();else delete result[i];
+            }
+        } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion && _iterator.return) {
+                    _iterator.return();
+                }
+            } finally {
+                if (_didIteratorError) {
+                    throw _iteratorError;
+                }
+            }
         }
+
         return result;
     },
 
@@ -103,27 +138,27 @@ exports.default = {
      */
     flatten: function flatten(arr) {
         var flat = [];
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
+        var _iteratorNormalCompletion2 = true;
+        var _didIteratorError2 = false;
+        var _iteratorError2 = undefined;
 
         try {
-            for (var _iterator = (0, _getIterator3.default)(arr), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                var i = _step.value;
+            for (var _iterator2 = (0, _getIterator3.default)(arr), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                var i = _step2.value;
 
                 if (i instanceof Array) flat = [].concat((0, _toConsumableArray3.default)(flat), (0, _toConsumableArray3.default)(this.flatten(i)));else flat.push(i);
             }
         } catch (err) {
-            _didIteratorError = true;
-            _iteratorError = err;
+            _didIteratorError2 = true;
+            _iteratorError2 = err;
         } finally {
             try {
-                if (!_iteratorNormalCompletion && _iterator.return) {
-                    _iterator.return();
+                if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                    _iterator2.return();
                 }
             } finally {
-                if (_didIteratorError) {
-                    throw _iteratorError;
+                if (_didIteratorError2) {
+                    throw _iteratorError2;
                 }
             }
         }
