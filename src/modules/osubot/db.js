@@ -56,7 +56,7 @@ async function refreshStat(qqid) {
         console.log('Not found')
         return 
     }
-    return users.update({ qqid }, { data: [osu, taiko, ctb, mania] })
+    return users.update({ qqid }, { $set: { data: [osu, taiko, ctb, mania] } })
 }
 
 async function refreshAllStat() {
