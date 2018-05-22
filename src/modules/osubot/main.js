@@ -91,8 +91,7 @@ const stat = {
                 }])
             else msg.send('osubot: stat: 请过会重试！')
         } catch (err) {
-            console.log(err)
-            msg.send(err.toString())
+            msg.error(err)
             return
         }
     }
@@ -137,7 +136,7 @@ const rec = {
                 }])
             else msg.send('osubot: rec: 请过会重试！')
         } catch (err) {
-            msg.send(err.toString())
+            msg.error(err)
             return
         }
     }
@@ -183,7 +182,7 @@ const bp = {
                 }])
             else msg.send('osubot: bp: 请过会重试！')
         } catch (err) {
-            msg.send(err.toString())
+            msg.error(err)
             return
         }
     }
