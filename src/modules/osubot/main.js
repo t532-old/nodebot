@@ -72,16 +72,20 @@ const stat = {
                 const statDoc = await statdb.getByQQ(msg.param.user_id)
                 prevStat = statDoc.data[mode]
             } catch (err) { 
-                console.log('prevStat not found')
                 prevStat = undefined
             }
         }
         try { 
-            const stat = await api.statQuery({
-                u: usr,
-                m: mode,
-            })
-            const path = await canvas.drawStat(stat, prevStat)
+            try {
+                const stat = await api.statQuery({
+                    u: usr,
+                    m: mode,
+                })
+                const path = await canvas.drawStat(stat, prevStat)
+            } catch (err) {
+                msg.send('osubot: stat: 请过会重试！')
+                return
+            }
             if (path)
                 msg.send([{
                     type: 'image',
@@ -104,6 +108,7 @@ const rec = {
      * @description Get a user's most recent play
      * @param {Message} msg The universal msg object
      * @param {string} usr The username that'll be queried
+     * @param {string} mode the mode that will be queried
      */
     async action(msg, { usr = 'me' }, [ mode = 'o' ]) {
         mode = util.checkmode(mode)
@@ -117,15 +122,20 @@ const rec = {
             }
         }
         try { 
-            const rec = await api.recentQuery({
-                u: usr,
-                limit: '1',
-                m: mode,
-            })
-            const [map, stat] = await Promise.all([
-                api.mapQuery({ b: rec.beatmap_id }),
-                api.statQuery({ u: usr }),
-            ])
+            try {
+                const rec = await api.recentQuery({
+                    u: usr,
+                    limit: '1',
+                    m: mode,
+                })
+                const [map, stat] = await Promise.all([
+                    api.mapQuery({ b: rec.beatmap_id }),
+                    api.statQuery({ u: usr }),
+                ])
+            } catch (err) {
+                msg.send('osubot: rec: 请过会重试！')
+                return
+            }
             const path = await canvas.drawRecent(rec, map, stat)
             if (path)
                 msg.send([{
@@ -144,14 +154,16 @@ const rec = {
 
 const bp = {
     args: '<order> [usr]',
-    options: [],
+    options: util.flatten(util.modes),
     /**
      * @description Get a user's best performance
      * @param {Message} msg The universal msg object
      * @param {string} order The username that'll be queried
      * @param {string} usr The username that'll be queried
+     * @param {string} mode the mode that will be queried
      */
-    async action(msg, { order, usr = 'me' }) {
+    async action(msg, { order, usr = 'me' }, [ mode = 'o' ]) {
+        mode = util.checkmode(mode)
         if (!parseInt(order) || parseInt(order) < 1 || parseInt(order) > 100)
             msg.send('osubot: bp: 请指定一个bp序号(1-100)！')
         if (usr === 'me') {
@@ -163,15 +175,21 @@ const bp = {
                 return
             }
         }
-        try { 
-            const rec = (await api.bestQuery({
-                u: usr,
-                limit: order,
-            }))[order - 1]
-            const [map, stat] = await Promise.all([
-                api.mapQuery({ b: rec.beatmap_id }),
-                api.statQuery({ u: usr }),
-            ])
+        try {
+            try {
+                const rec = (await api.bestQuery({
+                    u: usr,
+                    limit: order,
+                    m: mode
+                }))[order - 1]
+                const [map, stat] = await Promise.all([
+                    api.mapQuery({ b: rec.beatmap_id }),
+                    api.statQuery({ u: usr }),
+                ])
+            } catch (err) {
+                msg.send('osubot: bp: 请过会重试！')
+                return
+            }
             const path = await canvas.drawBest(rec, map, stat)
             if (path)
                 msg.send([{
