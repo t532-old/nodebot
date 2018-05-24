@@ -1,5 +1,5 @@
 develop:
-    version: '1.0.0' # The version. This only influences the develop.about command.
+    version: '1.0.1-alpha' # The version. This only influences the develop.about command.
     operators: # A list, now reserved, will be useful in the future
 osubot:
     key: # Your osu! api key
