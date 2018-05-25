@@ -2,7 +2,6 @@ import fs from 'fs'
 import { statdb, userdb } from './db'
 
 const initPaths = [
-    'cache',
     'cache/osubot',
     'cache/osubot/avatar',
     'cache/osubot/avatarl',
@@ -20,10 +19,10 @@ export default async function() {
     const time = new Date(`${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate() + 1}`)
     setTimeout(async () => {
         statdb.refreshAllStat()
-        console.log('Refreshed user status')
+              .then(() => console.log(`${new Date().toString()}: Refreshed user status`))
         setInterval(async () => {
             statdb.refreshAllStat()
-            console.log('Refreshed user status')
+                  .then(() => console.log(`${new Date().toString()}: Refreshed user status`))
         }, 86400000)
     }, time.getTime() - Date.now())
 }

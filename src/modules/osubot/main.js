@@ -3,12 +3,12 @@ import { Message } from '../../message'
 import { api } from './web'
 import canvas from './canvas'
 import util from './util'
-import { userdb, statdb } from './db'
+import { userdb, statdb, managedb } from './db'
 // Imports from modules
 import fs from 'fs'
 import yaml from 'js-yaml'
 // Initialize settings
-const config = yaml.safeLoad(fs.readFileSync('config.yml')).osubot
+const { operators } = yaml.safeLoad(fs.readFileSync('config.yml'))
 
 const MESSAGES = {
     QUERY_BIND_FAIL: '你还没有绑定你的osu!id。\n使用 `-bind <id>\' 来绑定（*一定*要去掉两边的尖括号<>），\n如果用户名有空格请将用户名*整个*用英文引号 "" 括起来！',
@@ -19,6 +19,8 @@ const MESSAGES = {
     BIND_FAIL: '你绑定过id了！如果想要重新绑定，请先输入 `-unbind\' 来解绑。',
     BIND_SUCC: '绑定成功！\n如果绑定错误，想要重新绑定，请输入 `-unbind\' 解绑后再次使用本命令。',
     UNBIND_SUCC: '解绑成功！',
+    DB_SUCC: '数据库操作完毕。',
+    DB_FAIL: '没有权限！',
 }
 
 const bind = {
@@ -242,6 +244,17 @@ const avatar = {
             canvas.clearCachedAvatars(user.osuid)
             msg.send(`osubot: avatar: ${MESSAGES.AVATAR_SUCC}`)
         } else msg.send(`osubot: avatar: ${USER_QUERY_BIND_FAIL}`)
+    }
+}
+
+const db = {
+    args: '',
+    options: ['backup', 'recovery'],
+    async action(msg, {}, [ type ]) {
+        if (operators.includes(msg.param.user_id)) {
+            await managedb[type]();
+            msg.send(`osubot: db: ${DB_SUCC}`)
+        } else msg.send(`osubot: db: ${DB_FAIL}`)
     }
 }
 
