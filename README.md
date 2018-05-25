@@ -1,6 +1,9 @@
 # nodebot
 [![license](https://img.shields.io/github/license/trustgit/nodebot.svg)](https://github.com/trustgit/nodebot/blob/master/LICENSE)
 [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/trustgit/nodebot?svg=true)](https://ci.appveyor.com/project/trustgit/nodebot)
+[![GitHub (pre-)release](https://img.shields.io/github/release/trustgit/nodebot/all.svg)](https://github.com/trustgit/nodebot/releases)
+[![GitHub repo size in bytes](https://img.shields.io/github/repo-size/trustgit/nodebot.svg)](https://github.com/trustgit/nodebot/pulse)
+[![GitHub repo wiki](https://img.shields.io/badge/read-repo%20wiki-ffaa55.svg)](https://github.com/trustgit/nodebot/wiki)
 [![凑badge（](https://img.shields.io/badge/developed%20for-osu!-ff6699.svg)](https://osu.ppy.sh/home)
 
 **WORKING IN PROGRESS:** 一个用来查询osu!账号信息的qqbot。
