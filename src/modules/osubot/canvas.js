@@ -465,6 +465,7 @@ async function drawBest(bp, map, stat) {
 }
 
 async function getAvatar(uid, avatarDest, avatarLargerDest) {
+    console.log(uid, avatarDest, avatarLargerDest)
     try {
         await res.avatarQuery(uid, avatarDest)
         await promisify(fs.copyFile, avatarDest, avatarLargerDest)

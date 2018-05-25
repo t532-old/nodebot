@@ -20,7 +20,7 @@ const MESSAGES = {
     BIND_SUCC: '绑定成功！\n如果绑定错误，想要重新绑定，请输入 `-unbind\' 解绑后再次使用本命令。',
     UNBIND_SUCC: '解绑成功！',
     DB_SUCC: '数据库操作完毕。',
-    DB_FAIL: '没有权限！',
+    DB_FAIL: '操作错误或者没有权限！',
 }
 
 const bind = {
@@ -72,7 +72,7 @@ const stat = {
      */
     async action(msg, { usr = 'me' }, [ mode = 'o' ]) {
         mode = util.checkmode(mode)
-        let prevStat
+        let status, prevStatus
         if (usr === 'me') {
             try {
                 const bindDoc = await userdb.getByQQ(msg.param.user_id)
@@ -83,14 +83,14 @@ const stat = {
             }
             try {
                 const statDoc = await statdb.getByQQ(msg.param.user_id)
-                prevStat = statDoc.data[mode]
+                prevStatus = statDoc.data[mode]
             } catch (err) { 
-                prevStat = undefined
+                prevStatus = undefined
             }
         }
         try { 
             try {
-                const stat = await api.statQuery({
+                status = await api.statQuery({
                     u: usr,
                     m: mode,
                 })
@@ -98,7 +98,7 @@ const stat = {
                 msg.send(`osubot: stat: ${MESSAGES.QUERY_NET_FAIL}`)
                 return
             }
-            const path = await canvas.drawStat(stat, prevStat)
+            const path = await canvas.drawStat(status, prevStatus)
             if (path)
                 msg.send([{
                     type: 'image',
@@ -125,6 +125,7 @@ const rec = {
      */
     async action(msg, { usr = 'me' }, [ mode = 'o' ]) {
         mode = util.checkmode(mode)
+        let recent, map, status
         if (usr === 'me') {
             try {
                 const doc = await userdb.getByQQ(msg.param.user_id)
@@ -136,20 +137,20 @@ const rec = {
         }
         try { 
             try {
-                const rec = await api.recentQuery({
+                recent = await api.recentQuery({
                     u: usr,
                     limit: '1',
                     m: mode,
                 })
-                const [map, stat] = await Promise.all([
-                    api.mapQuery({ b: rec.beatmap_id }),
+                ;[map, status] = await Promise.all([
+                    api.mapQuery({ b: recent.beatmap_id }),
                     api.statQuery({ u: usr }),
                 ])
             } catch (err) {
                 msg.send(`osubot: rec: ${MESSAGES.QUERY_NET_FAIL}`)
                 return
             }
-            const path = await canvas.drawRecent(rec, map, stat)
+            const path = await canvas.drawRecent(recent, map, status)
             if (path)
                 msg.send([{
                     type: 'image',
@@ -177,6 +178,7 @@ const bp = {
      */
     async action(msg, { order, usr = 'me' }, [ mode = 'o' ]) {
         mode = util.checkmode(mode)
+        let best, map, status
         if (!parseInt(order) || parseInt(order) < 1 || parseInt(order) > 100)
             msg.send(`osubot: bp: ${MESSAGES.BP_ARGS_FAIL}`)
         if (usr === 'me') {
@@ -190,20 +192,21 @@ const bp = {
         }
         try {
             try {
-                const rec = (await api.bestQuery({
+                best = (await api.bestQuery({
                     u: usr,
                     limit: order,
                     m: mode
                 }))[order - 1]
-                const [map, stat] = await Promise.all([
-                    api.mapQuery({ b: rec.beatmap_id }),
+                ;[map, status] = await Promise.all([
+                    api.mapQuery({ b: best.beatmap_id }),
                     api.statQuery({ u: usr }),
                 ])
             } catch (err) {
+                console.log(err)
                 msg.send(`osubot: bp: ${MESSAGES.QUERY_NET_FAIL}`)
                 return
             }
-            const path = await canvas.drawBest(rec, map, stat)
+            const path = await canvas.drawBest(best, map, status)
             if (path)
                 msg.send([{
                     type: 'image',
@@ -253,9 +256,9 @@ const db = {
     async action(msg, {}, [ type ]) {
         if (operators.includes(msg.param.user_id)) {
             await managedb[type]();
-            msg.send(`osubot: db: ${DB_SUCC}`)
-        } else msg.send(`osubot: db: ${DB_FAIL}`)
+            msg.send(`osubot: db: ${MESSAGE.DB_SUCC}`)
+        } else msg.send(`osubot: db: ${MESSAGE.DB_FAIL}`)
     }
 }
 
-export default { bind, unbind, stat, rec, bp, roll, avatar }
+export default { bind, unbind, stat, rec, bp, roll, avatar, db }

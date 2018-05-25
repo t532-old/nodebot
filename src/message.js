@@ -49,7 +49,7 @@ class Message {
                     data: { qq: '2037246484' }
                 },
             ])
-            console.log(`${date.toString()} error: \n${error.stack}`)
+            console.log(`${date.toString()} error: \n${err.stack}`)
     }
     /**
      * Sends a private message

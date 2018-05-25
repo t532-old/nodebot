@@ -85,14 +85,14 @@ async function getByOSU(osuid) {
 async function backup() {
     const values = await users.find()
     await usersBackup.remove({})
-    for (user in values)
+    for (let user of values)
         await usersBackup.insert(user)
 }
 
 async function recovery() {
     const values = await usersBackup.find()
     await users.remove({})
-    for (user in values)
+    for (let user of values)
         await users.insert(user)
 }
 
