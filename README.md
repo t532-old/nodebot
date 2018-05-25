@@ -6,12 +6,12 @@
 **WORKING IN PROGRESS:** 一个用来查询osu!账号信息的qqbot。
 
 ## Bot 用户
-Bot 用户需要帮助时，请查看：[帮助文档 - 指令](/trustgit/nodebot/wiki/Commands)
+Bot 用户需要帮助时，请查看：[帮助文档 - 指令](https://github.com/trustgit/nodebot/wiki/Commands)
 
 ## Bot 开发者
-关于如何构建 Bot，可见[帮助文档 - 构建](/trustgit/nodebot/wiki/Build)。
+关于如何构建 Bot，可见[帮助文档 - 构建](https://github.com/trustgit/nodebot/wiki/Build)。
 
-Bot 开发者可以阅读代码中的注释，或查看[帮助文档 - 开发](/trustgit/nodebot/wiki/Development)。
+Bot 开发者可以阅读代码中的注释，或查看[帮助文档 - 开发](https://github.com/trustgit/nodebot/wiki/Development)。
 
 ## 声明
 - 本项目使用的所有 package 均可见 `package.json`。
