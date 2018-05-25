@@ -202,7 +202,6 @@ const bp = {
                     api.statQuery({ u: usr }),
                 ])
             } catch (err) {
-                console.log(err)
                 msg.send(`osubot: bp: ${MESSAGES.QUERY_NET_FAIL}`)
                 return
             }
@@ -246,7 +245,7 @@ const avatar = {
         if (user) {
             canvas.clearCachedAvatars(user.osuid)
             msg.send(`osubot: avatar: ${MESSAGES.AVATAR_SUCC}`)
-        } else msg.send(`osubot: avatar: ${USER_QUERY_BIND_FAIL}`)
+        } else msg.send(`osubot: avatar: ${MESSAGES.QUERY_BIND_FAIL}`)
     }
 }
 
@@ -256,8 +255,8 @@ const db = {
     async action(msg, {}, [ type ]) {
         if (operators.includes(msg.param.user_id)) {
             await managedb[type]();
-            msg.send(`osubot: db: ${MESSAGE.DB_SUCC}`)
-        } else msg.send(`osubot: db: ${MESSAGE.DB_FAIL}`)
+            msg.send(`osubot: db: ${MESSAGES.DB_SUCC}`)
+        } else msg.send(`osubot: db: ${MESSAGES.DB_FAIL}`)
     }
 }
 
