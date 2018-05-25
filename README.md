@@ -5,27 +5,13 @@
 
 **WORKING IN PROGRESS:** 一个用来查询osu!账号信息的qqbot。
 
-- Bot 用户需要帮助时，请查看：[帮助文档 - 指令](https://github.com/trustgit/nodebot/blob/master/doc/commands.md)
+## Bot 用户
+Bot 用户需要帮助时，请查看：[帮助文档 - 指令](/trustgit/nodebot/wiki/Commands)
 
-## 依赖项
-我并没有做过兼容性测试。你们可以试试在其他情况下能不能跑，能跑的话提个issue
-- Windows 7（在用Windows 10）或更高，docker我没试过，你们可以试试（
-- MongoDB
-- Nodejs 8.9（正在用的）& npm
-- 酷Q Pro
-- GraphicsMagick
+## Bot 开发者
+关于如何构建 Bot，可见[帮助文档 - 构建](/trustgit/nodebot/wiki/Build)。
 
-**酷Q一定要装 [cqhttp](https://github.com/richardchien/coolq-http-api/releases)**
-## 运行
-根据 `config.template.yml` 创建一个 `config.yml` 文件，并在27017端口上运行mongod，在5700端口上运行cqhttp。然后在命令行中输入：
-```sh
-$ cd <your-bot-directory>
-$ npm install
-$ npm start
-```
-## 其他命令
-- 转译(通过 Babel): `npm run build` (=> `babel src -d dist`)
-- 提交文档更改: `git subtree push --prefix=doc origin gh-pages`
+Bot 开发者可以阅读代码中的注释，或查看[帮助文档 - 开发](/trustgit/nodebot/wiki/Development)。
 
 ## 声明
 - 本项目使用的所有 package 均可见 `package.json`。
