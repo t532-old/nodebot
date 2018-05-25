@@ -6,7 +6,7 @@ import message from './message'
 import inits from './modules/init'
 const app = new Koa()
 
-fs.mkdirSync('cache')
+if (!fs.existsSync('cache')) fs.mkdirSync('cache')
 for (let init of inits) init()
 
 message.listen()
