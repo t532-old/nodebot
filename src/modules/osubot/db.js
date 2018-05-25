@@ -5,6 +5,7 @@ import { api } from './web'
 
 const db = Monk('localhost:27017/botdb')
 const users = db.get('users')
+const usersBackup = db.get('backup')
 const config = yaml.safeLoad(fs.readFileSync('config.yml')).osubot
 
 /**
@@ -56,7 +57,7 @@ async function refreshStat(qqid) {
         console.log('Not found')
         return 
     }
-    return users.update({ qqid }, { data: [osu, taiko, ctb, mania] })
+    return users.update({ qqid }, { $set: { data: [osu, taiko, ctb, mania] } })
 }
 
 async function refreshAllStat() {
@@ -81,5 +82,20 @@ async function getByOSU(osuid) {
     return users.findOne({ osuid })
 }
 
+async function backup() {
+    const values = await users.find()
+    await usersBackup.remove({})
+    for (let user of values)
+        await usersBackup.insert(user)
+}
+
+async function recovery() {
+    const values = await usersBackup.find()
+    await users.remove({})
+    for (let user of values)
+        await users.insert(user)
+}
+
 export const userdb = { newUser, delUser, getByQQ, getByOSU }
 export const statdb = { getByQQ, getByOSU, refreshStat, refreshAllStat }
+export const managedb = { backup, recovery }

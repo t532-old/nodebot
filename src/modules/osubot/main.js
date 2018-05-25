@@ -3,12 +3,25 @@ import { Message } from '../../message'
 import { api } from './web'
 import canvas from './canvas'
 import util from './util'
-import { userdb, statdb } from './db'
+import { userdb, statdb, managedb } from './db'
 // Imports from modules
 import fs from 'fs'
 import yaml from 'js-yaml'
 // Initialize settings
-const config = yaml.safeLoad(fs.readFileSync('config.yml')).osubot
+const { operators } = yaml.safeLoad(fs.readFileSync('config.yml'))
+
+const MESSAGES = {
+    QUERY_BIND_FAIL: '你还没有绑定你的osu!id。\n使用 `-bind <id>\' 来绑定（*一定*要去掉两边的尖括号<>），\n如果用户名有空格请将用户名*整个*用英文引号 "" 括起来！',
+    QUERY_NET_FAIL: '用户不存在/最近没玩过！',
+    QUERY_CANVAS_FAIL: '请求太频繁，请稍后重试！',
+    BP_ARGS_FAIL: '请指定一个bp序号(1-100)！',
+    AVATAR_SUCC: '清除头像缓存成功！',
+    BIND_FAIL: '你绑定过id了！如果想要重新绑定，请先输入 `-unbind\' 来解绑。',
+    BIND_SUCC: '绑定成功！\n如果绑定错误，想要重新绑定，请输入 `-unbind\' 解绑后再次使用本命令。',
+    UNBIND_SUCC: '解绑成功！',
+    DB_SUCC: '数据库操作完毕。',
+    DB_FAIL: '操作错误或者没有权限！',
+}
 
 const bind = {
     args: '<account>',
@@ -22,15 +35,15 @@ const bind = {
         let user
         try { user = await api.statQuery({ u: account }) }
         catch (err) { 
-            msg.send('osubot: bind: 用户名无效或bot炸了！（请注意输入用户名时不用添加帮助中示例的尖括号<>）') 
+            msg.send(`osubot: bind: ${MESSAGES.QUERY_NET_FAIL}`) 
             return
         }
         const result = await userdb.newUser(msg.param.user_id, user.user_id)
         if (!result) {
-            msg.send('osubot: bind: 你绑定过id了！如果想要重新绑定，请先输入 `-unbind\' 来解绑。')
+            msg.send(`osubot: bind: ${MESSAGES.BIND_FAIL}`)
             return
         }
-        msg.send('osubot: bind: 绑定成功！\n如果绑定错误，想要重新绑定，请输入 `-unbind\' 解绑后再次使用本命令。')
+        msg.send(`osubot: bind: ${MESSAGES.BIND_SUCC}`)
     }
 }
 
@@ -44,7 +57,7 @@ const unbind = {
      */
     async action(msg) {
         await userdb.delUser(msg.param.user_id)
-        msg.send('osubot: unbind: 解绑成功！')
+        msg.send(`osubot: unbind: ${MESSAGES.UNBIND_SUCC}`)
     }
 }
 
@@ -59,29 +72,33 @@ const stat = {
      */
     async action(msg, { usr = 'me' }, [ mode = 'o' ]) {
         mode = util.checkmode(mode)
-        let prevStat
+        let status, prevStatus
         if (usr === 'me') {
             try {
                 const bindDoc = await userdb.getByQQ(msg.param.user_id)
                 usr = bindDoc.osuid
             } catch (err) {
-                msg.send('osubot: stat: 你还没有绑定你的osu!id。\n使用 `-bind <id>\' 来绑定（*一定*要去掉两边的尖括号<>），\n如果用户名有空格请将用户名*整个*用英文引号 " 括起来！')
+                msg.send(`osubot: stat: ${MESSAGES.QUERY_BIND_FAIL}`)
                 return
             }
             try {
                 const statDoc = await statdb.getByQQ(msg.param.user_id)
-                prevStat = statDoc.data[mode]
+                prevStatus = statDoc.data[mode]
             } catch (err) { 
-                console.log('prevStat not found')
-                prevStat = undefined
+                prevStatus = undefined
             }
         }
         try { 
-            const stat = await api.statQuery({
-                u: usr,
-                m: mode,
-            })
-            const path = await canvas.drawStat(stat, prevStat)
+            try {
+                status = await api.statQuery({
+                    u: usr,
+                    m: mode,
+                })
+            } catch (err) {
+                msg.send(`osubot: stat: ${MESSAGES.QUERY_NET_FAIL}`)
+                return
+            }
+            const path = await canvas.drawStat(status, prevStatus)
             if (path)
                 msg.send([{
                     type: 'image',
@@ -89,10 +106,9 @@ const stat = {
                         file: path,
                     }
                 }])
-            else msg.send('osubot: stat: 请过会重试！')
+            else msg.send(`osubot: stat: ${MESSAGES.QUERY_CANVAS_FAIL}`)
         } catch (err) {
-            console.log(err)
-            msg.send(err.toString())
+            msg.error(err)
             return
         }
     }
@@ -105,29 +121,36 @@ const rec = {
      * @description Get a user's most recent play
      * @param {Message} msg The universal msg object
      * @param {string} usr The username that'll be queried
+     * @param {string} mode the mode that will be queried
      */
     async action(msg, { usr = 'me' }, [ mode = 'o' ]) {
         mode = util.checkmode(mode)
+        let recent, map, status
         if (usr === 'me') {
             try {
                 const doc = await userdb.getByQQ(msg.param.user_id)
                 usr = doc.osuid
             } catch (err) {
-                msg.send('osubot: stat: 你还没有绑定你的osu!id。\n使用 `-bind <id>\' 来绑定（*不带*尖括号<>），\n如果用户名有空格请将用户名*整个*用英文引号 " 括起来！')
+                msg.send(`osubot: stat: ${MESSAGES.QUERY_BIND_FAIL}`)
                 return
             }
         }
         try { 
-            const rec = await api.recentQuery({
-                u: usr,
-                limit: '1',
-                m: mode,
-            })
-            const [map, stat] = await Promise.all([
-                api.mapQuery({ b: rec.beatmap_id }),
-                api.statQuery({ u: usr }),
-            ])
-            const path = await canvas.drawRecent(rec, map, stat)
+            try {
+                recent = await api.recentQuery({
+                    u: usr,
+                    limit: '1',
+                    m: mode,
+                })
+                ;[map, status] = await Promise.all([
+                    api.mapQuery({ b: recent.beatmap_id }),
+                    api.statQuery({ u: usr }),
+                ])
+            } catch (err) {
+                msg.send(`osubot: rec: ${MESSAGES.QUERY_NET_FAIL}`)
+                return
+            }
+            const path = await canvas.drawRecent(recent, map, status)
             if (path)
                 msg.send([{
                     type: 'image',
@@ -135,9 +158,9 @@ const rec = {
                         file: path,
                     }
                 }])
-            else msg.send('osubot: rec: 请过会重试！')
+            else msg.send(`osubot: rec: ${MESSAGES.QUERY_CANVAS_FAIL}`)
         } catch (err) {
-            msg.send(err.toString())
+            msg.error(err)
             return
         }
     }
@@ -145,35 +168,45 @@ const rec = {
 
 const bp = {
     args: '<order> [usr]',
-    options: [],
+    options: util.flatten(util.modes),
     /**
      * @description Get a user's best performance
      * @param {Message} msg The universal msg object
      * @param {string} order The username that'll be queried
      * @param {string} usr The username that'll be queried
+     * @param {string} mode the mode that will be queried
      */
-    async action(msg, { order, usr = 'me' }) {
+    async action(msg, { order, usr = 'me' }, [ mode = 'o' ]) {
+        mode = util.checkmode(mode)
+        let best, map, status
         if (!parseInt(order) || parseInt(order) < 1 || parseInt(order) > 100)
-            msg.send('osubot: bp: 请指定一个bp序号(1-100)！')
+            msg.send(`osubot: bp: ${MESSAGES.BP_ARGS_FAIL}`)
         if (usr === 'me') {
             try {
                 const doc = await userdb.getByQQ(msg.param.user_id)
                 usr = doc.osuid
             } catch (err) {
-                msg.send('osubot: bp: 你还没有绑定你的osu!id。\n使用 `-bind <id>\' 来绑定（*不带*尖括号<>），\n如果用户名有空格请将用户名*整个*用英文引号 " 括起来！')
+                msg.send(`osubot: bp: ${MESSAGES.QUERY_BIND_FAIL}`)
                 return
             }
         }
-        try { 
-            const rec = (await api.bestQuery({
-                u: usr,
-                limit: order,
-            }))[order - 1]
-            const [map, stat] = await Promise.all([
-                api.mapQuery({ b: rec.beatmap_id }),
-                api.statQuery({ u: usr }),
-            ])
-            const path = await canvas.drawBest(rec, map, stat)
+        try {
+            try {
+                best = (await api.bestQuery({
+                    u: usr,
+                    limit: order,
+                    m: mode
+                }))[order - 1]
+                ;[map, status] = await Promise.all([
+                    api.mapQuery({ b: best.beatmap_id }),
+                    api.statQuery({ u: usr }),
+                ])
+            } catch (err) {
+                console.log(err)
+                msg.send(`osubot: bp: ${MESSAGES.QUERY_NET_FAIL}`)
+                return
+            }
+            const path = await canvas.drawBest(best, map, status)
             if (path)
                 msg.send([{
                     type: 'image',
@@ -181,9 +214,9 @@ const bp = {
                         file: path,
                     }
                 }])
-            else msg.send('osubot: bp: 请过会重试！')
+            else msg.send(`osubot: bp: ${MESSAGES.QUERY_CANVAS_FAIL}`)
         } catch (err) {
-            msg.send(err.toString())
+            msg.error(err)
             return
         }
     }
@@ -212,9 +245,20 @@ const avatar = {
         const user = await userdb.getByQQ(msg.param.user_id)
         if (user) {
             canvas.clearCachedAvatars(user.osuid)
-            msg.send('osubot: avatar: 清除头像缓存成功！')
-        } else msg.send('osubot: avatar: 你还没有绑定你的osu!id。\n使用 `-bind <id>\' 来绑定（*不带*尖括号<>），\n如果用户名有空格请将用户名*整个*用英文引号 " 括起来！')
+            msg.send(`osubot: avatar: ${MESSAGES.AVATAR_SUCC}`)
+        } else msg.send(`osubot: avatar: ${USER_QUERY_BIND_FAIL}`)
     }
 }
 
-export default { bind, unbind, stat, rec, bp, roll, avatar }
+const db = {
+    args: '',
+    options: ['backup', 'recovery'],
+    async action(msg, {}, [ type ]) {
+        if (operators.includes(msg.param.user_id)) {
+            await managedb[type]();
+            msg.send(`osubot: db: ${MESSAGE.DB_SUCC}`)
+        } else msg.send(`osubot: db: ${MESSAGE.DB_FAIL}`)
+    }
+}
+
+export default { bind, unbind, stat, rec, bp, roll, avatar, db }
