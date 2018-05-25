@@ -80,6 +80,7 @@ async function staticQuery(url, dest) {
         url,
         responseType: 'stream'
     })
+    if (res.status === 403) return false
     res.data.pipe(fs.createWriteStream(dest))
     return new Promise(function (resolve, reject) {
         res.data.on('end', resolve)

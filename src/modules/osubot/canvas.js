@@ -56,16 +56,16 @@ async function drawRecent(rec, map, stat) {
         else target.push(value)
         return target
     }, [])
-    if (!fs.existsSync(avatarDest))
-        if (!(await getAvatar(uid, avatarDest, avatarLargerDest))) return false
     await promisify(fs.copyFile, `assets${path.sep}image${path.sep}userbg${path.sep}crecent.jpg`, avatarBGDest)
-    await promisifyGM(
-        gm(avatarBGDest)
-        .quality(100)
-        .composite(avatarDest)
-        .gravity('North')
-        .geometry('+0-50')
-    )
+    if (!fs.existsSync(avatarDest))
+        if (await getAvatar(uid, avatarDest, avatarLargerDest)) 
+            await promisifyGM(
+                gm(avatarBGDest)
+                .quality(100)
+                .composite(avatarDest)
+                .gravity('North')
+                .geometry('+0-50')
+            )
     if (!fs.existsSync(bgDest))
         await res.bgQuery(sid, bgDest)
     await promisify(fs.copyFile, bgDest, dest)
@@ -193,15 +193,15 @@ async function drawStat(stat, statPrev) {
     const avatarBGDest = `cache${path.sep}osubot${path.sep}statbg${path.sep}${uid}.jpg`
     const avatarLargerDest = `cache${path.sep}osubot${path.sep}avatarl${path.sep}${uid}.jpg`
     await promisify(fs.copyFile, `assets${path.sep}image${path.sep}userbg${path.sep}c${Math.ceil(Math.random() * 5)}.jpg`, dest)
-    if (!fs.existsSync(avatarDest))
-        if (!(await getAvatar(uid, avatarDest, avatarLargerDest))) return false
     await promisify(fs.copyFile, `assets${path.sep}image${path.sep}userbg${path.sep}cstat.jpg`, avatarBGDest)
-    await promisifyGM(
-        gm(avatarBGDest)
-        .quality(100)
-        .composite(avatarLargerDest)
-        .gravity('Center')
-    )
+    if (!fs.existsSync(avatarDest))
+        if (await getAvatar(uid, avatarDest, avatarLargerDest))
+            await promisifyGM(
+                gm(avatarBGDest)
+                .quality(100)
+                .composite(avatarLargerDest)
+                .gravity('Center')
+            )
     await promisifyGM(
         gm(dest)
         .quality(100)
@@ -334,16 +334,16 @@ async function drawBest(bp, map, stat) {
         else target.push(value)
         return target
     }, [])
-    if (!fs.existsSync(avatarDest))
-        if (!(await getAvatar(uid, avatarDest, avatarLargerDest))) return false
     await promisify(fs.copyFile, `assets${path.sep}image${path.sep}userbg${path.sep}crecent.jpg`, avatarBGDest)
-    await promisifyGM(
-        gm(avatarBGDest)
-        .quality(100)
-        .composite(avatarDest)
-        .gravity('North')
-        .geometry('+0-50')
-    )
+    if (!fs.existsSync(avatarDest))
+        if (await getAvatar(uid, avatarDest, avatarLargerDest))
+            await promisifyGM(
+                gm(avatarBGDest)
+                .quality(100)
+                .composite(avatarDest)
+                .gravity('North')
+                .geometry('+0-50')
+            )
     if (!fs.existsSync(bgDest))
         await res.bgQuery(sid, bgDest)
     await promisify(fs.copyFile, bgDest, dest)
@@ -465,9 +465,9 @@ async function drawBest(bp, map, stat) {
 }
 
 async function getAvatar(uid, avatarDest, avatarLargerDest) {
-    console.log(uid, avatarDest, avatarLargerDest)
+    try { await res.avatarQuery(uid, avatarDest) }
+    catch (err) { return false }
     try {
-        await res.avatarQuery(uid, avatarDest)
         await promisify(fs.copyFile, avatarDest, avatarLargerDest)
         await promisifyGM(
             gm(avatarDest)
