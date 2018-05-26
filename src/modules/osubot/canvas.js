@@ -308,10 +308,10 @@ async function drawStat(stat, statPrev) {
             .drawText(-300, -20, '+' + parseInt(diff.playcount).toString())
             .drawText(300, -20, (parseFloat(diff.accuracy) >= 0 ? '+' : '') + diff.accuracy.slice(0, 3 + diff.accuracy.split('.').length) + '%')
             .drawText(0, -55, (-parseInt(diff.pp_rank) >= 0 ? '+' : '') + (-diff.pp_rank))
-            .drawText(-100, 175, (parseInt(diff.count_rank_ssh) + parseInt(diff.count_rank_ss) >= 0 ? '+' : '') + (parseInt(diff.count_rank_ssh) + parseInt(diff.count_rank_ss)).toString())
-            .drawText(-33, 175, (parseInt(diff.count_rank_sh) >= 0 ? '+' : '') + diff.count_rank_sh)
-            .drawText(33, 175, (parseInt(diff.count_rank_s) >= 0 ? '+' : '') + diff.count_rank_s)
-            .drawText(100, 175, (parseInt(diff.count_rank_a) >= 0 ? '+' : '') + diff.count_rank_a)
+            .drawText(-100, 175, (parseInt(diff.count_rank_ssh) + parseInt(diff.count_rank_ss) >= 0 ? '+' : '') + ((parseInt(diff.count_rank_ssh) + parseInt(diff.count_rank_ss)).toString() || '0'))
+            .drawText(-33, 175, (parseInt(diff.count_rank_sh) >= 0 ? '+' : '') + (diff.count_rank_sh || '0'))
+            .drawText(33, 175, (parseInt(diff.count_rank_s) >= 0 ? '+' : '') + (diff.count_rank_s || '0'))
+            .drawText(100, 175, (parseInt(diff.count_rank_a) >= 0 ? '+' : '') + (diff.count_rank_a || '0'))
         )
     }
     return 'file://' + process.cwd() + path.sep + dest

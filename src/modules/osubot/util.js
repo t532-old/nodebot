@@ -66,7 +66,7 @@ export default {
         for (let i of Object.keys(differ)) {
             if (typeof differ[i] === 'number' && typeof diffee[i] === 'number')
                 result[i] = (differ[i] - diffee[i]).toString()
-            else if (parseFloat(differ[i]) && parseFloat(diffee[i]))
+            else if (typeof parseFloat(differ[i]) === 'number' && typeof parseFloat(diffee[i]) === 'number')
                 result[i] = (parseFloat(differ[i]) - parseFloat(diffee[i])).toString()
             else delete result[i]
         }
