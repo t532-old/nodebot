@@ -8,7 +8,6 @@ const initPaths = [
     'cache/osubot/recent',
     'cache/osubot/recentbg',
     'cache/osubot/stat',
-    'cache/osubot/statbg',
     'cache/osubot/mapbg',
     'cache/osubot/best',
 ]
