@@ -14,7 +14,7 @@ message.listen()
 app.use(body())
 
 app.use(async ctx => {
-    if (ctx.request.body.post_type)
+    if (ctx.request.body.message_type)
         message.handle(ctx.request.body)
 })
 

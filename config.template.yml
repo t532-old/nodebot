@@ -1,5 +1,5 @@
 operators: # A list, now reserved, will be useful in the future
 develop:
-    version: '1.1.1-beta' # The version. This only influences the develop.about command.
+    version: '1.1.2-beta' # The version. This only influences the develop.about command.
 osubot:
     key: # Your osu! api key
