@@ -77,15 +77,10 @@ const stat = {
             try {
                 const bindDoc = await userdb.getByQQ(msg.param.user_id)
                 usr = bindDoc.osuid
+                prevStatus = bindDoc.data[mode]
             } catch (err) {
                 msg.send(`osubot: stat: ${MESSAGES.QUERY_BIND_FAIL}`)
                 return
-            }
-            try {
-                const statDoc = await statdb.getByQQ(msg.param.user_id)
-                prevStatus = statDoc.data[mode]
-            } catch (err) { 
-                prevStatus = undefined
             }
         }
         try { 
@@ -95,6 +90,10 @@ const stat = {
                     m: mode,
                 })
             } catch (err) {
+                msg.send(`osubot: stat: ${MESSAGES.QUERY_NET_FAIL}`)
+                return
+            }
+            if (status.pp_rank === null) {
                 msg.send(`osubot: stat: ${MESSAGES.QUERY_NET_FAIL}`)
                 return
             }

@@ -28,7 +28,7 @@ async function statQuery(params) {
     let result
     try { result = await apiQuery('get_user', params) }
     catch (err) { throw new Error('statQuery: bad network status') }
-    if (result.data[0] === undefined || result.data[0].pp_rank === null) throw new Error('statQuery: user does not exist')
+    if (result.data[0] === undefined) throw new Error('statQuery: user does not exist')
     else return result.data[0]
 }
 
