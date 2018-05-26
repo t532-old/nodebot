@@ -189,6 +189,7 @@ async function drawStat(stat, statPrev) {
     const uid = stat.user_id
     const dest = `cache${path.sep}osubot${path.sep}stat${path.sep}${uid}.jpg`
     const avatarDest = `cache${path.sep}osubot${path.sep}avatar${path.sep}${uid}.jpg`
+    const avatarLargerDest = `cache${path.sep}osubot${path.sep}avatarl${path.sep}${uid}.jpg`
     const ranks = ['XH', 'X', 'SH', 'S', 'A']
     await promisify(fs.copyFile, `assets${path.sep}image${path.sep}userbg${path.sep}c${Math.ceil(Math.random() * 5)}.jpg`, dest)
     await promisifyGM(
