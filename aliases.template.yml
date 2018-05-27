@@ -1,0 +1,4 @@
+# This file let you set alias of your commands
+# Use the format below (and remember the indent!) :
+- from: ''
+  to: ''

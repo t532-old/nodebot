@@ -1,3 +1,15 @@
+class Aliaser {
+    constructor(aliases) { 
+        this.aliases = aliases
+    }
+    alias(from) {
+        for (let i of this.aliases)
+            if (from.toLowerCase().trim().split(/[\r\n\s]/).filter(i => i).join(' ') == i.from) 
+                from = i.to
+        return from
+    }
+}
+
 class Command {
     /**
      * @constructor
@@ -44,6 +56,14 @@ class Command {
         this.list[name] = { args, options, action, str }
     }
     /**
+     * Bind a group of commands.
+     * @param {object} commands 
+     */
+    onAll(commands) {
+        for (let i of Object.keys(commands)) 
+            this.on(i, commands[i])
+    }
+    /**
      * do a command
      * @param {string} command 
      */
@@ -83,4 +103,4 @@ class Command {
     }
 }
 
-export default Command
+export { Aliaser, Command }

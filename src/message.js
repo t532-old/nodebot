@@ -2,8 +2,11 @@ import botModules from './modules'
 import fs from 'fs'
 import yaml from 'js-yaml'
 import axios from 'axios'
-import Command from './command'
+import { Command, Aliaser } from './command'
+const aliases = yaml.safeLoad(fs.readFileSync('aliases.yml'))
 const { sendPort } = yaml.safeLoad(fs.readFileSync('config.yml'))
+
+const aliaser = new Aliaser(aliases)
 
 const handler = new Command({
     prefix: /-/,
@@ -68,14 +71,11 @@ class Message {
     static async 'group'(group_id, message) { return axios.post(`http://localhost:${sendPort}/send_group_msg`, { group_id, message }) }
 }
 
-function listen() {
-    for (let i in botModules)
-        handler.on(i, botModules[i])
-}
+function listen() { handler.onAll(botModules) }
 
 function handle(param) {
-    const comm = unescape(param.message.replace(/&#(\d+);/g, (match, str) => '%' + parseInt(str).toString(16))).trim()
-    handler.do(comm, new Message(param))
+    const comm = unescape(param.message.replace(/&#(\d+);/g, (match, str) => '%' + parseInt(str).toString(16)))
+    handler.do(aliaser.alias(comm), new Message(param))
 }
 
 export { Message }

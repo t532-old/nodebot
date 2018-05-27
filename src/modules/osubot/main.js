@@ -113,17 +113,6 @@ const stat = {
     }
 }
 
-const statme = {
-    args: '',
-    options: util.flatten(util.modes),
-    /**
-     * @description Fetch a user's status
-     * @param {Message} msg The universal msg object
-     * @param {string} mode the mode that will be queried
-     */
-    async action(msg, {}, options) { stat.action(msg, 'me', options) }
-}
-
 const rec = {
     args: '[usr]',
     options: util.flatten(util.modes),
@@ -270,4 +259,4 @@ const db = {
     }
 }
 
-export default { bind, unbind, stat, rec, bp, roll, avatar, db, '-': statme }
+export default { bind, unbind, stat, rec, bp, roll, avatar, db }

@@ -3,10 +3,11 @@ console.log(
 `-------------------------------
 Running runtime tests...`
 )
-require('fs').copyFileSync('config.template.yml', 'config.yml')
 console.log('- 1/3: Load config')
-require('../dist/modules/init')
+require('fs').copyFileSync('config.template.yml', 'config.yml')
+require('fs').copyFileSync('aliases.template.yml', 'aliases.yml')
 console.log('- 2/3: Load Initialization script')
-require('../dist/message')
+require('../dist/modules/init')
 console.log('- 3/3: Load main bot')
+require('../dist/message')
 console.log(`- ✔ Success`)
