@@ -1,6 +1,9 @@
 import botModules from './modules'
+import fs from 'fs'
+import yaml from 'js-yaml'
 import axios from 'axios'
 import Command from './command'
+const { sendPort } = yaml.safeLoad(fs.readFileSync('config.yml'))
 
 const handler = new Command({
     prefix: /-/,
@@ -56,13 +59,13 @@ class Message {
      * @param {string} user_id The target user's qq id.
      * @param {string|array} message The message
      */
-    static async 'private'(user_id, message) { return axios.post('http://localhost:5700/send_private_msg', { user_id, message }) }
+    static async 'private'(user_id, message) { return axios.post(`http://localhost:${sendPort}/send_private_msg`, { user_id, message }) }
     /**
      * Sends a group message
      * @param {string} group_id The target qq group id.
      * @param {string|array} message The message
      */
-    static async 'group'(group_id, message) { return axios.post('http://localhost:5700/send_group_msg', { group_id, message }) }
+    static async 'group'(group_id, message) { return axios.post(`http://localhost:${sendPort}/send_group_msg`, { group_id, message }) }
 }
 
 function listen() {

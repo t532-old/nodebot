@@ -1,10 +1,12 @@
 import fs from 'fs'
 import Koa from 'koa'
 import body from 'koa-body'
+import yaml from 'js-yaml'
 
 import message from './message'
 import inits from './modules/init'
 const app = new Koa()
+const { receivePort } = yaml.safeLoad(fs.readFileSync('config.yml'))
 
 if (!fs.existsSync('cache')) fs.mkdirSync('cache')
 for (let init of inits) init()
@@ -18,4 +20,4 @@ app.use(async ctx => {
         message.handle(ctx.request.body)
 })
 
-app.listen(8080)
+app.listen(receivePort)

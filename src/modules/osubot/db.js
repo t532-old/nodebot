@@ -3,10 +3,10 @@ import Monk from 'monk'
 import yaml from 'js-yaml'
 import { api } from './web'
 
-const db = Monk('localhost:27017/botdb')
+const config = yaml.safeLoad(fs.readFileSync('config.yml')).osubot
+const db = Monk(`localhost:${config.databasePort}/botdb`)
 const users = db.get('users')
 const usersBackup = db.get('backup')
-const config = yaml.safeLoad(fs.readFileSync('config.yml')).osubot
 
 /**
  * Adds a bound user to db
