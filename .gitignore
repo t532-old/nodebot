@@ -59,6 +59,7 @@ typings/
 
 # config file
 config.yml
+aliases.yml
 
 # bot caches
 cache/

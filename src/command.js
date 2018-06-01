@@ -1,11 +1,24 @@
+class Aliaser {
+    constructor(aliases) { 
+        this.aliases = aliases
+    }
+    alias(from) {
+        for (let i of this.aliases)
+            if (from.toLowerCase().trim().split(/[\r\n\s]/).filter(i => i).join(' ') == i.from) 
+                from = i.to
+        return from
+    }
+}
+
 class Command {
     /**
      * @constructor
-     * @param {regexp} prefix - The commands' prefix
-     * @param {function} handlers - do this when no avalible commands 
+     * @param {object} prefixes - The commands' && options' prefix
+     * @param {object} handlers - do this when no avalible commands || the arguments are missing
      */
-    constructor({prefix, handlers}) { 
-        this.prefix = prefix
+    constructor({prefixes, handlers}) { 
+        this.commandPrefix = new RegExp('^' + prefixes.command)
+        this.optionsPrefix = new RegExp('^' + prefixes.options)
         this.defaultHandler = handlers.default
         this.invalidHandler = handlers.invalid
         this.list = {}
@@ -32,7 +45,7 @@ class Command {
      * })
      */
     on(name, {args, options, action}) {
-        const str = this.prefix.toString().slice(1, -1) + name + ' ' + args
+        const str = this.commandPrefix.toString().slice(1, -1) + name + ' ' + args
         args = args.split(' ')
         args = {
             required: args.filter(i => i.match(/^<.+>$/))
@@ -44,12 +57,20 @@ class Command {
         this.list[name] = { args, options, action, str }
     }
     /**
+     * Bind a group of commands.
+     * @param {object} commands 
+     */
+    onAll(commands) {
+        for (let i of Object.keys(commands)) 
+            this.on(i, commands[i])
+    }
+    /**
      * do a command
      * @param {string} command 
      */
     do(command, ...extraArgs) {
-        if (!this.prefix.test(command[0])) return
-        command = command.trim().slice(1).split('"').map(i => i.trim()).reduce((target, value, index) => {
+        if (!this.commandPrefix.test(command)) return
+        command = command.trim().split(this.commandPrefix)[1].split('"').map(i => i.trim()).reduce((target, value, index) => {
             if (index % 2 == 0) target.push(...value.split(/[\r\n\s]/))
             else target.push(value)
             return target
@@ -61,8 +82,8 @@ class Command {
                 return
             } else throw new SyntaxError('No default handler for undefined command')
         }
-        const options = command.filter(i => i[0] === '*').map(i => i.slice(1)).filter(i => this.list[name].options.includes(i))
-        command = command.filter(i => i[0] !== '*')
+        const options = command.filter(i => this.optionsPrefix.test(i)).map(i => i.slice(1)).filter(i => this.list[name].options.includes(i))
+        command = command.filter(i => !this.optionsPrefix.test(i))
         if (this.list[name].args.required.length > command.length) {
             if (typeof this.invalidHandler === 'function') {
                 this.invalidHandler(...extraArgs, [name, ...command])
@@ -83,4 +104,4 @@ class Command {
     }
 }
 
-export default Command
+export { Aliaser, Command }
