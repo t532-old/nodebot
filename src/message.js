@@ -9,7 +9,10 @@ const { sendPort } = yaml.safeLoad(fs.readFileSync('config.yml'))
 const aliaser = new Aliaser(aliases)
 
 const handler = new Command({
-    prefix: /-/,
+    prefixes: {
+        command: '-',
+        options: '\\*',
+    },
     handlers: {
         default() { },
         invalid(msg, [name, commands]) {
