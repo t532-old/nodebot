@@ -65,8 +65,10 @@ async function drawRecent(rec, map, stat) {
             .gravity('North')
             .geometry('+0-50')
         )
-    if (!fs.existsSync(bgDest))
-        await res.bgQuery(sid, bgDest)
+    if (!fs.existsSync(bgDest)) {
+        try { await res.bgQuery(sid, bgDest) }
+        catch (err) { await promisify(fs.copyFile, `assets${path.sep}image${path.sep}userbg${path.sep}c${Math.ceil(Math.random() * 5)}.jpg`, bgDest) }
+    }
     await promisify(fs.copyFile, bgDest, dest)
     await promisifyGM(
         gm(dest)
@@ -303,8 +305,10 @@ async function drawBest(bp, map, stat) {
             .gravity('North')
             .geometry('+0-50')
         )
-    if (!fs.existsSync(bgDest))
-        await res.bgQuery(sid, bgDest)
+    if (!fs.existsSync(bgDest)) {
+        try { await res.bgQuery(sid, bgDest) }
+        catch (err) { await promisify(fs.copyFile, `assets${path.sep}image${path.sep}userbg${path.sep}c${Math.ceil(Math.random() * 5)}.jpg`, bgDest) }
+    }
     await promisify(fs.copyFile, bgDest, dest)
     await promisifyGM(
         gm(dest)
@@ -366,10 +370,10 @@ async function drawBest(bp, map, stat) {
         .fontSize(13)
         .fill('#999')
         .drawText(0, 85, map.version + ' - mapped by ' + map.creator)
+        .drawRectangle(675, 345, 825, 365)
         .fontSize(12)
         .fill('#f69')
         .drawText(0, 5, 'total score')
-        .drawRectangle(675, 345, 825, 365)
         .font('assets/fonts/Exo2.0-Regular.otf')
         .fill('#fff')
         .drawText(0, 105, bp.date)
