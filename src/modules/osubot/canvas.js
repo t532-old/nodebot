@@ -42,15 +42,6 @@ async function drawRecent(rec, map, stat) {
     const avatarLargerDest = `cache${path.sep}osubot${path.sep}avatarl${path.sep}${uid}.jpg`
     const avatarBGDest = `cache${path.sep}osubot${path.sep}recentbg${path.sep}${uid}.jpg`
     const mapFile = await res.mapFileQuery(bid)
-    const pp = osu.ppv2({
-        combo: parseInt(rec.maxcombo),
-        nmiss: parseInt(rec.countmiss),
-        acc_percent: parseFloat(util.accuracy(rec)),
-        stars: new osu.diff().calc({
-            map: mapFile,
-            mods: parseInt(rec.enabled_mods)
-        })
-    })
     const mods = osu.modbits.string(rec.enabled_mods).split('').reduce((target, value, index) => {
         if (index % 2) target[target.length - 1] += value
         else target.push(value)
@@ -109,8 +100,6 @@ async function drawRecent(rec, map, stat) {
         .drawEllipse(750, 250, 210, 210, -145, -35)
         .fill('#fff')
         .font('assets/fonts/Exo2.0-Medium.otf')
-        .fontSize(25)
-        .drawText(0, -185, Math.round(pp.total).toString() + 'pp')
         .fontSize(30)
         .drawText(0, -155, stat.username)
         .font('assets/fonts/Exo2.0-BoldItalic.otf')
@@ -161,6 +150,26 @@ async function drawRecent(rec, map, stat) {
         .drawText(0, -20, util.scorify(rec.score))
         .crop(1000, 500)
     )
+    try {
+        const pp = osu.ppv2({
+            combo: parseInt(rec.maxcombo),
+            nmiss: parseInt(rec.countmiss),
+            acc_percent: parseFloat(util.accuracy(rec)),
+            stars: new osu.diff().calc({
+                map: mapFile,
+                mods: parseInt(rec.enabled_mods)
+            })
+        })
+        await promisifyGM(
+            gm(dest)
+            .quality(100)
+            .gravity('Center')
+            .fill('#fff')
+            .font('assets/fonts/Exo2.0-Medium.otf')
+            .fontSize(25)
+            .drawText(0, -185, Math.round(pp.total).toString() + 'pp')
+        )
+    } catch (err) {}
     await promisifyGM(
         gm(dest)
         .quality(100)

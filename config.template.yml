@@ -2,7 +2,7 @@ operators: # A list, now reserved, will be useful in the future
 receivePort: # The port you've set to receive messages in cqhttp
 sendPort: # cqhttp's api port
 develop:
-    version: '1.3.1-beta' # The version. This only influences the develop.about command.
+    version: '1.3.2-beta' # The version. This only influences the develop.about command.
 osubot:
     key: # Your osu! api key
     databasePort: # mongod's port

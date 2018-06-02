@@ -45,7 +45,7 @@ class Command {
      * })
      */
     on(name, {args, options, action}) {
-        const str = this.commandPrefix.toString().slice(1, -1) + name + ' ' + args
+        const str = this.commandPrefix.toString().slice(2, -1) + name + ' ' + args
         args = args.split(' ')
         args = {
             required: args.filter(i => i.match(/^<.+>$/))
@@ -82,7 +82,7 @@ class Command {
                 return
             } else throw new SyntaxError('No default handler for undefined command')
         }
-        const options = command.filter(i => this.optionsPrefix.test(i)).map(i => i.slice(1)).filter(i => this.list[name].options.includes(i))
+        const options = command.filter(i => this.optionsPrefix.test(i)).map(i => i.split(this.optionsPrefix)[1]).filter(i => this.list[name].options.includes(i))
         command = command.filter(i => !this.optionsPrefix.test(i))
         if (this.list[name].args.required.length > command.length) {
             if (typeof this.invalidHandler === 'function') {

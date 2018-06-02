@@ -58,7 +58,8 @@ class Message {
                     data: { qq: '2037246484' }
                 },
             ])
-            console.log(`${date.toString()} error: \n${err.stack}`)
+            console.log(`${date.toString()} error:`)
+            console.log(err)
     }
     /**
      * Sends a private message
