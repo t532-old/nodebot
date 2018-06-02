@@ -6,7 +6,7 @@
 [![GitHub repo wiki](https://img.shields.io/badge/read-repo%20wiki-ffaa55.svg)](https://github.com/trustgit/nodebot/wiki)
 [![凑badge（](https://img.shields.io/badge/developed%20for-osu!-ff6699.svg)](https://osu.ppy.sh/home)
 
-**WORKING IN PROGRESS:** 一个用来查询osu!账号信息的qqbot。
+## [**关于这个 Bot**](https://github.com/trustgit/nodebot/wiki/About)
 
 ## Bot 用户
 Bot 用户需要帮助时，请查看：[帮助文档 - 指令](https://github.com/trustgit/nodebot/wiki/Commands)
@@ -15,8 +15,3 @@ Bot 用户需要帮助时，请查看：[帮助文档 - 指令](https://github.c
 关于如何构建 Bot，可见[帮助文档 - 构建](https://github.com/trustgit/nodebot/wiki/Build)。
 
 Bot 开发者可以阅读代码中的注释，或查看[帮助文档 - 开发](https://github.com/trustgit/nodebot/wiki/Development)。
-
-## 声明
-- 本项目使用的所有 package 均可见 `package.json`。
-- 本项目不使用 `package-lock.json`。
-- 本项目遵循 [semver 语义化版本规则](https://semver.org)。
