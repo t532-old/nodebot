@@ -1,8 +1,8 @@
 {
   "name": "nodebot",
-  "version": "1.3.2-beta",
+  "version": "2.0.0-beta",
   "description": "A bot",
-  "main": "src/coreindex.js",
+  "main": "src/core/index.js",
   "scripts": {
     "start": "npm run build && node dist/core/index.js",
     "build": "babel src -d dist",
