@@ -1,3 +1,11 @@
+// Import modules
+import gm from 'gm'
+import fs from 'fs'
+import path from 'path'
+// Import local files
+import { promisify, promisifyGM } from './_util'
+import { res } from '../web'
+
 async function getAvatar(uid, avatarDest, avatarLargerDest) {
     try { await res.avatarQuery(uid, avatarDest) }
     catch (err) { return false }
