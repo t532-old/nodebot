@@ -160,6 +160,7 @@ async function drawRecent(rec, map, stat) {
                 mods: parseInt(rec.enabled_mods)
             })
         })
+        const fcpp = osu.ppv2({ map: mapFile })
         await promisifyGM(
             gm(dest)
             .quality(100)
@@ -168,6 +169,8 @@ async function drawRecent(rec, map, stat) {
             .font('assets/fonts/Exo2.0-Medium.otf')
             .fontSize(25)
             .drawText(0, -185, Math.round(pp.total).toString() + 'pp')
+            .fontSize(15)
+            .drawText(0, -205, Math.round(fcpp.total).toString() + 'pp if FC')
         )
     } catch (err) {}
     await promisifyGM(
@@ -404,7 +407,6 @@ async function drawBest(bp, map, stat) {
         .drawText(33, 160, '50')
         .fill('#a66')
         .drawText(100, 160, 'X')
-        
         .font('assets/fonts/Venera-300.otf')
         .fontSize(50)
         .fill('#f69')
