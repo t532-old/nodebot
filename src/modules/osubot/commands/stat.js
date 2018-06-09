@@ -40,7 +40,7 @@ export default {
                 msg.send(`osubot: stat: ${MESSAGES.QUERY_NET_FAIL}`)
                 return
             }
-            const path = await canvas.drawStat(status, prevStatus)
+            const path = await drawStat(status, prevStatus)
             if (path)
                 msg.send([{
                     type: 'image',
