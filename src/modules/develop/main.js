@@ -1,4 +1,3 @@
-import { Message } from '../../message'
 import yaml from 'js-yaml'
 import fs from 'fs'
 

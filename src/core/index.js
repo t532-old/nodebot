@@ -4,7 +4,7 @@ import body from 'koa-body'
 import yaml from 'js-yaml'
 
 import message from './message'
-import inits from './modules/init'
+import inits from '../modules/init'
 const app = new Koa()
 const { receivePort } = yaml.safeLoad(fs.readFileSync('config.yml'))
 
