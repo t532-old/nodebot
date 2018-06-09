@@ -1,13 +1,6 @@
 class Aliaser {
-    constructor(aliases) { 
-        this.aliases = aliases
-    }
-    alias(from) {
-        for (let i of this.aliases)
-            if (from.toLowerCase().trim().split(/[\r\n\s]/).filter(i => i).join(' ') == i.from) 
-                from = i.to
-        return from
-    }
+    constructor(aliases) { this.aliases = aliases }
+    alias(from) { return this.aliases[from] || from }
 }
 
 class Command {
