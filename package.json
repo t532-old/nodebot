@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/trustgit/nodebot.git"
+    "url": "git+https://gitlab.com/trustgit/nodebot.git"
   },
   "author": "trustgit",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/trustgit/nodebot/issues"
+    "url": "https://gitlab.com/trustgit/nodebot/issues"
   },
-  "homepage": "https://github.com/trustgit/nodebot#readme",
+  "homepage": "https://gitlab.com/trustgit/nodebot",
   "dependencies": {
     "axios": "^0.18.0",
     "babel-runtime": "^6.26.0",

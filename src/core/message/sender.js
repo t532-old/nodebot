@@ -26,7 +26,7 @@ export default class {
                         text: '很遗憾，发生了一个未预料到的错误。请过会重试；同时，请您复制下面的信息：\n' +
                                 date.toString() + ': ' +
                                 err.toString() + 
-                                '\n并到 https://github.com/trustgit/nodebot/issues 提交issue或私聊' 
+                                '\n并到 https://gitlab.com/trustgit/nodebot/issues 提交issue或私聊' 
                     }
                 },
                 {
