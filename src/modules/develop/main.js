@@ -25,7 +25,8 @@ const about = {
         msg.send(
 `Nodebot v${config.version}
 powered by Node.js & cqhttp.
-${new Date().getFullYear()} trustgit | under MIT License`
+${new Date().getFullYear()} trustgit | under MIT License
+Star on GitLab if you enjoy it! https://gitlab.com/trustgit/nodebot`
         )
     }
 }
