@@ -2,7 +2,7 @@
 [![license](https://img.shields.io/badge/license-MIT-55aa55.svg)](https://gitlab.com/trustgit/nodebot/blob/master/LICENSE)
 [![pipeline status](https://gitlab.com/trustgit/nodebot/badges/master/pipeline.svg)](https://gitlab.com/trustgit/nodebot/commits/master)
 [![GitLab (pre-)release](https://img.shields.io/badge/see-latest%20release-5555ff.svg)](https://gitlab.com/trustgit/nodebot/tags)
-[![GitLab repo wiki](https://img.shields.io/badge/read-repo%20wiki-ffaa55.svg)](https://gitlab.com/trustgit/nodebot/wiki)
+[![GitLab repo wiki](https://img.shields.io/badge/read-repo%20wiki-ffaa55.svg)](https://gitlab.com/trustgit/nodebot/wikis)
 [![凑badge（](https://img.shields.io/badge/developed%20for-osu!-ff6699.svg)](https://osu.ppy.sh/home)
 
 ## [**关于这个 Bot**](https://gitlab.com/trustgit/nodebot/wikis/About)
