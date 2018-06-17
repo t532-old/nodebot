@@ -45,4 +45,4 @@ function clearCachedAvatars(uid) {
     }
 }
 
-export default { getAvatar, clearCachedAvatars }
+export { getAvatar, clearCachedAvatars }
