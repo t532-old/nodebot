@@ -2,7 +2,7 @@
 ## Features
 - **不向后兼容**：更改 aliases.yml 格式
 - 源码：重构
-- WIP：改善 recent 与 bp 的绘制
+- 改善 recent 与 bp 的绘制
 
 ---
 
@@ -15,8 +15,8 @@
 
 # v1.3.1-beta
 ## Bugs
-修复了 `-bp` 指令绘制颜色异常的bug
-修复了 `web.js#res.bgQuery()` 抛出的异常未 catch 的 bug
+- 修复了 `-bp` 指令绘制颜色异常的bug
+- 修复了 `web.js#res.bgQuery()` 抛出的异常未 catch 的 bug
 
 ---
 
