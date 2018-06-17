@@ -1,4 +1,3 @@
-import { Message } from '../../message'
 import yaml from 'js-yaml'
 import fs from 'fs'
 
@@ -26,7 +25,8 @@ const about = {
         msg.send(
 `Nodebot v${config.version}
 powered by Node.js & cqhttp.
-${new Date().getFullYear()} trustgit | under MIT License`
+${new Date().getFullYear()} trustgit | under MIT License
+Star on GitLab if you enjoy it! https://gitlab.com/trustgit/nodebot`
         )
     }
 }
@@ -39,7 +39,7 @@ const help = {
      * @param {Message} msg The universal msg object
      */
     async action(msg) {
-        msg.send('帮助页面： https://github.com/trustgit/nodebot/wiki/Commands')
+        msg.send('帮助页面： https://gitlab.com/trustgit/nodebot/wikis/Commands')
     }
 }
 

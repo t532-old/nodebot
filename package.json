@@ -1,23 +1,23 @@
 {
   "name": "nodebot",
-  "version": "1.3.2-beta",
+  "version": "2.0.0-beta",
   "description": "A bot",
-  "main": "src/index.js",
+  "main": "src/core/index.js",
   "scripts": {
-    "start": "npm run build && node dist/index.js",
+    "start": "npm run build && node dist/core/index.js",
     "build": "babel src -d dist",
     "test": "npm run build && node test/test.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/trustgit/nodebot.git"
+    "url": "git+https://gitlab.com/trustgit/nodebot.git"
   },
   "author": "trustgit",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/trustgit/nodebot/issues"
+    "url": "https://gitlab.com/trustgit/nodebot/issues"
   },
-  "homepage": "https://github.com/trustgit/nodebot#readme",
+  "homepage": "https://gitlab.com/trustgit/nodebot",
   "dependencies": {
     "axios": "^0.18.0",
     "babel-runtime": "^6.26.0",

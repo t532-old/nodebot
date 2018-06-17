@@ -1,2 +1,2 @@
-import osubot from './main'
+import osubot from './commands'
 export default { ...osubot }

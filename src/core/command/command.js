@@ -1,18 +1,7 @@
-class Aliaser {
-    constructor(aliases) { 
-        this.aliases = aliases
-    }
-    alias(from) {
-        for (let i of this.aliases)
-            if (from.toLowerCase().trim().split(/[\r\n\s]/).filter(i => i).join(' ') == i.from) 
-                from = i.to
-        return from
-    }
-}
-
-class Command {
+export default class {
     /**
      * @constructor
+     * @name Command
      * @param {object} prefixes - The commands' && options' prefix
      * @param {object} handlers - do this when no avalible commands || the arguments are missing
      */
@@ -103,5 +92,3 @@ class Command {
         this.list[name].action(...extraArgs, args, options)
     }
 }
-
-export { Aliaser, Command }

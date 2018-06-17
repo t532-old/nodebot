@@ -1,18 +1,4 @@
 export default {
-    modes: [['o', 's', '0', 'osu', 'std', 'osu!', 'standard'],
-            ['t', '1', 'tk', 'taiko'],
-            ['c', '2', 'ctb', 'catch', 'catchthebeat'],
-            ['m', '3', 'mania']],
-    /**
-     * Convert a mode string to mode id.
-     * @param {string} mode The mode string that's going to be converted
-     */
-    checkmode(mode) {
-        mode = mode.toLowerCase()
-        for (let i in this.modes)
-            if (this.modes[i].includes(mode)) return i
-        return 0
-    },
     /**
      * Calculates a play's accuracy (f**k ppy).
      * @param {object} data The recent play data
@@ -84,16 +70,22 @@ export default {
         }
         return res
     },
-    /**
-     * flatten an array (f**k tc39).
-     * @param {array} arr Array to be flatten
-     */
-    flatten(arr) {
-        let flat = []
-        for (let i of arr) {
-            if (i instanceof Array) flat = [...flat, ...this.flatten(i)]
-            else flat.push(i)
-        }
-        return flat
-    },
+}
+
+export function promisifyGM(gmO) {
+    return new Promise(function(resolve, reject) {
+        gmO.write(gmO.source, err => {
+            if (err) reject(err)
+            else resolve()
+        })
+    })
+}
+
+export function promisify(fn, ...args) {
+    return new Promise((resolve, reject) => {
+        fn(...args, (err) => {
+            if (err) reject(err)
+            else resolve()
+        })
+    })
 }
