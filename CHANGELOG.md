@@ -1,9 +1,10 @@
 # v2.0.0-beta
-WIP
 ## Features
 - **不向后兼容**：更改 aliases.yml 格式
 - 源码：重构
 - WIP：改善 recent 与 bp 的绘制
+
+---
 
 # v1.3.2-beta
 ## Bugs
