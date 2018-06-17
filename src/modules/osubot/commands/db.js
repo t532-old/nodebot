@@ -1,4 +1,4 @@
-import { userdb } from '../db'
+import { managedb } from '../db'
 import MESSAGES from './_messages'
 import fs from 'fs'
 import yaml from 'js-yaml'

@@ -1,4 +1,7 @@
 import axios from 'axios'
+import yaml from 'js-yaml'
+import fs from 'fs'
+const { sendPort } = yaml.safeLoad(fs.readFileSync('config.yml'))
 /**
  * A class that is uses to send message asynchronously.
  * @class
@@ -6,7 +9,7 @@ import axios from 'axios'
  * @property {function} send A cqhttp sender binds to a specific target
  * @property {object} param The message object that cqhttp gives
  */
-export default class {
+export default class Message {
     /**
      * builds a message object
      * @param {object} param 

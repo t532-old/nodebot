@@ -16,7 +16,7 @@ import { res } from '../web'
  * @param {object} map 
  * @param {object} stat 
  */
-export default async function (rec, map, stat) {
+export default async function drawRecent(rec, map, stat) {
     const uid = stat.user_id
     const sid = map.beatmapset_id
     const bid = rec.beatmap_id
@@ -144,7 +144,10 @@ export default async function (rec, map, stat) {
                 mods: parseInt(rec.enabled_mods)
             })
         })
-        const fcpp = osu.ppv2({ map: mapFile })
+        const fcpp = osu.ppv2({
+            map: mapFile,
+            acc_percent: parseFloat(util.accuracy(rec))
+        })
         await promisifyGM(
             gm(dest)
             .quality(100)
@@ -152,9 +155,9 @@ export default async function (rec, map, stat) {
             .fill('#fff')
             .font('assets/fonts/Exo2.0-Medium.otf')
             .fontSize(25)
-            .drawText(0, -185, Math.round(pp.total).toString() + 'pp')
+            .drawText(0, -180, Math.round(pp.total).toString() + 'pp')
             .fontSize(15)
-            .drawText(0, -205, Math.round(fcpp.total).toString() + 'pp if FC')
+            .drawText(0, -195, Math.round(fcpp.total).toString() + 'pp if FC')
         )
     } catch (err) {}
     await promisifyGM(

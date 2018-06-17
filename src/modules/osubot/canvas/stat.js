@@ -6,7 +6,6 @@ import path from 'path'
 import util from './_util'
 import { promisify, promisifyGM } from './_util'
 import { getAvatar } from './avatar'
-import { res } from '../web'
 
 export default async function drawStat(stat, statPrev) {
     const uid = stat.user_id
