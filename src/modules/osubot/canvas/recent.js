@@ -11,7 +11,6 @@ import { res } from '../web'
 
 /**
  * Draws a recent play image and returns its path
- * @name drawRecent
  * @param {object} rec 
  * @param {object} map 
  * @param {object} stat 

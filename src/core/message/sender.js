@@ -12,14 +12,22 @@ const { sendPort } = yaml.safeLoad(fs.readFileSync('config.yml'))
 export default class Message {
     /**
      * builds a message object
-     * @param {object} param 
+     * @param {object} param A standard cqhttp message object
      */
     constructor(param) {
         this.target = param.group_id || param.user_id
         this.type = param.message_type
         this.param = param
     }
+    /**
+     * Send a message back to the target
+     * @param {string|array} message The message that'll be sent
+     */
     send(message) { Message[this.type](this.target, message) }
+    /**
+     * send an error message to the target and log the error
+     * @param {Error} err 
+     */
     error(err) {
         const date = new Date()
             this.send([

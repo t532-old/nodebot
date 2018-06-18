@@ -8,7 +8,7 @@ export default {
     args: '<order> [usr]',
     options: util.flatten(util.modes),
     /**
-     * @description Get a user's best performance
+     * Get a user's best performance
      * @param {Message} msg The universal msg object
      * @param {string} order The username that'll be queried
      * @param {string} usr The username that'll be queried

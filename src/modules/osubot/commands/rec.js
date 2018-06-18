@@ -8,7 +8,7 @@ export default {
     args: '[usr]',
     options: util.flatten(util.modes),
     /**
-     * @description Get a user's most recent play
+     * Get a user's most recent play
      * @param {Message} msg The universal msg object
      * @param {string} usr The username that'll be queried
      * @param {string} mode the mode that will be queried

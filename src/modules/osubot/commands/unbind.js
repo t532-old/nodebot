@@ -5,7 +5,7 @@ export default {
     args: '',
     options: [],
     /**
-     * @description unbinds an osu! id from a QQ id.
+     * unbinds an osu! id from a QQ id.
      * @param {Message} msg The universal msg object
      * @param {string} account The account
      */

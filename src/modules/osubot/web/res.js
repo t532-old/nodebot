@@ -4,8 +4,8 @@ import osu from 'ojsama'
 
 /**
  * A GET requrest that gets a file stream, and writes it to another stream
- * @param {string} url 
- * @param {string} dest 
+ * @param {string} url The url you want to fetch
+ * @param {string} dest The place the file will be copied to
  */
 async function staticQuery(url, dest) {
     const res = await axios({
@@ -32,6 +32,10 @@ async function avatarQuery(uid, dest) { return staticQuery('https://a.ppy.sh/' +
  */
 async function bgQuery(sid, dest) { return staticQuery('https://assets.ppy.sh/beatmaps/' + sid + '/covers/cover.jpg', dest) }
 
+/**
+ * Simple sugar over staticQuery, queries a map's .osu file
+ * @param {string} bid 
+ */
 async function mapFileQuery(bid) {
     const parser = new osu.parser()
     const res = (await axios.get('https://osu.ppy.sh/osu/' + bid)).data

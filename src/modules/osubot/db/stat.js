@@ -29,6 +29,9 @@ async function refreshStat(qqid) {
     else return users.update({ qqid }, { $set: { data: [osu, taiko, ctb, mania] } })
 }
 
+/**
+ * refreshes all bound user's status
+ */
 async function refreshAllStat() {
     const docs = await users.find()
     for (let user of docs)

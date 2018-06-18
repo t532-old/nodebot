@@ -1,3 +1,14 @@
+# v2.0.1
+## Features
+- 添加了一些注释 (~75 lines)
+- 完善了一些注释
+## Bugs
+- 修复 `-avatar` 命令可能出现的错误
+## P.S.
+这是 nodebot 的第一个非 beta 版本，这表明快速迭代期已经结束。
+
+---
+
 # v2.0.0-beta
 ## Features
 - **不向后兼容**：更改 aliases.yml 格式

@@ -7,6 +7,9 @@ const db = Monk(`localhost:${config.databasePort}/botdb`)
 const users = db.get('users')
 const usersBackup = db.get('backup')
 
+/**
+ * backups the db
+ */
 async function backup() {
     const values = await users.find()
     await usersBackup.remove({})
@@ -14,6 +17,9 @@ async function backup() {
         await usersBackup.insert(user)
 }
 
+/**
+ * recoveries the db
+ */
 async function recovery() {
     const values = await usersBackup.find()
     await users.remove({})

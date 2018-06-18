@@ -8,7 +8,7 @@ export default {
     args: '[usr]',
     options: util.flatten(util.modes),
     /**
-     * @description Fetch a user's status
+     * Fetch a user's status
      * @param {Message} msg The universal msg object
      * @param {string} usr username that will be queried
      * @param {string} mode the mode that will be queried

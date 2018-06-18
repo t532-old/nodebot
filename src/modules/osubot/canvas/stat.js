@@ -7,6 +7,12 @@ import util from './_util'
 import { promisify, promisifyGM } from './_util'
 import { getAvatar } from './avatar'
 
+/**
+ * Draws a user's status
+ * also draws the increasement if statPrev exists
+ * @param {object} stat
+ * @param {object?} statPrev
+ */
 export default async function drawStat(stat, statPrev) {
     const uid = stat.user_id
     const dest = `cache${path.sep}osubot${path.sep}stat${path.sep}${uid}.jpg`

@@ -4,7 +4,6 @@ import yaml from 'js-yaml'
 import { Command, Aliaser } from '../command'
 import Message from './sender'
 const aliases = yaml.safeLoad(fs.readFileSync('aliases.yml'))
-const { sendPort } = yaml.safeLoad(fs.readFileSync('config.yml'))
 
 const aliaser = new Aliaser(aliases)
 
@@ -24,8 +23,15 @@ Should be: ${this.list[name].str}`
     }
 })
 
+/**
+ * Initialize the commands listening.
+ */
 function listen() { handler.onAll(botModules) }
 
+/**
+ * handles a command by a specific target.
+ * @param {object} param A cqhttp message object
+ */
 function handle(param) {
     const comm = unescape(param.message.replace(/&#(\d+);/g, (match, str) => '%' + parseInt(str).toString(16)))
     handler.do(aliaser.alias(comm), new Message(param))

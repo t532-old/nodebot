@@ -9,6 +9,12 @@ import { promisify, promisifyGM } from './_util'
 import { getAvatar } from './avatar'
 import { res } from '../web'
 
+/**
+ * draws a user's bp and returns its path
+ * @param {object} bp 
+ * @param {object} map 
+ * @param {object} stat 
+ */
 export default async function drawBest(bp, map, stat) {
     const uid = stat.user_id
     const sid = map.beatmapset_id

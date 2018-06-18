@@ -6,7 +6,7 @@ export default {
     args: '<account>',
     options: [],
     /**
-     * @description binds an osu! id with a QQ id.
+     * binds an osu! id with a QQ id.
      * @param {Message} msg The universal msg object
      * @param {string} account The account
      */

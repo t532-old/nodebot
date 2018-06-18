@@ -72,6 +72,10 @@ export default {
     },
 }
 
+/**
+ * return a promise that waits for the saving of the gm object
+ * @param {GMStat} gmO The gm object
+ */
 export function promisifyGM(gmO) {
     return new Promise(function(resolve, reject) {
         gmO.write(gmO.source, err => {
@@ -81,6 +85,11 @@ export function promisifyGM(gmO) {
     })
 }
 
+/**
+ * promisify a callback function
+ * @param {function} fn 
+ * @param {array} args 
+ */
 export function promisify(fn, ...args) {
     return new Promise((resolve, reject) => {
         fn(...args, (err) => {

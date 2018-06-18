@@ -1,5 +1,5 @@
 import fs from 'fs'
-import { statdb, userdb } from './db'
+import { statdb } from './db'
 
 const initPaths = [
     'cache/osubot',
@@ -12,6 +12,10 @@ const initPaths = [
     'cache/osubot/best',
 ]
 
+/**
+ * This sets an interval function that 
+ * refreshes bound users' status every 0:00
+ */
 export default async function() {
     for (let i of initPaths)
         if (!fs.existsSync(i)) fs.mkdirSync(i)

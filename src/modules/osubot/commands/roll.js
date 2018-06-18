@@ -2,7 +2,7 @@ export default {
     args: '[range]',
     options: [],
     /**
-     * @description Gives a random result in a specific range (default 100)
+     * Gives a random result in a specific range (default 100)
      * @param {Message} msg The universal msg object
      * @param {string} range The rolling range
      */

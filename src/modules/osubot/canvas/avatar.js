@@ -6,6 +6,14 @@ import path from 'path'
 import { promisify, promisifyGM } from './_util'
 import { res } from '../web'
 
+/**
+ * get a user's avatar
+ * saves 350*350 version to avatarDest
+ * saves 421*421 version with a bit blur to avatarLargerDest
+ * @param {string} uid 
+ * @param {string} avatarDest 
+ * @param {string} avatarLargerDest 
+ */
 async function getAvatar(uid, avatarDest, avatarLargerDest) {
     try { await res.avatarQuery(uid, avatarDest) }
     catch (err) { return false }
@@ -40,8 +48,10 @@ function clearCachedAvatars(uid) {
         for (let i of fs.readdirSync(`cache${path.sep}osubot${path.sep}avatarl`))
             fs.unlinkSync(`cache${path.sep}osubot${path.sep}avatarl${path.sep}${i}.jpg`)
     } else {
-        fs.unlinkSync(`cache${path.sep}osubot${path.sep}avatar${path.sep}${uid}.jpg`)
-        fs.unlinkSync(`cache${path.sep}osubot${path.sep}avatarl${path.sep}${uid}.jpg`)
+        if (fs.existsSync(`cache${path.sep}osubot${path.sep}avatar${path.sep}${uid}.jpg`))
+            fs.unlinkSync(`cache${path.sep}osubot${path.sep}avatar${path.sep}${uid}.jpg`)
+        if (fs.existsSync(`cache${path.sep}osubot${path.sep}avatarl${path.sep}${uid}.jpg`))
+            fs.unlinkSync(`cache${path.sep}osubot${path.sep}avatarl${path.sep}${uid}.jpg`)
     }
 }
 
