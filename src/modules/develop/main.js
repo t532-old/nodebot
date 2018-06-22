@@ -11,7 +11,7 @@ const test = {
      * @param {Message} msg The universal msg object
      * @param {array} txt The texts user sends
      */
-    async action(msg, { txt }) { msg.send(txt.filter(i => /!|！/.test(i)).join(' ')) }
+    async action(msg, { txt }) { msg.send(txt.filter(i => /!|！/.test(i) === false).join(' ')) }
 }
 
 const about = {
