@@ -1,9 +1,4 @@
-import fs from 'fs'
-import Monk from 'monk'
-import yaml from 'js-yaml'
-
-const config = yaml.safeLoad(fs.readFileSync('config.yml')).osubot
-const db = Monk(`localhost:${config.databasePort}/botdb`)
+import db from './server'
 const users = db.get('users')
 /**
  * Get bind info by QQid.
