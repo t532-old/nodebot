@@ -1,10 +1,9 @@
 # v3.0.0-rc1
 
-WIP
-
 ## Features
 - 更改了 assets 的一些结构。
-- 将 `config.yml` 中的 cqhttp api 和 mongod database 的端口字段改为地址。
+- **非向后兼容：将 `config.yml` 中的 cqhttp api 和 mongod database 的端口字段改为地址。**
+- 增加了 Source maps
 
 ---
 
