@@ -1,6 +1,6 @@
 {
   "name": "nodebot",
-  "version": "3.0.0-beta",
+  "version": "3.0.0-rc1",
   "description": "A bot",
   "main": "src/core/index.js",
   "scripts": {
