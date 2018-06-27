@@ -30,7 +30,7 @@ export default async function drawRecent(rec, map, stat) {
         else target.push(value)
         return target
     }, [])
-    await promisify(fs.copyFile, `assets${path.sep}image${path.sep}userbg${path.sep}crecent.jpg`, avatarBGDest)
+    await promisify(fs.copyFile, `assets${path.sep}osubot${path.sep}image${path.sep}userbg${path.sep}crecent.jpg`, avatarBGDest)
     if (fs.existsSync(avatarDest) || await getAvatar(uid, avatarDest, avatarLargerDest)) 
         await promisifyGM(
             gm(avatarBGDest)
@@ -41,7 +41,7 @@ export default async function drawRecent(rec, map, stat) {
         )
     if (!fs.existsSync(bgDest)) {
         try { await res.bgQuery(sid, bgDest) }
-        catch (err) { await promisify(fs.copyFile, `assets${path.sep}image${path.sep}userbg${path.sep}c${Math.ceil(Math.random() * 5)}.jpg`, bgDest) }
+        catch (err) { await promisify(fs.copyFile, `assets${path.sep}osubot${path.sep}image${path.sep}userbg${path.sep}c${Math.ceil(Math.random() * 5)}.jpg`, bgDest) }
     }
     await promisify(fs.copyFile, bgDest, dest)
     await promisifyGM(
@@ -73,17 +73,17 @@ export default async function drawRecent(rec, map, stat) {
         .drawEllipse(750, 250, 210, 210, -145, -35)
         .gravity('West')
         .fill('#fff')
-        .font('assets/fonts/Exo2.0-Medium.otf')
+        .font('assets/osubot/fonts/Exo2.0-Medium.otf')
         .fontSize(20)
         .drawText(600, -137, stat.username)
         .gravity('Center')
-        .font('assets/fonts/Exo2.0-BoldItalic.otf')
+        .font('assets/osubot/fonts/Exo2.0-BoldItalic.otf')
         .fontSize(25)
         .fill('#3ad')
         .drawText(0, 35, map.title.slice(0, 35) + (map.title.length > 35 ? '...' : ''))
         .fontSize(17)
         .drawText(0, 60, map.artist.slice(0, 50) + (map.artist.length > 50 ? '...' : ''))
-        .font('assets/fonts/Exo2.0-Bold.otf')
+        .font('assets/osubot/fonts/Exo2.0-Bold.otf')
         .fontSize(30)
         .drawText(-300, 0, rec.maxcombo + 'x')
         .drawText(300, 0, util.accuracy(rec) + '%')
@@ -98,7 +98,7 @@ export default async function drawRecent(rec, map, stat) {
         .fill('#999')
         .drawText(0, 85, map.version + ' - mapped by ' + map.creator)
         .drawRectangle(675, 345, 825, 365)
-        .font('assets/fonts/Exo2.0-Regular.otf')
+        .font('assets/osubot/fonts/Exo2.0-Regular.otf')
         .fill('#fff')
         .drawText(0, 105, rec.date)
         .fontSize(25)
@@ -109,7 +109,7 @@ export default async function drawRecent(rec, map, stat) {
         .drawText(-33, 140, util.fillNumber(rec.count100))
         .drawText(33, 140, util.fillNumber(rec.count50))
         .drawText(100, 140, util.fillNumber(rec.countmiss))
-        .font('assets/fonts/Exo2.0-ExtraBold.otf')
+        .font('assets/osubot/fonts/Exo2.0-ExtraBold.otf')
         .fontSize(12)
         .fill('#66a')
         .drawText(-100, 160, '300')
@@ -119,7 +119,7 @@ export default async function drawRecent(rec, map, stat) {
         .drawText(33, 160, '50')
         .fill('#a66')
         .drawText(100, 160, 'X')
-        .font('assets/fonts/Venera-300.otf')
+        .font('assets/osubot/fonts/Venera-300.otf')
         .fontSize(50)
         .fill('#f69')
         .drawText(0, -20, util.scorify(rec.score))
@@ -147,11 +147,11 @@ export default async function drawRecent(rec, map, stat) {
             .quality(100)
             .gravity('West')
             .fill('#fff')
-            .font('assets/fonts/Venera-700.otf')
+            .font('assets/osubot/fonts/Venera-700.otf')
             .fontSize(25)
             .drawText(410, -165, Math.round(pp.total).toString() + 'PP')
             .gravity('East')
-            .font('assets/fonts/Venera-900.otf')
+            .font('assets/osubot/fonts/Venera-900.otf')
             .fontSize(12)
             .drawText(410, -177, Math.round(pp.aim).toString() + ' AIM')
             .drawText(410, -165, Math.round(pp.speed).toString() + ' SPD')
@@ -163,7 +163,7 @@ export default async function drawRecent(rec, map, stat) {
     await promisifyGM(
         gm(dest)
         .quality(100)
-        .composite('assets/image/rank/' + rec.rank + '.png')
+        .composite('assets/osubot/image/rank/' + rec.rank + '.png')
         .gravity('North')
         .geometry('+0+80')
     )
@@ -172,7 +172,7 @@ export default async function drawRecent(rec, map, stat) {
             gm(dest)
             .quality(100)
             .gravity('North')
-            .composite('assets/image/mods/' + mods[i] + '.png')
+            .composite('assets/osubot/image/mods/' + mods[i] + '.png')
             .geometry((padding >= 0 ? '+' : '') + padding + '+170')
         )
     }
