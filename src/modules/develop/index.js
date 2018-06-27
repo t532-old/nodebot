@@ -1,2 +1,2 @@
-import develop from './main'
-export default { ...develop }
+import commands from './main'
+export default { commands }
