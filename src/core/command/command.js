@@ -59,7 +59,7 @@ export default class {
      */
     do(command, ...extraArgs) {
         if (!this.commandPrefix.test(command)) return
-        command = command.trim().split(this.commandPrefix)[1].split('"').map(i => i.trim()).reduce((target, value, index) => {
+        command = command.trim().split(this.commandPrefix)[1].split(/["“”'‘’]/).map(i => i.trim()).reduce((target, value, index) => {
             if (index % 2 == 0) target.push(...value.split(/[\r\n\s]/))
             else target.push(value)
             return target

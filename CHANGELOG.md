@@ -4,6 +4,7 @@
 - 更改了 assets 的一些结构。
 - **非向后兼容：将 `config.yml` 中的 cqhttp api 和 mongod database 的端口字段改为地址。**
 - 增加了 Source maps
+- 将参数分割时使用的英文引号(")改为多种引号("'“”‘’)
 
 ---
 
