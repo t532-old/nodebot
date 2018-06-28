@@ -1,3 +1,15 @@
+# v3.0.0
+
+## Features
+- 延迟复读功能
+- 把 -bp 与 -rec 的背景模糊加回去
+
+## Bugs
+- 修复了一些 bugs
+- 由于正式发布，标志了之后修 bug 要开始动 patch 位了
+
+---
+
 # v3.0.0-rc2
 
 ## Features

@@ -16,3 +16,8 @@ nodebot 同时附带了模块 `osubot` (~1000 sloc)，包含了 osu! qq bot 所�
 - [Bot 开发：构建](https://gitlab.com/trustgit/nodebot/wikis/Build)
 - [Bot 开发：扩展](https://gitlab.com/trustgit/nodebot/wikis/Development)
 - [？？？：关于 Bot](https://gitlab.com/trustgit/nodebot/wikis/About)
+
+## 一些废话
+nodebot 缓存导致错误的命令消息。  
+nodebot 同时为开发者提供将所有消息 log 到控制台的功能，这些信息是临时的，每次控制台被关闭时就会被清除。  
+~~不过说实话，你消息都发出来了还怕你 :horse: 缓存呢？~~

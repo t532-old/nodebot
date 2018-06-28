@@ -54,6 +54,7 @@ export default async function drawRecent(rec, map, stat) {
         .quality(100)
         .gravity('Center')
         .crop(1500, 500)
+        .blur(10, 10)
         .fill('#fffb')
         .drawCircle(750, 250, 750, 620)
         .fill('#fff8')
