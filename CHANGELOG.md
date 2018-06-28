@@ -1,3 +1,11 @@
+# v3.0.0-rc2
+
+## Features
+- 将错误 log 到 `logs/error.log` 中，而不是 console。
+- 支持向 console log 消息。
+
+---
+
 # v3.0.0-rc1
 
 ## Features

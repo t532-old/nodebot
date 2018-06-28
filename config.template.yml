@@ -1,8 +1,9 @@
 operators: # A list, now reserved, will be useful in the future
 receivePort: # The port you've set to receive messages in cqhttp
 sendAddress: # cqhttp's api address **WITH PROTOCOL!!**
+logMessage: false # turn it to 'true' to log every message to your console.
 develop:
-    version: '3.0.0-rc1' # The version. This only influences the develop.about command.
+    version: '3.0.0-rc2' # The version. This only influences the develop.about command.
 osubot:
     key: # Your osu! api key
     databaseAddress: # mongod's address **WITHOUT PROTOCOL!!**
