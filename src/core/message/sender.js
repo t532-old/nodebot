@@ -2,6 +2,8 @@ import axios from 'axios'
 import yaml from 'js-yaml'
 import fs from 'fs'
 const { sendAddress } = yaml.safeLoad(fs.readFileSync('config.yml'))
+const errorLog = fs.createWriteStream('log/error.log'),
+      runLog = fs.createWriteStream('log/run.log')
 /**
  * A class that is uses to send message asynchronously.
  * @class
@@ -30,23 +32,22 @@ export default class Message {
      */
     error(err) {
         const date = new Date()
-            this.send([
-                {
-                    type: 'text',
-                    data: {
-                        text: '很遗憾，发生了一个未预料到的错误。请过会重试；同时，请您复制下面的信息：\n' +
-                                date.toString() + ': ' +
-                                err.toString() + 
-                                '\n并到 https://gitlab.com/trustgit/nodebot/issues 提交issue或私聊' 
-                    }
-                },
-                {
-                    type: 'at',
-                    data: { qq: '2037246484' }
-                },
-            ])
-            console.log(`${date.toString()} error:`)
-            console.log(err)
+        this.send([
+            {
+                type: 'text',
+                data: {
+                    text: '很遗憾，发生了一个未预料到的错误。请过会重试；同时，请您复制下面的信息：\n' +
+                            date.toString() + ': ' +
+                            err.toString() + 
+                            '\n并到 https://gitlab.com/trustgit/nodebot/issues 提交issue或私聊' 
+                }
+            },
+            {
+                type: 'at',
+                data: { qq: '2037246484' }
+            },
+        ])
+        fs.appendFileSync('logs/error.log', `[ERR] ${date.toString()}\n${err.stack || err}\n`)
     }
     /**
      * Sends a private message
