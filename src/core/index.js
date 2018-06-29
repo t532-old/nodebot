@@ -5,6 +5,20 @@ import body from 'koa-body'
 import yaml from 'js-yaml'
 import message from './message'
 import { inits } from '../modules'
+// ascii
+console.log(`
+                    __     __          __ 
+   ____  ____  ____/ /__  / /_  ____  / /_
+  / __ \\/ __ \\/ __  / _ \\/ __ \\/ __ \\/ __/
+ / / / / /_/ / /_/ /  __/ /_/ / /_/ / /_  
+/_/ /_/\\____/\\__,_/\\___/_.___/\\____/\\__/  `
+)
+console.log(`
+PACKAGE | Nodebot   v${require('../../package.json').version}
+AUTHOR  | trustgit  (c) ${new Date().getFullYear()} MIT License
+
+[SVR] ATTEMPTING TO START SERVER...`
+)
 // environment init
 const app = new Koa()
 const { receivePort } = yaml.safeLoad(fs.readFileSync('config.yml'))
@@ -23,3 +37,4 @@ app.use(async ctx => {
 })
 // start listening
 app.listen(receivePort)
+console.log(`[SVR] SUCCESS`)
