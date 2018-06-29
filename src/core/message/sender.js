@@ -11,18 +11,39 @@ const { sendAddress, logMessage } = yaml.safeLoad(fs.readFileSync('config.yml'))
  */
 export default class Message {
     /**
+     * When is the message created
+     * @property
+     */
+    startTime = new Date()
+    /**
+     * The target qqid or group id
+     * @property
+     */
+    target
+    /**
+     * The send() type
+     * @property
+     */
+    type
+    /**
+     * the cqhttp POST message
+     * @property
+     */
+    param
+    /**
      * builds a message object
+     * @constructor
      * @param {object} param A standard cqhttp message object
      */
     constructor(param) {
         this.target = param.group_id || param.user_id
         this.type = param.message_type
         this.param = param
-        this.startTime = new Date()
         console.log(`[IN ] ${this.startTime.toString()}\n      ${this.type} ${this.target}: ${this.param.message}`)
     }
     /**
      * Send a message back to the target
+     * @method
      * @param {string|array} message The message that'll be sent
      */
     send(message) {
@@ -32,6 +53,7 @@ export default class Message {
     }
     /**
      * send an error message to the target and log the error
+     * @method
      * @param {Error} err 
      */
     error(err) {
@@ -56,12 +78,14 @@ export default class Message {
     }
     /**
      * Sends a private message
+     * @static
      * @param {string} user_id The target user's qq id.
      * @param {string|array} message The message
      */
     static async 'private'(user_id, message) { return axios.post(`${sendAddress}/send_private_msg`, { user_id, message }) }
     /**
      * Sends a group message
+     * @static
      * @param {string} group_id The target qq group id.
      * @param {string|array} message The message
      */

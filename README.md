@@ -7,7 +7,7 @@
 [![GitLab repo wiki](https://img.shields.io/badge/read-repo%20wiki-ffaa55.svg)](https://gitlab.com/trustgit/nodebot/wikis)
 [![凑badge（](https://img.shields.io/badge/developed%20for-osu!-ff6699.svg)](https://osu.ppy.sh/home)
 
-**nodebot 是一个模块化，轻量化 (~160 sloc) 的，基于命令的 Node.js qqbot 框架。**
+**nodebot 是一个模块化，轻量化 (~200 sloc) 的，基于命令的 Node.js qqbot 框架。**
 
 nodebot 同时附带了模块 `osubot` (~1000 sloc)，包含了 osu! qq bot 所需的基础功能。
 

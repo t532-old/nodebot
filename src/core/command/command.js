@@ -1,5 +1,30 @@
 export default class Command {
     /**
+     * Initialize the command list
+     * @property
+     */
+    list = {}
+    /**
+     * The commands' prefix Regex
+     * @property
+     */
+    commandPrefix
+    /**
+     * The commands' options' prefix Regex
+     * @property
+     */
+    optionsPrefix
+    /**
+     * The handler that runs when no command matches
+     * @method
+     */
+    defaultHandler() {}
+    /**
+     * The handler that runs when the args are invalid
+     * @method
+     */
+    invalidHandler() {}
+    /**
      * @constructor
      * @name Command
      * @param {object} prefixes - The commands' && options' prefix
@@ -8,12 +33,12 @@ export default class Command {
     constructor({prefixes, handlers}) { 
         this.commandPrefix = new RegExp('^' + prefixes.command)
         this.optionsPrefix = new RegExp('^' + prefixes.options)
-        this.defaultHandler = handlers.default
-        this.invalidHandler = handlers.invalid
-        this.list = {}
+        if (handlers.default) this.defaultHandler = handlers.default
+        if (handlers.invalid) this.invalidHandler = handlers.invalid
     }
     /**
      * bind a command
+     * @method
      * @param {string} name - the command name
      * @param {object} params - {
      *      {string} args - the arguments' format, 
@@ -47,6 +72,7 @@ export default class Command {
     }
     /**
      * Bind a group of commands.
+     * @method
      * @param {object} commands 
      */
     onAll(commands) {
@@ -55,6 +81,7 @@ export default class Command {
     }
     /**
      * do a command
+     * @method
      * @param {string} command 
      */
     do(command, ...extraArgs) {
