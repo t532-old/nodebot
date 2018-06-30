@@ -16,7 +16,7 @@ import { res } from '../web'
  */
 async function getAvatar(uid, avatarDest, avatarLargerDest) {
     try { await res.avatarQuery(uid, avatarDest) }
-    catch (err) { return false }
+    catch { return false }
     try {
         await promisify(fs.copyFile, avatarDest, avatarLargerDest)
         await promisifyGM(
@@ -31,7 +31,7 @@ async function getAvatar(uid, avatarDest, avatarLargerDest) {
             .blur(3, 3)
         )
         return true
-    } catch(err) {
+    } catch {
         await clearCachedAvatars(uid)
         return false
     }

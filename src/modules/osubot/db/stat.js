@@ -17,9 +17,7 @@ async function refreshStat(qqid) {
             api.statQuery({ u: osuid, m: 2 }),
             api.statQuery({ u: osuid, m: 3 }),
         ])
-    } catch (err) { 
-        return 
-    }
+    } catch { return }
     if (!osu.pp_rank && !taiko.pp_rank && !ctb.pp_rank && !mania.pp_rank) return users.remove({ qqid })
     else return users.update({ qqid }, { $set: { data: [osu, taiko, ctb, mania] } })
 }

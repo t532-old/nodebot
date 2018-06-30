@@ -23,7 +23,7 @@ export default {
             try {
                 const doc = await userdb.getByQQ(msg.param.user_id)
                 usr = doc.osuid
-            } catch (err) {
+            } catch {
                 msg.send(`osubot: bp: ${MESSAGES.QUERY_BIND_FAIL}`)
                 return
             }
@@ -39,7 +39,7 @@ export default {
                     api.mapQuery({ b: best.beatmap_id }),
                     api.statQuery({ u: usr }),
                 ])
-            } catch (err) {
+            } catch {
                 msg.send(`osubot: bp: ${MESSAGES.QUERY_NET_FAIL}`)
                 return
             }

@@ -41,7 +41,7 @@ export default async function drawBest(bp, map, stat) {
         )
     if (!fs.existsSync(bgDest)) {
         try { await res.bgQuery(sid, bgDest) }
-        catch (err) { await promisify(fs.copyFile, `assets${path.sep}osubot${path.sep}image${path.sep}userbg${path.sep}c${Math.ceil(Math.random() * 5)}.jpg`, bgDest) }
+        catch { await promisify(fs.copyFile, `assets${path.sep}osubot${path.sep}image${path.sep}userbg${path.sep}c${Math.ceil(Math.random() * 5)}.jpg`, bgDest) }
     }
     await promisify(fs.copyFile, bgDest, dest)
     await promisifyGM(

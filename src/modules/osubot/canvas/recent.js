@@ -41,7 +41,7 @@ export default async function drawRecent(rec, map, stat) {
         )
     if (!fs.existsSync(bgDest)) {
         try { await res.bgQuery(sid, bgDest) }
-        catch (err) { await promisify(fs.copyFile, `assets${path.sep}osubot${path.sep}image${path.sep}userbg${path.sep}c${Math.ceil(Math.random() * 5)}.jpg`, bgDest) }
+        catch { await promisify(fs.copyFile, `assets${path.sep}osubot${path.sep}image${path.sep}userbg${path.sep}c${Math.ceil(Math.random() * 5)}.jpg`, bgDest) }
     }
     await promisify(fs.copyFile, bgDest, dest)
     await promisifyGM(
@@ -160,7 +160,7 @@ export default async function drawRecent(rec, map, stat) {
             .gravity('Center')
             .drawText(0, -190, Math.round(fcpp.total).toString() + 'pp if FC')
         )
-    } catch (err) {}
+    } catch {}
     await promisifyGM(
         gm(dest)
         .quality(100)

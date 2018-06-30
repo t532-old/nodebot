@@ -21,7 +21,7 @@ export default {
                 const bindDoc = await userdb.getByQQ(msg.param.user_id)
                 usr = bindDoc.osuid
                 prevStatus = bindDoc.data[mode]
-            } catch (err) {
+            } catch {
                 msg.send(`osubot: stat: ${MESSAGES.QUERY_BIND_FAIL}`)
                 return
             }
@@ -32,7 +32,7 @@ export default {
                     u: usr,
                     m: mode,
                 })
-            } catch (err) {
+            } catch {
                 msg.send(`osubot: stat: ${MESSAGES.QUERY_NET_FAIL}`)
                 return
             }

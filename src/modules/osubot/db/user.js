@@ -20,9 +20,7 @@ async function newUser(qqid, osuid) {
             api.statQuery({ u: osuid, m: 2 }),
             api.statQuery({ u: osuid, m: 3 }),
         ])
-    } catch (err) { 
-        return false
-    }
+    } catch { return false }
     return users.insert({ qqid, osuid, data: [osu, taiko, ctb, mania] })
 }
 

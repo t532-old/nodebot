@@ -13,7 +13,7 @@ export default {
     async action(msg, { account }) {
         let user
         try { user = await api.statQuery({ u: account }) }
-        catch (err) { 
+        catch { 
             msg.send(`osubot: bind: ${MESSAGES.QUERY_NET_FAIL}`) 
             return
         }

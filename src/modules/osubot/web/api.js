@@ -26,7 +26,7 @@ async function apiQuery(name, params) {
 async function statQuery(params) {
     let result
     try { result = await apiQuery('get_user', params) }
-    catch (err) { throw new Error('statQuery: bad network status') }
+    catch { throw new Error('statQuery: bad network status') }
     if (result.data[0] === undefined) throw new Error('statQuery: user does not exist')
     else return result.data[0]
 }
@@ -38,7 +38,7 @@ async function statQuery(params) {
 async function recentQuery(params) {
     let result
     try { result = await apiQuery('get_user_recent', params) }
-    catch (err) { throw new Error('recentQuery: bad network status') }
+    catch { throw new Error('recentQuery: bad network status') }
     if (result.data[0] === undefined) throw new Error('recentQuery: user does not exist or not played recently')
     else return result.data[0]
 }
@@ -50,7 +50,7 @@ async function recentQuery(params) {
 async function bestQuery(params) {
     let result
     try { result = await apiQuery('get_user_best', params) }
-    catch (err) { throw new Error('bestQuery: bad network status') }
+    catch { throw new Error('bestQuery: bad network status') }
     if (result.data === []) throw new Error('bestQuery: user does not exist or not played enough')
     else return result.data
 }
@@ -62,7 +62,7 @@ async function bestQuery(params) {
 async function mapQuery(params) {
     let result
     try { result = await apiQuery('get_beatmaps', params) } 
-    catch (err) { throw new Error('mapQuery: bad network status') } 
+    catch { throw new Error('mapQuery: bad network status') } 
     if (result.data[0] === undefined) throw new Error('mapQuery: map does not exist')
     else return result.data[0]
 }
