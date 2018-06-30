@@ -1,5 +1,5 @@
-import osubot from './osubot'
-import develop from './develop'
+import * as osubot from './osubot'
+import * as develop from './develop'
 
 export const commands = { ...(osubot.commands), ...(develop.commands) }
 export const inits = [ osubot.inits ]

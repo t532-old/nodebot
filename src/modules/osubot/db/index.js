@@ -1,4 +1,3 @@
-import userdb from './user'
-import statdb from './stat'
-import managedb from './manage'
-export { userdb, statdb, managedb }
+export userdb from './user'
+export statdb from './stat'
+export managedb from './manage'

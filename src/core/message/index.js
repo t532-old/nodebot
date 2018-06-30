@@ -1,2 +1,1 @@
-import handler from './handler'
-export default handler
+export * as default from './handler'

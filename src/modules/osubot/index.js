@@ -1,8 +1,3 @@
-import commands from './commands'
-import inits from './init'
-import middlewares from './middleware'
-export default {
-    commands,
-    inits,
-    middlewares,
-}
+export * as commands from './commands'
+export inits from './init'
+export middlewares from './middleware'

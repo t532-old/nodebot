@@ -1,5 +1,4 @@
-import drawRecent from './recent'
-import drawStat from './stat'
-import drawBest from './best'
-import { getAvatar, clearCachedAvatars } from './avatar'
-export { drawRecent, drawStat, drawBest, getAvatar, clearCachedAvatars }
+export { getAvatar, clearCachedAvatars } from './avatar'
+export drawRecent from './recent'
+export drawStat from './stat'
+export drawBest from './best'

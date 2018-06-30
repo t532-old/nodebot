@@ -1,3 +1,2 @@
-import Command from './command'
-import Aliaser from './aliaser'
-export { Command, Aliaser }
+export Command from './command'
+export Aliaser from './aliaser'

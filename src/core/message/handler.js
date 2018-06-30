@@ -59,4 +59,4 @@ function handle(param) {
     execute(msg)
 }
 // exports
-export default { listen, handle }
+export { listen, handle }

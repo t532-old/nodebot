@@ -1,2 +1,1 @@
-import commands from './main'
-export default { commands }
+export commands from './main'
