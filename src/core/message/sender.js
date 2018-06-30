@@ -14,7 +14,7 @@ export default class Message {
      * When is the message created
      * @property
      */
-    startTime = new Date()
+    #startTime = new Date()
     /**
      * The target qqid or group id
      * @property
@@ -39,7 +39,7 @@ export default class Message {
         this.target = param.group_id || param.user_id
         this.type = param.message_type
         this.param = param
-        console.log(`[IN ] ${this.startTime.toString()}\n      ${this.type} ${this.target}: ${this.param.message}`)
+        console.log(`[IN ] ${this.#startTime.toString()}\n      ${this.type} ${this.target}: ${this.param.message}`)
     }
     /**
      * Send a message back to the target
@@ -49,7 +49,7 @@ export default class Message {
     send(message) {
         const endTime = new Date()
         Message[this.type](this.target, message)
-        if (logMessage) console.log(`[OUT] ${endTime.toString()}( ${endTime.getTime() - this.startTime.getTime()} ms )\n      reply ${this.type} ${this.target}: ${JSON.stringify(message)}`)
+        if (logMessage) console.log(`[OUT] ${endTime.toString()}( ${endTime.getTime() - this.#startTime.getTime()} ms )\n      reply ${this.type} ${this.target}: ${JSON.stringify(message)}`)
     }
     /**
      * send an error message to the target and log the error

@@ -18,7 +18,7 @@ const handler = new Command({
         invalid(msg, [name, commands]) {
             msg.send(
 `Invalid argument(s)!
-Should be: ${this.list[name].str}`
+Should be: ${this.getUsage(name)}`
             )
         }
     }
