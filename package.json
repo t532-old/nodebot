@@ -1,11 +1,11 @@
 {
   "name": "nodebot",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "A bot",
   "main": "src/core/index.js",
   "scripts": {
     "start": "npm run build && node -r source-map-support/register dist/core/index.js",
-    "build": "babel src -d dist -s",
+    "build": "babel src -d dist -s --verbose",
     "test": "npm run build && node -r source-map-support/register test/test.js"
   },
   "repository": {
@@ -21,6 +21,7 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.51",
     "axios": "^0.18.0",
+    "chalk": "^2.4.1",
     "gm": "^1.23.1",
     "js-yaml": "^3.11.0",
     "koa": "^2.5.0",
