@@ -9,6 +9,6 @@ osubot:
     databaseAddress: # {string} mongod's address **WITHOUT PROTOCOL!!**
     repeater:
         times: 3 # {number} the bot will repeat after this number of times.
-        # use either 'notAllowed' or 'allowed', or none of them. If you use both, 'allowed' will be ignored.
+        # use either 'notAllowed' or 'allowed', or none of them. If you use both, 'notAllowed' will be processed first.
         notAllowed: # {array<number>?} A list of groups that you don't want the bot to repeat in.
         allowed: # {array<number>?} A list of groups that you want the bot to repeat in.
