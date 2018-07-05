@@ -1,6 +1,7 @@
 import axios from 'axios'
 import yaml from 'js-yaml'
 import fs from 'fs'
+import chalk from 'chalk'
 const { sendAddress, logMessage } = yaml.safeLoad(fs.readFileSync('config.yml'))
 /**
  * A class that is uses to send message asynchronously.
@@ -39,7 +40,7 @@ export default class Message {
         this.target = param.group_id || param.user_id
         this.type = param.message_type
         this.param = param
-        console.log(`[IN ] ${this.#startTime.toString()}\n      ${this.type} ${this.target}: ${this.param.message}`)
+        console.log(`[IN ] ${chalk.gray(this.#startTime.toString())}\n      ${this.type === 'group' ? `${this.type} ${this.target}` : chalk.yellow(`${this.type} ${this.target}`)}: ${this.param.message}`)
     }
     /**
      * Send a message back to the target
