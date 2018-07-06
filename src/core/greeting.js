@@ -1,4 +1,5 @@
 import { version } from '../../package.json'
+import chalk from 'chalk'
 
 const ascii = `
                     __     __          __ 
@@ -12,6 +13,7 @@ PACKAGE | Nodebot   v${version}
 AUTHOR  | trustgit  (c) ${new Date().getFullYear()} MIT License`
 
 export default function greeting() {
-    console.log(ascii)
-    console.log(info)
+    const colors = ['red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'black']
+    console.log(chalk[colors[Math.floor(Math.random() * colors.length)]](ascii))
+    console.log(chalk.black.bgWhite(info))
 }
