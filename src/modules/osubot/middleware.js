@@ -14,8 +14,8 @@ const { repeater: config } = yaml.safeLoad(readFileSync('config.yml')).osubot
 export default function repeater(msg) {
     if (/!|！/.test(msg.param.message) === false && 
         msg.type === 'group') {
-        if (notAllowed in config && config.notAllowed.includes(msg.target)) return
-        if (allowed in config && !config.allowed.includes(msg.target)) return
+        if ('notAllowed' in config && config.notAllowed.includes(msg.target)) return
+        if ('allowed' in config && !config.allowed.includes(msg.target)) return
         if (!log[msg.type][msg.target]) log[msg.type][msg.target] = { count: 1, message: msg.param.message }
         else if (msg.param.message === log[msg.type][msg.target].message) log[msg.type][msg.target].count++
         else log[msg.type][msg.target] = { count: 1, message: msg.param.message }
