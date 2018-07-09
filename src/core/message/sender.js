@@ -2,6 +2,7 @@ import axios from 'axios'
 import yaml from 'js-yaml'
 import fs from 'fs'
 import chalk from 'chalk'
+import { error, income, outgo } from '../log'
 const { sendAddress, logMessage } = yaml.safeLoad(fs.readFileSync('config.yml'))
 /**
  * A class that is uses to send message asynchronously.
@@ -40,7 +41,7 @@ export default class Message {
         this.target = param.group_id || param.user_id
         this.type = param.message_type
         this.param = param
-        console.log(`[IN ] ${chalk.gray(this.#startTime.toString())}\n      ${this.type === 'group' ? `${this.type} ${this.target}` : chalk.yellow(`${this.type} ${this.target}`)}: ${this.param.message}`)
+        income(this, this.#startTime)
     }
     /**
      * Send a message back to the target
@@ -48,9 +49,8 @@ export default class Message {
      * @param {string|array} message The message that'll be sent
      */
     send(message) {
-        const endTime = new Date()
         Message[this.type](this.target, message)
-        if (logMessage) console.log(`${chalk.green('[OUT]')} ${chalk.gray(`${endTime.toString()} ( ${endTime.getTime() - this.#startTime.getTime()} ms )`)}\n      ${this.type === 'group' ? `reply ${this.type} ${this.target}` : chalk.yellow(`reply ${this.type} ${this.target}`)}: ${JSON.stringify(message)}`)
+        if (logMessage) outgo(this, message, this.#startTime)
     }
     /**
      * send an error message to the target and log the error
@@ -58,7 +58,6 @@ export default class Message {
      * @param {Error} err 
      */
     error(err) {
-        const endTime = new Date()
         this.send([
             {
                 type: 'text',
@@ -74,7 +73,7 @@ export default class Message {
                 data: { qq: '2037246484' }
             },
         ])
-        if (logMessage) console.log(`${chalk.red('[ERR]')} ${chalk.gray(endTime.toString())}\n${err.stack || err}`)
+        if (logMessage) error(err)
         fs.appendFileSync('logs/error.log', `[ERR] ${endTime.toString()}\n${err.stack || err}\n`)
     }
     /**

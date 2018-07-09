@@ -66,3 +66,13 @@ Aliases 功能能让你忽略命令前缀，识别特定的消息并且替换为
 'hime hime': '-say suki suki daisuki hime'
 '-inter-': '-say wudi'
 ```
+
+## Logs
+模块可以使用公共的 logger 来将记录 log 至控制台：
+```js
+import { error, mod } from '(... path to dist/core/log)'
+```
+- `error` 接收一个参数 `err` 并将其作为一条错误信息 log 到控制台。
+- `mod` 接收两个参数：
+    - `name` 为你的 module name
+    - `text` 为你想展示的信息。

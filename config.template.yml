@@ -1,12 +1,12 @@
 operators: # {array<number>} A list, now reserved, will be useful in the future
 receivePort: # {number} The port you've set to receive messages in cqhttp
 sendAddress: # {string} cqhttp's api address **WITH PROTOCOL!!**
+databaseAddress: # {string} mongod's address **WITHOUT PROTOCOL!!**
 logMessage: false # {boolean} turn it to 'true' to log every message to your console.
 develop:
-    version: '3.2.1' # {string} The version. This only influences the develop.about command.
+    version: '3.3.0' # {string} The version. This only influences the develop.about command.
 osubot:
     key: # {string} Your osu! api key
-    databaseAddress: # {string} mongod's address **WITHOUT PROTOCOL!!**
     repeater:
         times: 3 # {number} the bot will repeat after this number of times.
         # use either 'notAllowed' or 'allowed', or none of them. If you use both, 'notAllowed' will be processed first.

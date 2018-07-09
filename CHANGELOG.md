@@ -1,9 +1,18 @@
+# v3.3.0
+
+## Features
+- logger 划分为单独的模块
+- **移动 `databaseAddress` 至顶层配置，在osubot内的仍然可用，但是已经被废弃**
+- 源码：对 `Command` 类增加新的 method `successHandler`，在命令解析完毕开始执行时时调用
+
+---
+
 # v3.2.1
 
 # Bugs
 - 修复了复读功能 log 中的 bug
 
-===
+---
 
 # v3.2.0
 
