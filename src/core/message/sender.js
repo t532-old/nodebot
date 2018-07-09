@@ -63,7 +63,7 @@ export default class Message {
                 type: 'text',
                 data: {
                     text: '很遗憾，发生了一个未预料到的错误。请过会重试；同时，请您复制下面的信息：\n' +
-                            endTime.toString() + ': ' +
+                            new Date().toString() + ': ' +
                             err.toString() + 
                             '\n并到 https://gitlab.com/trustgit/nodebot/issues 提交issue或私聊' 
                 }
@@ -74,7 +74,7 @@ export default class Message {
             },
         ])
         if (logMessage) error(err)
-        fs.appendFileSync('logs/error.log', `[ERR] ${endTime.toString()}\n${err.stack || err}\n`)
+        fs.appendFileSync('logs/error.log', `[ERR] ${new Date().toString()}\n${err.stack || err}\n`)
     }
     /**
      * Sends a private message
