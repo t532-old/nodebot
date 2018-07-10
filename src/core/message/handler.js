@@ -37,7 +37,13 @@ function format(msg) { msg.param.message = unescape(msg.param.message.replace(/&
  * Make a message its alias.
  * @param {Message} msg 
  */
-function aliasify(msg) { msg.param.message = aliaser.alias(msg.param.message) }
+function aliasify(msg) {
+    const alias = aliaser.alias(msg.param.message)
+    if (msg.param.message !== alias) {
+        analyzer(msg, 'alias', `${msg.param.message}:${alias}`)
+        msg.param.message = alias
+    }
+}
 /**
  * execute a message (command).
  * @param {Message} msg 
