@@ -3,6 +3,7 @@ receivePort: # {number} The port you've set to receive messages in cqhttp
 sendAddress: # {string} cqhttp's api address **WITH PROTOCOL!!**
 databaseAddress: # {string} mongod's address **WITHOUT PROTOCOL!!**
 logMessage: false # {boolean} turn it to 'true' to log every message to your console.
+analyzeMessage: false # {boolean} make it 'true' to record events to the database.
 develop:
     version: '3.3.0' # {string} The version. This only influences the develop.about command.
 osubot:

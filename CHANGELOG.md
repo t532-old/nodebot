@@ -2,6 +2,7 @@
 
 ## Features
 - logger 划分为单独的模块
+- 添加 analyzer
 - **移动 `databaseAddress` 至顶层配置，在osubot内的仍然可用，但是已经被废弃**
 - 源码：对 `Command` 类增加新的 method `successHandler`，在命令解析完毕开始执行时时调用
 

@@ -1,11 +1,12 @@
 // imports
 import { commands, middlewares } from '../../modules'
 import fs from 'fs'
-import yaml from 'js-yaml'
+import { safeLoad } from 'js-yaml'
 import { Command, Aliaser } from '../command'
 import Message from './sender'
+import analyzer from '../analyzer'
 // configuration
-const aliases = yaml.safeLoad(fs.readFileSync('aliases.yml'))
+const aliases = safeLoad(fs.readFileSync('aliases.yml'))
 // Aliaser & Command
 const aliaser = new Aliaser(aliases)
 const handler = new Command({
@@ -14,13 +15,15 @@ const handler = new Command({
         options: '\\*',
     },
     handlers: {
-        default() { },
-        invalid(msg, [name, commands]) {
+        default(msg, [name]) { analyzer(msg, 'unexistCommand', name) },
+        invalid(msg, [name]) {
             msg.send(
 `Invalid argument(s)!
 Should be: ${this.getUsage(name)}`
             )
-        }
+            analyzer(msg, 'command', name)
+        },
+        success(msg, [name]) { analyzer(msg, 'command', name) }
     }
 })
 

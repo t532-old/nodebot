@@ -123,7 +123,7 @@ export default class Command {
             args[i] = raw.optional.shift()
         if (this.#list[name].args.group) args[this.#list[name].args.group] = raw.group
         this.#list[name].action(...extraArgs, args, options)
-        this.successHandler(...extraArgs, args, options)
+        this.successHandler(...extraArgs, [name, [args, options]])
     }
     getUsage(name) { return this.#list[name].str }
 }

@@ -14,7 +14,7 @@ const info = `
  AUTHOR  | trustgit  (c) ${new Date().getFullYear()} MIT License `
 
 export default function greeting() {
-    const colors = ['red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'black']
+    const colors = ['red', 'green', 'yellow', 'blue', 'magenta', 'cyan']
     log(chalk[colors[Math.floor(Math.random() * colors.length)]](ascii))
     log(chalk.black.bgWhite(info))
 }

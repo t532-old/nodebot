@@ -1,12 +1,13 @@
-import yaml from 'js-yaml'
+import { safeLoad } from 'js-yaml'
 import { readFileSync } from 'fs'
 import chalk from 'chalk'
 import { mod } from '../../core/log'
+import analyzer from '../../core/analyzer'
 const log = {
     private: {},
     group: {},
 }
-const { repeater: config } = yaml.safeLoad(readFileSync('config.yml')).osubot
+const { repeater: config } = safeLoad(readFileSync('config.yml')).osubot
 /**
  * This middleware counts the repeated times of a message
  * if it reaches 3, the bot repeats it
@@ -25,6 +26,7 @@ export default function repeater(msg) {
                   repeatTarget = log[msg.type][msg.target]
             mod('osubot middleware', `attempting to repeat \`${msg.param.message}' in ${msg.type === 'group' ? `${msg.type} ${msg.target}` : chalk.yellow(`${msg.type} ${msg.target}`)} in ${Math.round(timeout / 1000)} secs`)
             setTimeout(() => { msg.send(repeatTarget.message) }, timeout)
+            analyzer(msg, 'middleware', 'osubotRepeat')
             delete log[msg.type][msg.target]
         } 
     }

@@ -1,9 +1,9 @@
 import axios from 'axios'
-import yaml from 'js-yaml'
+import { safeLoad } from 'js-yaml'
 import fs from 'fs'
 import chalk from 'chalk'
 import { error, income, outgo } from '../log'
-const { sendAddress, logMessage } = yaml.safeLoad(fs.readFileSync('config.yml'))
+const { sendAddress } = safeLoad(fs.readFileSync('config.yml'))
 /**
  * A class that is uses to send message asynchronously.
  * @class
@@ -50,7 +50,7 @@ export default class Message {
      */
     send(message) {
         Message[this.type](this.target, message)
-        if (logMessage) outgo(this, message, this.#startTime)
+        outgo(this, message, this.#startTime)
     }
     /**
      * send an error message to the target and log the error
@@ -73,7 +73,7 @@ export default class Message {
                 data: { qq: '2037246484' }
             },
         ])
-        if (logMessage) error(err)
+        error(err)
         fs.appendFileSync('logs/error.log', `[ERR] ${new Date().toString()}\n${err.stack || err}\n`)
     }
     /**
