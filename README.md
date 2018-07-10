@@ -7,7 +7,7 @@
 [![GitLab repo wiki](https://img.shields.io/badge/read-repo%20wiki-ffaa55.svg)](https://gitlab.com/trustgit/nodebot/wikis)
 [![凑badge（](https://img.shields.io/badge/developed%20for-osu!-ff6699.svg)](https://osu.ppy.sh/home)
 
-**nodebot 是一个模块化，轻量化 (~200 sloc) 的，基于命令的 Node.js qqbot 框架。**
+**nodebot 是一个模块化，轻量化 (~250 sloc) 的，基于命令的 Node.js qqbot 框架。**
 
 nodebot 同时附带了模块 `osubot` (~1000 sloc)，包含了 osu! qq bot 所需的基础功能。
 
@@ -20,4 +20,5 @@ nodebot 同时附带了模块 `osubot` (~1000 sloc)，包含了 osu! qq bot 所�
 ## 一些废话
 nodebot 缓存导致错误的命令消息。  
 nodebot 同时为开发者提供将所有消息 log 到控制台的功能，这些信息是临时的，每次控制台被关闭时就会被清除。  
+自 3.3.0 后，nodebot 为开发者提供统计命令使用次数的功能。我们只会统计命令名称和次数，不会存储任何参数和其他聊天信息。  
 ~~不过说实话，你消息都发出来了还怕你 :horse: 缓存呢？~~
