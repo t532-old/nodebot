@@ -36,11 +36,6 @@ async function bgQuery(sid, dest) { return staticQuery('https://assets.ppy.sh/be
  * Simple sugar over staticQuery, queries a map's .osu file
  * @param {string} bid 
  */
-async function mapFileQuery(bid) {
-    const parser = new osu.parser()
-    const res = (await axios.get('https://osu.ppy.sh/osu/' + bid)).data
-    parser.feed(res)
-    return parser.map
-}
+async function mapFileQuery(bid, dest) { return staticQuery('https://osu.ppy.sh/osu/' + bid, dest) }
 
 export default { query: staticQuery, avatarQuery, bgQuery, mapFileQuery }

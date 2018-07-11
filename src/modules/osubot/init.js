@@ -11,6 +11,7 @@ const initPaths = [
     'cache/osubot/stat',
     'cache/osubot/mapbg',
     'cache/osubot/best',
+    'cache/osubot/mapfile'
 ]
 
 /**

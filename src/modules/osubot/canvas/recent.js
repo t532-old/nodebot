@@ -24,7 +24,7 @@ export default async function drawRecent(rec, map, stat) {
     const avatarDest = `cache${path.sep}osubot${path.sep}avatar${path.sep}${uid}.jpg`
     const avatarLargerDest = `cache${path.sep}osubot${path.sep}avatarl${path.sep}${uid}.jpg`
     const avatarBGDest = `cache${path.sep}osubot${path.sep}recentbg${path.sep}${uid}.jpg`
-    const mapFile = await res.mapFileQuery(bid)
+    const mapFileDest = `cache${path.sep}osubot${path.sep}mapfile${path.sep}${bid}.osu`
     const mods = osu.modbits.string(rec.enabled_mods).split('').reduce((target, value, index) => {
         if (index % 2) target[target.length - 1] += value
         else target.push(value)
@@ -127,21 +127,22 @@ export default async function drawRecent(rec, map, stat) {
         .crop(1000, 500)
     )
     try {
+        if (!fs.existsSync(mapFileDest)) await res.mapFileQuery(bid, mapFileDest)
+        const parser = new osu.parser()
+        const mapFile = parser.feed(fs.readFileSync(mapFileDest))
+        const stars = new osu.diff().calc({
+            map: mapFile,
+            mods: parseInt(rec.enabled_mods)
+        })
         const pp = osu.ppv2({
             combo: parseInt(rec.maxcombo),
             nmiss: parseInt(rec.countmiss),
             acc_percent: parseFloat(util.accuracy(rec)),
-            stars: new osu.diff().calc({
-                map: mapFile,
-                mods: parseInt(rec.enabled_mods)
-            })
+            stars
         })
         const fcpp = osu.ppv2({
             acc_percent: parseFloat(util.accuracy(rec)),
-            stars: new osu.diff().calc({
-                map: mapFile,
-                mods: parseInt(rec.enabled_mods)
-            })
+            stars
         })
         await promisifyGM(
             gm(dest)

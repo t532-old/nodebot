@@ -24,7 +24,6 @@ export default async function drawBest(bp, map, stat) {
     const avatarDest = `cache${path.sep}osubot${path.sep}avatar${path.sep}${uid}.jpg`
     const avatarLargerDest = `cache${path.sep}osubot${path.sep}avatarl${path.sep}${uid}.jpg`
     const avatarBGDest = `cache${path.sep}osubot${path.sep}recentbg${path.sep}${uid}.jpg`
-    const mapFile = await res.mapFileQuery(bid)
     const mods = osu.modbits.string(bp.enabled_mods).split('').reduce((target, value, index) => {
         if (index % 2) target[target.length - 1] += value
         else target.push(value)
