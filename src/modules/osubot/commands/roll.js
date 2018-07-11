@@ -8,7 +8,7 @@ export default {
      */
     async action(msg, { range = '100' }) {
         if (typeof range === 'string' && !parseInt(range)) {
-            range = range.split(',').filter(i => /!|！/.test(i) === false)
+            range = range.split(',').filter(i => /^[!！]/.test(i) === false)
             msg.send(range[Math.floor(Math.random() * range.length)])
         } else msg.send(Math.round(Math.random() * parseInt(range)).toString())
     }
