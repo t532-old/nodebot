@@ -1,9 +1,9 @@
 import fs from 'fs'
 import url from 'url'
 import axios from 'axios'
-import yaml from 'js-yaml'
+import { safeLoad } from 'js-yaml'
 
-const config = yaml.safeLoad(fs.readFileSync('config.yml')).osubot
+const config = safeLoad(fs.readFileSync('config.yml')).osubot
 
 /**
  * A GET request to the ppy api.

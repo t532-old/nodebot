@@ -1,8 +1,9 @@
 import axios from 'axios'
-import yaml from 'js-yaml'
+import { safeLoad } from 'js-yaml'
 import fs from 'fs'
 import chalk from 'chalk'
-const { sendAddress, logMessage } = yaml.safeLoad(fs.readFileSync('config.yml'))
+import { error, income, outgo } from '../log'
+const { sendAddress } = safeLoad(fs.readFileSync('config.yml'))
 /**
  * A class that is uses to send message asynchronously.
  * @class
@@ -40,7 +41,7 @@ export default class Message {
         this.target = param.group_id || param.user_id
         this.type = param.message_type
         this.param = param
-        console.log(`[IN ] ${chalk.gray(this.#startTime.toString())}\n      ${this.type === 'group' ? `${this.type} ${this.target}` : chalk.yellow(`${this.type} ${this.target}`)}: ${this.param.message}`)
+        income(this, this.#startTime)
     }
     /**
      * Send a message back to the target
@@ -48,9 +49,8 @@ export default class Message {
      * @param {string|array} message The message that'll be sent
      */
     send(message) {
-        const endTime = new Date()
         Message[this.type](this.target, message)
-        if (logMessage) console.log(`${chalk.green('[OUT]')} ${chalk.gray(`${endTime.toString()} ( ${endTime.getTime() - this.#startTime.getTime()} ms )`)}\n      ${this.type === 'group' ? `reply ${this.type} ${this.target}` : chalk.yellow(`reply ${this.type} ${this.target}`)}: ${JSON.stringify(message)}`)
+        outgo(this, message, this.#startTime)
     }
     /**
      * send an error message to the target and log the error
@@ -58,13 +58,12 @@ export default class Message {
      * @param {Error} err 
      */
     error(err) {
-        const endTime = new Date()
         this.send([
             {
                 type: 'text',
                 data: {
                     text: '很遗憾，发生了一个未预料到的错误。请过会重试；同时，请您复制下面的信息：\n' +
-                            endTime.toString() + ': ' +
+                            new Date().toString() + ': ' +
                             err.toString() + 
                             '\n并到 https://gitlab.com/trustgit/nodebot/issues 提交issue或私聊' 
                 }
@@ -74,8 +73,8 @@ export default class Message {
                 data: { qq: '2037246484' }
             },
         ])
-        if (logMessage) console.log(`${chalk.red('[ERR]')} ${chalk.gray(endTime.toString())}\n${err.stack || err}`)
-        fs.appendFileSync('logs/error.log', `[ERR] ${endTime.toString()}\n${err.stack || err}\n`)
+        error(err)
+        fs.appendFileSync('logs/error.log', `[ERR] ${new Date().toString()}\n${err.stack || err}\n`)
     }
     /**
      * Sends a private message

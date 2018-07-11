@@ -1,9 +1,21 @@
+# v3.3.0
+
+## Features
+- 优化 `-rec` 命令绘制，增加铺面四维显示
+- logger 划分为单独的模块
+- 添加 analyzer
+- 缓存用于计算铺面信息的 .osu 文件
+- **移动 `databaseAddress` 至顶层配置，在 `osubot` 内的仍然对 osubot module 可用，但是已经被废弃，且 analyzer 不识别**
+- 源码：对 `Command` 类增加新的 method `successHandler`，在命令解析完毕开始执行时时调用
+
+---
+
 # v3.2.1
 
 # Bugs
 - 修复了复读功能 log 中的 bug
 
-===
+---
 
 # v3.2.0
 

@@ -2,16 +2,17 @@
 import fs from 'fs'
 import Koa from 'koa'
 import body from 'koa-body'
-import yaml from 'js-yaml'
+import { safeLoad } from 'js-yaml'
 import message from './message'
 import { inits } from '../modules'
 import greet from './greeting'
+import { log } from './log'
 // ascii
 greet()
 // environment init
-console.log('[SVR] ATTEMPTING TO START SERVER...')
+log('[SVR] ATTEMPTING TO START SERVER...')
 const app = new Koa()
-const { receivePort } = yaml.safeLoad(fs.readFileSync('config.yml'))
+const { receivePort } = safeLoad(fs.readFileSync('config.yml'))
 if (!fs.existsSync('cache')) fs.mkdirSync('cache')
 if (!fs.existsSync('logs')) fs.mkdirSync('logs')
 // application init
@@ -27,4 +28,4 @@ app.use(async ctx => {
 })
 // start listening
 app.listen(receivePort)
-console.log(`[SVR] SUCCESS`)
+log(`[SVR] SUCCESS`)

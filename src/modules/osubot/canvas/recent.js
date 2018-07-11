@@ -24,7 +24,7 @@ export default async function drawRecent(rec, map, stat) {
     const avatarDest = `cache${path.sep}osubot${path.sep}avatar${path.sep}${uid}.jpg`
     const avatarLargerDest = `cache${path.sep}osubot${path.sep}avatarl${path.sep}${uid}.jpg`
     const avatarBGDest = `cache${path.sep}osubot${path.sep}recentbg${path.sep}${uid}.jpg`
-    const mapFile = await res.mapFileQuery(bid)
+    const mapFileDest = `cache${path.sep}osubot${path.sep}mapfile${path.sep}${bid}.osu`
     const mods = osu.modbits.string(rec.enabled_mods).split('').reduce((target, value, index) => {
         if (index % 2) target[target.length - 1] += value
         else target.push(value)
@@ -81,9 +81,9 @@ export default async function drawRecent(rec, map, stat) {
         .font('assets/osubot/fonts/Exo2.0-BoldItalic.otf')
         .fontSize(25)
         .fill('#3ad')
-        .drawText(0, 35, map.title.slice(0, 35) + (map.title.length > 35 ? '...' : ''))
+        .drawText(0, 40, map.title.slice(0, 35) + (map.title.length > 35 ? '...' : ''))
         .fontSize(17)
-        .drawText(0, 60, map.artist.slice(0, 50) + (map.artist.length > 50 ? '...' : ''))
+        .drawText(0, 65, map.artist.slice(0, 50) + (map.artist.length > 50 ? '...' : ''))
         .font('assets/osubot/fonts/Exo2.0-Bold.otf')
         .fontSize(30)
         .drawText(-300, 0, rec.maxcombo + 'x')
@@ -92,9 +92,6 @@ export default async function drawRecent(rec, map, stat) {
         .fill('#333')
         .drawText(-290, 20, 'max combo')
         .drawText(290, 20, 'accuracy')
-        .fontSize(12)
-        .fill('#f69')
-        .drawText(0, 5, 'total score')
         .fontSize(13)
         .fill('#999')
         .drawText(0, 85, map.version + ' - mapped by ' + map.creator)
@@ -123,25 +120,26 @@ export default async function drawRecent(rec, map, stat) {
         .font('assets/osubot/fonts/Venera-300.otf')
         .fontSize(50)
         .fill('#f69')
-        .drawText(0, -20, util.scorify(rec.score))
+        .drawText(0, 0, util.scorify(rec.score))
         .crop(1000, 500)
     )
     try {
+        if (!fs.existsSync(mapFileDest)) await res.mapFileQuery(bid, mapFileDest)
+        const parser = new osu.parser()
+        const mapFile = parser.feed(fs.readFileSync(mapFileDest, 'utf-8')).map
+        const stars = new osu.diff().calc({
+            map: mapFile,
+            mods: parseInt(rec.enabled_mods)
+        })
         const pp = osu.ppv2({
             combo: parseInt(rec.maxcombo),
             nmiss: parseInt(rec.countmiss),
             acc_percent: parseFloat(util.accuracy(rec)),
-            stars: new osu.diff().calc({
-                map: mapFile,
-                mods: parseInt(rec.enabled_mods)
-            })
+            stars
         })
         const fcpp = osu.ppv2({
             acc_percent: parseFloat(util.accuracy(rec)),
-            stars: new osu.diff().calc({
-                map: mapFile,
-                mods: parseInt(rec.enabled_mods)
-            })
+            stars
         })
         await promisifyGM(
             gm(dest)
@@ -159,8 +157,12 @@ export default async function drawRecent(rec, map, stat) {
             .drawText(410, -153, Math.round(pp.acc).toString() + ' ACC')
             .gravity('Center')
             .drawText(0, -190, Math.round(fcpp.total).toString() + 'pp if FC')
+            .font('assets/osubot/fonts/Exo2.0-Bold.otf')
+            .fontSize(14)
+            .fill('#aaa')
+            .drawText(0, -42, `${stars.total.toString().slice(0, 4)} Stars [AR${mapFile.ar}  CS${mapFile.cs}  OD${mapFile.od}  HP${mapFile.hp}]`)
         )
-    } catch {}
+    } catch (err) { console.log(err) }
     await promisifyGM(
         gm(dest)
         .quality(100)

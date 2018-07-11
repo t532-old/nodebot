@@ -66,3 +66,42 @@ Aliases 功能能让你忽略命令前缀，识别特定的消息并且替换为
 'hime hime': '-say suki suki daisuki hime'
 '-inter-': '-say wudi'
 ```
+
+## Logs
+模块可以使用公共的 logger 来将记录 log 至控制台：
+```js
+import { error, mod } from '(... path to dist/core/log)'
+```
+- `error` 接收一个参数 `err` 并将其作为一条错误信息 log 到控制台。
+- `mod` 接收两个参数：
+    - `name` 为你的 module name
+    - `text` 为你想展示的信息。
+
+## Analyzer
+nodebot 自带的统计器 analyzer(src/core/analyzer) 可以统计不同目标触发不同事件的次数。
+
+import：
+```js
+import analyzer from '(...path to dist/core/analyzer)'
+```
+之后若想记录一次事件，调用：
+```js
+//      the Message object | type of this event      | the event's name
+analyzer(MessageObject,    'command/middleware/init', 'eventName'     )
+```
+在 `botdb` 数据库的 collection `analytics` 中可以查询到所有统计：
+```js
+// input
+use botdb
+db.analytics.find()
+// =======================
+// output
+{ "_id" : ObjectId("..."), "messageType" : "private", "messageTarget" : 2037246484, "type" : "command", "identifier" : "stat", "counter" : 2 }
+{ "_id" : ObjectId("..."), "messageType" : "group", "messageTarget" : 204228752, "type" : "middleware", "identifier" : "osubotRepeat", "counter" : 1 }
+...
+```
+
+自动监听的事件：
+- 命令调用
+- 不存在的命令调用
+- aliases

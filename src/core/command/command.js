@@ -25,6 +25,11 @@ export default class Command {
      */
     invalidHandler() {}
     /**
+     * The handler that runs when a command is recognized and parsed
+     * @method
+     */
+    successHandler() {}
+    /**
      * @constructor
      * @name Command
      * @param {object} prefixes - The commands' && options' prefix
@@ -35,6 +40,7 @@ export default class Command {
         this.#optionsPrefix = new RegExp('^' + prefixes.options)
         if (handlers.default) this.defaultHandler = handlers.default
         if (handlers.invalid) this.invalidHandler = handlers.invalid
+        if (handlers.success) this.successHandler = handlers.success
     }
     /**
      * bind a command
@@ -117,6 +123,7 @@ export default class Command {
             args[i] = raw.optional.shift()
         if (this.#list[name].args.group) args[this.#list[name].args.group] = raw.group
         this.#list[name].action(...extraArgs, args, options)
+        this.successHandler(...extraArgs, [name, [args, options]])
     }
     getUsage(name) { return this.#list[name].str }
 }

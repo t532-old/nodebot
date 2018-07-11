@@ -1,8 +1,8 @@
 import fs from 'fs'
-import yaml from 'js-yaml'
+import { safeLoad } from 'js-yaml'
 import Monk from 'monk'
 
-const config = yaml.safeLoad(fs.readFileSync('config.yml')).osubot
-const db = Monk(`${config.databaseAddress}/botdb`)
+const { databaseAddress, osubot } = safeLoad(fs.readFileSync('config.yml'))
+const db = Monk(`${databaseAddress || osubot.databaseAddress}/botdb`)
 
 export default db

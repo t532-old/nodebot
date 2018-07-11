@@ -1,7 +1,7 @@
-import yaml from 'js-yaml'
+import { safeLoad } from 'js-yaml'
 import fs from 'fs'
 
-const config = yaml.safeLoad(fs.readFileSync('config.yml')).develop
+const config = safeLoad(fs.readFileSync('config.yml')).develop
 
 const test = {
     args: '[txt...]',
@@ -11,7 +11,7 @@ const test = {
      * @param {Message} msg The universal msg object
      * @param {array} txt The texts user sends
      */
-    async action(msg, { txt }) { msg.send(txt.filter(i => /!|！/.test(i) === false).join(' ')) }
+    async action(msg, { txt }) { msg.send(txt.filter(i => /^[!！]/.test(i) === false).join(' ')) }
 }
 
 const about = {

@@ -1,9 +1,9 @@
 import { managedb } from '../db'
 import MESSAGES from './_messages'
 import fs from 'fs'
-import yaml from 'js-yaml'
+import { safeLoad } from 'js-yaml'
 // Initialize settings
-const { operators } = yaml.safeLoad(fs.readFileSync('config.yml'))
+const { operators } = safeLoad(fs.readFileSync('config.yml'))
 
 export default {
     args: '',
