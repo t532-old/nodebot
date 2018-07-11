@@ -3,7 +3,8 @@
 ## Features
 - logger 划分为单独的模块
 - 添加 analyzer
-- **移动 `databaseAddress` 至顶层配置，在osubot内的仍然可用，但是已经被废弃**
+- 缓存用于计算铺面信息的 .osu 文件
+- **移动 `databaseAddress` 至顶层配置，在 `osubot` 内的仍然对 osubot module 可用，但是已经被废弃，且 analyzer 不识别**
 - 源码：对 `Command` 类增加新的 method `successHandler`，在命令解析完毕开始执行时时调用
 
 ---
