@@ -108,7 +108,7 @@ export default async function drawStat(stat, statPrev) {
         gm(dest)
         .quality(100)
         .gravity('NorthEast')
-        .composite(`${assetspath}/image/flags/' + stat.country + '.png`)
+        .composite(`${assetspath}/image/flags/${stat.country}.png`)
         .geometry('+30+455')
     )
     return 'file://' + process.cwd() + path.sep + dest

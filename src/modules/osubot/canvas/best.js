@@ -57,8 +57,13 @@ export default async function drawBest(bp, map, stat) {
         .blur(10, 10)
         .fill('#fffb')
         .drawCircle(750, 250, 750, 620)
-        .fill('#fff8')
+        .tile(dest)
         .drawCircle(750, 250, 750, 610)
+    )
+    await promisifyGM(
+        gm(dest)
+        .fill('#fff8')
+        .drawCircle(750, 250, 750, 490)
         .fill('#fff8')
         .drawCircle(750, 250, 750, 490)
         .fill('#fff5')
@@ -133,7 +138,7 @@ export default async function drawBest(bp, map, stat) {
     await promisifyGM(
         gm(dest)
         .quality(100)
-        .composite(`${assetspath}/image/rank/' + bp.rank + '.png`)
+        .composite(`${assetspath}/image/rank/${bp.rank}.png`)
         .gravity('North')
         .geometry('+0+80')
     )
@@ -142,7 +147,7 @@ export default async function drawBest(bp, map, stat) {
             gm(dest)
             .quality(100)
             .gravity('North')
-            .composite(`${assetspath}/image/mods/' + mods[i] + '.png`)
+            .composite(`${assetspath}/image/mods/${mods[i]}.png`)
             .geometry((padding >= 0 ? '+' : '') + padding + '+170')
         )
     }
