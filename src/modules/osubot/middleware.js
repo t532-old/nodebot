@@ -1,7 +1,7 @@
 import { safeLoad } from 'js-yaml'
 import { readFileSync } from 'fs'
 import chalk from 'chalk'
-import { mod } from '../../core/log'
+import { modLog } from '../../core/log'
 import analyzer from '../../core/analyzer'
 const log = {
     private: {},
@@ -24,7 +24,7 @@ export default function repeater(msg) {
         if (log[msg.type][msg.target].count === config.times) {
             const timeout = Math.round(Math.random() * 200000),
                   repeatTarget = log[msg.type][msg.target]
-            mod('osubot middleware', `attempting to repeat \`${msg.param.message}' in ${msg.type === 'group' ? `${msg.type} ${msg.target}` : chalk.yellow(`${msg.type} ${msg.target}`)} in ${Math.round(timeout / 1000)} secs`)
+            modLog('osubot middleware', `attempting to repeat \`${msg.param.message}' in ${msg.type === 'group' ? `${msg.type} ${msg.target}` : chalk.yellow(`${msg.type} ${msg.target}`)} in ${Math.round(timeout / 1000)} secs`)
             setTimeout(() => { msg.send(repeatTarget.message) }, timeout)
             analyzer(msg, 'middleware', 'osubotRepeat')
             delete log[msg.type][msg.target]

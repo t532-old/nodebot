@@ -1,6 +1,6 @@
 import fs from 'fs'
 import { statdb } from './db'
-import { mod } from '../../core/log'
+import { modLog } from '../../core/log'
 
 const initPaths = [
     'cache/osubot',
@@ -24,10 +24,10 @@ export default async function refresher() {
     const time = new Date(`${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate() + 1}`)
     setTimeout(async () => {
         statdb.refreshAllStat()
-              .then(() => mod('osubot initializer', 'Refreshed user status'))
+              .then(() => modLog('osubot initializer', 'Refreshed user status'))
         setInterval(async () => {
             statdb.refreshAllStat()
-                  .then(() => mod('osubot initializer', 'Refreshed user status'))
+                  .then(() => modLog('osubot initializer', 'Refreshed user status'))
         }, 86400000)
     }, time.getTime() - Date.now())
 }

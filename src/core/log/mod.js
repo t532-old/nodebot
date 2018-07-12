@@ -2,10 +2,10 @@ import log from './log'
 import chalk from 'chalk'
 /**
  * log a message from modules
- * @name mod
+ * @name modLog
  * @param {string} name the module's name
  * @param {string} message the log message
  */
-export default function mod(name, message) {
+export default function modLog(name, message) {
     log(`${chalk.blue('[MOD]')} ${chalk.gray(new Date().toString())} by ${name}: ${message}`)
 }

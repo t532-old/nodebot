@@ -85,7 +85,11 @@ export default async function drawRecent(rec, map, stat) {
         .fontSize(17)
         .drawText(0, 65, map.artist.slice(0, 50) + (map.artist.length > 50 ? '...' : ''))
         .font('assets/osubot/fonts/Exo2.0-Bold.otf')
+        .fill('#aaa')
         .fontSize(30)
+        .drawText(-300, 2, rec.maxcombo + 'x')
+        .drawText(300, 2, util.accuracy(rec) + '%')
+        .fill('#3ad')
         .drawText(-300, 0, rec.maxcombo + 'x')
         .drawText(300, 0, util.accuracy(rec) + '%')
         .fontSize(12)
@@ -162,7 +166,7 @@ export default async function drawRecent(rec, map, stat) {
             .fill('#aaa')
             .drawText(0, -42, `${stars.total.toString().slice(0, 4)} Stars [AR${mapFile.ar}  CS${mapFile.cs}  OD${mapFile.od}  HP${mapFile.hp}]`)
         )
-    } catch (err) { console.log(err) }
+    } catch { }
     await promisifyGM(
         gm(dest)
         .quality(100)

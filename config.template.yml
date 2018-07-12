@@ -1,11 +1,12 @@
 operators: # {array<number>} A list, now reserved, will be useful in the future
-receivePort: # {number} The port you've set to receive messages in cqhttp
+receivePort: # {number} The port you want to receive messages from cqhttp
 sendAddress: # {string} cqhttp's api address **WITH PROTOCOL!!**
 databaseAddress: # {string} mongod's address **WITHOUT PROTOCOL!!**
 logMessage: false # {boolean} turn it to 'true' to log every message to your console.
 analyzeMessage: false # {boolean} make it 'true' to record events to the database.
+autoAccept: none # {string} use one of ['none', 'friend', 'group', 'both'] to automatically accept/refuse these requests
 develop:
-    version: '3.3.0' # {string} The version. This only influences the develop.about command.
+    version: '3.4.0' # {string} The version. This only influences the develop.about command.
 osubot:
     key: # {string} Your osu! api key
     repeater:
