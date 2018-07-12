@@ -74,7 +74,6 @@ export default class Message {
             },
         ])
         errorLog(err)
-        fs.appendFileSync('logs/error.log', `[ERR] ${new Date().toString()}\n${err.stack || err}\n`)
     }
     /**
      * Sends a private message

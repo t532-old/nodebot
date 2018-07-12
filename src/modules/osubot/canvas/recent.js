@@ -152,7 +152,7 @@ export default async function drawRecent(rec, map, stat) {
             .fill('#aaa')
             .drawText(0, -42, `${info.stars} Stars [AR${info.ar}  CS${info.cs}  OD${info.od}  HP${info.hp}]`)
         )
-    } catch (err) { console.log(err) }
+    } catch { }
     await promisifyGM(
         gm(dest)
         .quality(100)
