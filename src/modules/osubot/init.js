@@ -1,17 +1,18 @@
 import fs from 'fs'
 import { statdb } from './db'
 import { modLog } from '../../core/log'
+import { cachepath } from './canvas/_util'
 
 const initPaths = [
-    'cache/osubot',
-    'cache/osubot/avatar',
-    'cache/osubot/avatarl',
-    'cache/osubot/recent',
-    'cache/osubot/recentbg',
-    'cache/osubot/stat',
-    'cache/osubot/mapbg',
-    'cache/osubot/best',
-    'cache/osubot/mapfile'
+    `${cachepath}`,
+    `${cachepath}/avatar`,
+    `${cachepath}/avatarl`,
+    `${cachepath}/recent`,
+    `${cachepath}/recentbg`,
+    `${cachepath}/stat`,
+    `${cachepath}/mapbg`,
+    `${cachepath}/best`,
+    `${cachepath}/mapfile`
 ]
 
 /**

@@ -98,3 +98,6 @@ export function promisify(fn, ...args) {
         })
     })
 }
+
+export const cachepath = 'cache/osubot'
+export const assetspath = 'assets/osubot'
