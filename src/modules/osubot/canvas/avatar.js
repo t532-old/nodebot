@@ -3,9 +3,8 @@ import gm from 'gm'
 import fs from 'fs'
 import path from 'path'
 // Import local files
-import { promisify, promisifyGM } from './_util'
+import { promisify, promisifyGM, cachepath } from './_util'
 import { res } from '../web'
-import { cachepath, assetspath } from './_util'
 
 /**
  * get a user's avatar

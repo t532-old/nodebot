@@ -2,7 +2,7 @@ import { getDimensions, getDifficulty, getMods } from './difficulty'
 import { getPP, getFCPP } from './performance'
 import { readFileSync } from 'fs'
 export default function aggregatedMapInfo(mapPath, play) {
-    const mapFile = readFileSync(mapPath)
+    const mapFile = readFileSync(mapPath, 'utf-8')
     const map = getDimensions(mapFile)
     const stars = getDifficulty(map)
     const mods = getMods(play.enabled_mods)

@@ -1,4 +1,12 @@
 export default {
+    copy(obj) {
+        let res = new obj.constructor()
+        for (let i in obj) {
+            if (obj[i] instanceof Object) res[i] = this.copy(obj[i])
+            else res[i] = obj[i]
+        }
+        return res
+    },
     accuracy(data) {
         const rec = this.copy(data)
         for (let i in rec) rec[i] = parseInt(rec[i])

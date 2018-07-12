@@ -4,7 +4,7 @@ import fs from 'fs'
 import path from 'path'
 // Import local files
 import util from './_util'
-import { promisify, promisifyGM } from './_util'
+import { promisify, promisifyGM, cachepath, assetspath } from './_util'
 import { getAvatar } from './avatar'
 
 /**

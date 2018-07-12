@@ -4,10 +4,9 @@ import fs from 'fs'
 import path from 'path'
 // Import local files
 import util from './_util'
-import { promisify, promisifyGM } from './_util'
+import { promisify, promisifyGM, cachepath, assetspath } from './_util'
 import { getAvatar } from './avatar'
 import { res } from '../web'
-import { cachepath, assetspath } from './_util'
 import calc from '../map'
 import { getMods } from '../map'
 
@@ -60,11 +59,10 @@ export default async function drawRecent(rec, map, stat) {
     )
     await promisifyGM(
         gm(dest)
-        .fill('#fff8')
-        .drawCircle(750, 250, 750, 490)
-        .fill('#fff8')
-        .drawCircle(750, 250, 750, 490)
+        .fill('#fffa')
+        .drawCircle(750, 250, 750, 610)
         .fill('#fff5')
+        .drawCircle(750, 250, 750, 490)
         .drawCircle(750, 250, 750, 460)
         .tile(avatarBGDest)
         .drawEllipse(750, 250, 210, 210, -145, -35)
@@ -154,7 +152,7 @@ export default async function drawRecent(rec, map, stat) {
             .fill('#aaa')
             .drawText(0, -42, `${info.stars} Stars [AR${info.ar}  CS${info.cs}  OD${info.od}  HP${info.hp}]`)
         )
-    } catch { }
+    } catch (err) { console.log(err) }
     await promisifyGM(
         gm(dest)
         .quality(100)
