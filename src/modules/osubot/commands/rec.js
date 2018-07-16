@@ -42,12 +42,20 @@ export default {
             }
             const path = await drawRecent(recent, map, status)
             if (path)
-                msg.send([{
-                    type: 'image',
-                    data: {
-                        file: path,
-                    }
-                }])
+                msg.send([
+                    {
+                        type: 'image',
+                        data: {
+                            file: path,
+                        }
+                    },
+                    {
+                        type: 'text',
+                        data: {
+                            text: `\nhttps://osu.ppy.sh/b/${recent.beatmap_id}`
+                        }
+                    },
+                ])
             else msg.send(`osubot: rec: ${MESSAGES.QUERY_CANVAS_FAIL}`)
         } catch (err) {
             msg.error(err)
