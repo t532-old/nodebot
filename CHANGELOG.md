@@ -1,3 +1,17 @@
+# v3.4.0
+
+## Features
+- 在 config 内增加选项 `autoAccept` (值可为`'none', 'friend', 'group', 'both'`) 来配置是否自动同意好友请求/加群请求。
+- 因为 log 模块的函数名称过于容易重复，特此更改。
+- 在 log 模块中增加了专门 log add request 的 `requestLog()`。
+- 为 recent 与 bp 图片中的 acc 与 cb 增加了（伪）阴影。
+- 把 -bp 与 -rec 中心圆圈的背景模糊删除以更好的模仿 lazer。
+- recent 与 bp 现在会提供图的链接。
+- stat 现在会提供用户页的链接。
+- 源码：重构了一部分画图脚本。
+
+---
+
 # v3.3.0
 
 ## Features

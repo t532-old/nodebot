@@ -42,12 +42,20 @@ export default {
             }
             const path = await drawStat(status, prevStatus)
             if (path)
-                msg.send([{
-                    type: 'image',
-                    data: {
-                        file: path,
-                    }
-                }])
+                msg.send([
+                    {
+                        type: 'image',
+                        data: {
+                            file: path,
+                        }
+                    },
+                    {
+                        type: 'text',
+                        data: {
+                            text: `\nhttps://osu.ppy.sh/u/${status.user_id}`
+                        }
+                    },
+                ])
             else msg.send(`osubot: stat: ${MESSAGES.QUERY_CANVAS_FAIL}`)
         } catch (err) {
             msg.error(err)

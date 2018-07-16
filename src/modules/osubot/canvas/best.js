@@ -5,7 +5,7 @@ import path from 'path'
 import osu from 'ojsama'
 // Import local files
 import util from './_util'
-import { promisify, promisifyGM } from './_util'
+import { promisify, promisifyGM, cachepath, assetspath } from './_util'
 import { getAvatar } from './avatar'
 import { res } from '../web'
 
@@ -19,17 +19,17 @@ export default async function drawBest(bp, map, stat) {
     const uid = stat.user_id
     const sid = map.beatmapset_id
     const bid = bp.beatmap_id
-    const dest = `cache${path.sep}osubot${path.sep}best${path.sep}${uid}.jpg`
-    const bgDest = `cache${path.sep}osubot${path.sep}mapbg${path.sep}${sid}.jpg`
-    const avatarDest = `cache${path.sep}osubot${path.sep}avatar${path.sep}${uid}.jpg`
-    const avatarLargerDest = `cache${path.sep}osubot${path.sep}avatarl${path.sep}${uid}.jpg`
-    const avatarBGDest = `cache${path.sep}osubot${path.sep}recentbg${path.sep}${uid}.jpg`
+    const dest = `${cachepath}/best/${uid}.jpg`
+    const bgDest = `${cachepath}/mapbg/${sid}.jpg`
+    const avatarDest = `${cachepath}/avatar/${uid}.jpg`
+    const avatarLargerDest = `${cachepath}/avatarl/${uid}.jpg`
+    const avatarBGDest = `${cachepath}/recentbg/${uid}.jpg`
     const mods = osu.modbits.string(bp.enabled_mods).split('').reduce((target, value, index) => {
         if (index % 2) target[target.length - 1] += value
         else target.push(value)
         return target
     }, [])
-    await promisify(fs.copyFile, `assets${path.sep}osubot${path.sep}image${path.sep}userbg${path.sep}crecent.jpg`, avatarBGDest)
+    await promisify(fs.copyFile, `${assetspath}/image/userbg/crecent.jpg`, avatarBGDest)
     if (fs.existsSync(avatarDest) || await getAvatar(uid, avatarDest, avatarLargerDest))
         await promisifyGM(
             gm(avatarBGDest)
@@ -40,7 +40,7 @@ export default async function drawBest(bp, map, stat) {
         )
     if (!fs.existsSync(bgDest)) {
         try { await res.bgQuery(sid, bgDest) }
-        catch { await promisify(fs.copyFile, `assets${path.sep}osubot${path.sep}image${path.sep}userbg${path.sep}c${Math.ceil(Math.random() * 5)}.jpg`, bgDest) }
+        catch { await promisify(fs.copyFile, `${assetspath}/image/userbg/c${Math.ceil(Math.random() * 5)}.jpg`, bgDest) }
     }
     await promisify(fs.copyFile, bgDest, dest)
     await promisifyGM(
@@ -56,11 +56,15 @@ export default async function drawBest(bp, map, stat) {
         .blur(10, 10)
         .fill('#fffb')
         .drawCircle(750, 250, 750, 620)
-        .fill('#fff8')
+        .tile(dest)
         .drawCircle(750, 250, 750, 610)
-        .fill('#fff8')
-        .drawCircle(750, 250, 750, 490)
+    )
+    await promisifyGM(
+        gm(dest)
+        .fill('#fffa')
+        .drawCircle(750, 250, 750, 610)
         .fill('#fff5')
+        .drawCircle(750, 250, 750, 490)
         .drawCircle(750, 250, 750, 460)
         .tile(avatarBGDest)
         .drawEllipse(750, 250, 210, 210, -145, -35)
@@ -72,19 +76,23 @@ export default async function drawBest(bp, map, stat) {
         .fill('#888a')
         .drawEllipse(750, 250, 210, 210, -145, -35)
         .fill('#fff')
-        .font('assets/osubot/fonts/Exo2.0-Medium.otf')
+        .font(`${assetspath}/fonts/Exo2.0-Medium.otf`)
         .fontSize(25)
         .drawText(0, -185, Math.round(bp.pp).toString() + 'pp')
         .fontSize(30)
         .drawText(0, -155, stat.username)
-        .font('assets/osubot/fonts/Exo2.0-BoldItalic.otf')
+        .font(`${assetspath}/fonts/Exo2.0-BoldItalic.otf`)
         .fontSize(25)
         .fill('#3ad')
         .drawText(0, 35, map.title.slice(0, 35) + (map.title.length > 35 ? '...' : ''))
         .fontSize(17)
         .drawText(0, 60, map.artist.slice(0, 50) + (map.artist.length > 50 ? '...' : ''))
-        .font('assets/osubot/fonts/Exo2.0-Bold.otf')
+        .font(`${assetspath}/fonts/Exo2.0-Bold.otf`)
+        .fill('#aaa')
         .fontSize(30)
+        .drawText(-300, 2, bp.maxcombo + 'x')
+        .drawText(300, 2, util.accuracy(bp) + '%')
+        .fill('#3ad')
         .drawText(-300, 0, bp.maxcombo + 'x')
         .drawText(300, 0, util.accuracy(bp) + '%')
         .fontSize(12)
@@ -98,7 +106,7 @@ export default async function drawBest(bp, map, stat) {
         .fontSize(12)
         .fill('#f69')
         .drawText(0, 5, 'total score')
-        .font('assets/osubot/fonts/Exo2.0-Regular.otf')
+        .font(`${assetspath}/fonts/Exo2.0-Regular.otf`)
         .fill('#fff')
         .drawText(0, 105, bp.date)
         .fontSize(25)
@@ -109,7 +117,7 @@ export default async function drawBest(bp, map, stat) {
         .drawText(-33, 140, util.fillNumber(bp.count100))
         .drawText(33, 140, util.fillNumber(bp.count50))
         .drawText(100, 140, util.fillNumber(bp.countmiss))
-        .font('assets/osubot/fonts/Exo2.0-ExtraBold.otf')
+        .font(`${assetspath}/fonts/Exo2.0-ExtraBold.otf`)
         .fontSize(12)
         .fill('#66a')
         .drawText(-100, 160, '300')
@@ -119,7 +127,7 @@ export default async function drawBest(bp, map, stat) {
         .drawText(33, 160, '50')
         .fill('#a66')
         .drawText(100, 160, 'X')
-        .font('assets/osubot/fonts/Venera-300.otf')
+        .font(`${assetspath}/fonts/Venera-300.otf`)
         .fontSize(50)
         .fill('#f69')
         .drawText(0, -20, util.scorify(bp.score))
@@ -128,7 +136,7 @@ export default async function drawBest(bp, map, stat) {
     await promisifyGM(
         gm(dest)
         .quality(100)
-        .composite('assets/osubot/image/rank/' + bp.rank + '.png')
+        .composite(`${assetspath}/image/rank/${bp.rank}.png`)
         .gravity('North')
         .geometry('+0+80')
     )
@@ -137,7 +145,7 @@ export default async function drawBest(bp, map, stat) {
             gm(dest)
             .quality(100)
             .gravity('North')
-            .composite('assets/osubot/image/mods/' + mods[i] + '.png')
+            .composite(`${assetspath}/image/mods/${mods[i]}.png`)
             .geometry((padding >= 0 ? '+' : '') + padding + '+170')
         )
     }

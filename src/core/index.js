@@ -7,6 +7,7 @@ import message from './message'
 import { inits } from '../modules'
 import greet from './greeting'
 import { log } from './log'
+import request from './request'
 // ascii
 greet()
 // environment init
@@ -23,8 +24,10 @@ app.use(body())
 // handle the message
 app.use(async ctx => {
     const msg = ctx.request.body
-    if (msg.message_type)
+    if (msg.post_type === 'message')
         message.handle(msg)
+    else if (msg.post_type === 'request')
+        request.handle(msg)
 })
 // start listening
 app.listen(receivePort)

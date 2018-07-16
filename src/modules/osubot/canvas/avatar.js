@@ -3,7 +3,7 @@ import gm from 'gm'
 import fs from 'fs'
 import path from 'path'
 // Import local files
-import { promisify, promisifyGM } from './_util'
+import { promisify, promisifyGM, cachepath } from './_util'
 import { res } from '../web'
 
 /**
@@ -43,15 +43,15 @@ async function getAvatar(uid, avatarDest, avatarLargerDest) {
  */
 function clearCachedAvatars(uid) {
     if (!uid) {
-        for (let i of fs.readdirSync(`cache${path.sep}osubot${path.sep}avatar`))
-            fs.unlinkSync(`cache${path.sep}osubot${path.sep}avatar${path.sep}${i}.jpg`)
-        for (let i of fs.readdirSync(`cache${path.sep}osubot${path.sep}avatarl`))
-            fs.unlinkSync(`cache${path.sep}osubot${path.sep}avatarl${path.sep}${i}.jpg`)
+        for (let i of fs.readdirSync(`${cachepath}/avatar`))
+            fs.unlinkSync(`${cachepath}/avatar/${i}.jpg`)
+        for (let i of fs.readdirSync(`${cachepath}/avatarl`))
+            fs.unlinkSync(`${cachepath}/avatarl/${i}.jpg`)
     } else {
-        if (fs.existsSync(`cache${path.sep}osubot${path.sep}avatar${path.sep}${uid}.jpg`))
-            fs.unlinkSync(`cache${path.sep}osubot${path.sep}avatar${path.sep}${uid}.jpg`)
-        if (fs.existsSync(`cache${path.sep}osubot${path.sep}avatarl${path.sep}${uid}.jpg`))
-            fs.unlinkSync(`cache${path.sep}osubot${path.sep}avatarl${path.sep}${uid}.jpg`)
+        if (fs.existsSync(`${cachepath}/avatar/${uid}.jpg`))
+            fs.unlinkSync(`${cachepath}/avatar/${uid}.jpg`)
+        if (fs.existsSync(`${cachepath}/avatarl/${uid}.jpg`))
+            fs.unlinkSync(`${cachepath}/avatarl/${uid}.jpg`)
     }
 }
 
