@@ -1,3 +1,10 @@
+# v3.4.1
+
+## Features
+- 更新了防注入机制，开发者现在可以在 config.yml 的 `injectionChecker` 字段中自定义注入检测
+
+---
+
 # v3.4.0
 
 ## Features

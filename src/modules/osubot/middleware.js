@@ -3,6 +3,7 @@ import { readFileSync } from 'fs'
 import chalk from 'chalk'
 import { modLog } from '../../core/log'
 import analyzer from '../../core/analyzer'
+const { injectionChecker } = safeLoad(readFileSync('config.yml'))
 const log = {
     private: {},
     group: {},
@@ -14,7 +15,7 @@ const { repeater: config } = safeLoad(readFileSync('config.yml')).osubot
  * @param {Message} msg 
  */
 export default function repeater(msg) {
-    if (/^[!！]/.test(msg.param.message) === false && 
+    if (new RegExp(...injectionChecker).test(msg.param.message) === false && 
         msg.type === 'group') {
         if ('notAllowed' in config && config.notAllowed.includes(msg.target)) return
         if ('allowed' in config && !config.allowed.includes(msg.target)) return

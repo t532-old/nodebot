@@ -1,3 +1,6 @@
+import { safeLoad } from 'js-yaml'
+import { readFileSync } from 'fs'
+const { injectionChecker } = safeLoad(readFileSync('config.yml'))
 export default {
     args: '[range]',
     options: [],
@@ -8,7 +11,7 @@ export default {
      */
     async action(msg, { range = '100' }) {
         if (typeof range === 'string' && !parseInt(range)) {
-            range = range.split(',').filter(i => /^[!！]/.test(i) === false)
+            range = range.split(',').filter(i => new RegExp(...injectionChecker).test(i) === false)
             msg.send(range[Math.floor(Math.random() * range.length)])
         } else msg.send(Math.round(Math.random() * parseInt(range)).toString())
     }

@@ -5,8 +5,11 @@ databaseAddress: # {string} mongod's address **WITHOUT PROTOCOL!!**
 logMessage: false # {boolean} turn it to 'true' to log every message to your console.
 analyzeMessage: false # {boolean} make it 'true' to record events to the database.
 autoAccept: none # {string} use one of ['none', 'friend', 'group', 'both'] to automatically accept/refuse these requests
+injectionChecker: # {array<string>} this will be used to generate a RegExp for checking whether the message have injection or not. If result is true, the message will be handled in a different way. Be careful with the escape.
+    - '\[CQ:' # the first member of the array is the RegExp
+    - 'gi' # and the second one are the RegExp's flags
 develop:
-    version: '3.4.0' # {string} The version. This only influences the develop.about command.
+    version: '3.4.1' # {string} The version. This only influences the develop.about command.
 osubot:
     key: # {string} Your osu! api key
     repeater:
