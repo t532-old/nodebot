@@ -6,6 +6,9 @@
 - 重构了自动处理 request 的部分，使其作为 `core/message/handle.js$handle()` 的中间件
 - 源码：将 `core/message/handle.js` 中的内置中间件分割为多个文件置于 `core/message/middlewares` 下
 
+## Known Bug
+- 有时接收到的信息类型与消息均为 `undefined`，然而 `post_type` 与 `group_id`/`user_id` 均正常。尚未查出是 cqhttp 还是 bot 的锅
+
 ---
 
 # v3.4.1
