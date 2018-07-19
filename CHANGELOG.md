@@ -1,7 +1,8 @@
 # v3.5.0
 
 ## Features
-<!-- - 实现了更宽松的用户名匹配，现在用户输入带有空格的 id 时不必用引号括起来 -->
+- 更加宽松的 roll 指令
+- 实现了更宽松的用户名匹配，现在用户输入带有空格的 id 时不必用引号括起来
 - 重构了自动处理 request 的部分，使其作为 `core/message/handle.js$handle()` 的中间件
 - 源码：将 `core/message/handle.js` 中的内置中间件分割为多个文件置于 `core/message/middlewares` 下
 

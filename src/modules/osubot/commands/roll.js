@@ -2,14 +2,15 @@ import { safeLoad } from 'js-yaml'
 import { readFileSync } from 'fs'
 const { injectionChecker } = safeLoad(readFileSync('config.yml'))
 export default {
-    args: '[range]',
+    args: '[range...]',
     options: [],
     /**
      * Gives a random result in a specific range (default 100)
      * @param {Message} msg The universal msg object
      * @param {string} range The rolling range
      */
-    async action(msg, { range = '100' }) {
+    async action(msg, { range = ['100'] }) {
+        range = range.map(i => i.trim()).join(',')
         if (typeof range === 'string' && !parseInt(range)) {
             range = range.split(',').filter(i => new RegExp(...injectionChecker).test(i) === false)
             msg.send(range[Math.floor(Math.random() * range.length)])

@@ -3,7 +3,7 @@ import { api } from '../web'
 import MESSAGES from './_messages'
 
 export default {
-    args: '<account>',
+    args: '[account...]',
     options: [],
     /**
      * binds an osu! id with a QQ id.
@@ -11,6 +11,7 @@ export default {
      * @param {string} account The account
      */
     async action(msg, { account }) {
+        account = account.join(' ')
         let user
         try { user = await api.statQuery({ u: account }) }
         catch { 

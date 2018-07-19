@@ -5,7 +5,7 @@ import { drawStat } from '../canvas'
 import MESSAGES from './_messages'
 
 export default {
-    args: '[usr]',
+    args: '[usr...]',
     options: util.flatten(util.modes),
     /**
      * Fetch a user's status
@@ -13,7 +13,8 @@ export default {
      * @param {string} usr username that will be queried
      * @param {string} mode the mode that will be queried
      */
-    async action(msg, { usr = 'me' }, [ mode = 'o' ]) {
+    async action(msg, { usr = ['me'] }, [ mode = 'o' ]) {
+        usr = usr.join(' ')
         mode = util.checkmode(mode)
         let status, prevStatus
         if (usr === 'me') {
