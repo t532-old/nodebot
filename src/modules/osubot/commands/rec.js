@@ -13,8 +13,8 @@ export default {
      * @param {string} usr The username that'll be queried
      * @param {string} mode the mode that will be queried
      */
-    async action(msg, { usr = ['me'] }, [ mode = 'o' ]) {
-        usr = usr.join(' ')
+    async action(msg, { usr }, [ mode = 'o' ]) {
+        usr = usr.join(' ') || 'me'
         mode = util.checkmode(mode)
         let recent, map, status
         if (usr === 'me') {

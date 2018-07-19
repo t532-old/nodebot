@@ -14,8 +14,8 @@ export default {
      * @param {string} usr The username that'll be queried
      * @param {string} mode the mode that will be queried
      */
-    async action(msg, { order, usr = ['me'] }, [ mode = 'o' ]) {
-        usr = usr.join(' ')
+    async action(msg, { order, usr }, [ mode = 'o' ]) {
+        usr = usr.join(' ') || 'me'
         mode = util.checkmode(mode)
         let best, map, status
         if (!parseInt(order) || parseInt(order) < 1 || parseInt(order) > 100)

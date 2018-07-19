@@ -9,8 +9,8 @@ export default {
      * @param {Message} msg The universal msg object
      * @param {string} range The rolling range
      */
-    async action(msg, { range = ['100'] }) {
-        range = range.map(i => i.trim()).join(',')
+    async action(msg, { range }) {
+        range = range.map(i => i.trim()).join(',') || '100'
         if (typeof range === 'string' && !parseInt(range)) {
             range = range.split(',').filter(i => new RegExp(...injectionChecker).test(i) === false)
             msg.send(range[Math.floor(Math.random() * range.length)])
