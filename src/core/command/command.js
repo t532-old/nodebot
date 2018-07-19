@@ -75,6 +75,7 @@ export default class Command {
             group: args.filter(i => i.match(/^\[.+\.{3,3}\]$/))[0] ? args.filter(i => i.match(/^\[.+\.{3,3}\]$/))[0].split(/\[|\.{3,3}\]/)[1] : null
         }
         this.#list[name] = { args, options, action, str }
+        return this
     }
     /**
      * Bind a group of commands.
@@ -84,6 +85,7 @@ export default class Command {
     onAll(commands) {
         for (let i of Object.keys(commands)) 
             this.on(i, commands[i])
+        return this
     }
     /**
      * do a command

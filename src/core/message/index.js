@@ -1,1 +1,1 @@
-export * as default from './handler'
+export default from './handler'
