@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { requestLog } from './log'
+import { requestLog } from '../../log'
 import { safeLoad } from 'js-yaml'
 import { readFileSync } from 'fs'
 
@@ -13,19 +13,18 @@ async function send(approve, type, flag) {
     })
 }
 
-async function handle(msg) {
+export default async function request(msg) {
+    msg.send = approve => send(approve, msg.request_type, msg.flag)
     if (
         msg.request_type === autoAccept ||
         autoAccept === 'both' &&
         (msg.sub_type === 'invite' ||
          !msg.sub_type)
     ) {
-        send(true, msg.request_type, msg.flag)
+        msg.send(true)
         requestLog(msg, true)
     } else {
-        send(false, msg.request_type, msg.flag)
+        msg.send(false)
         requestLog(msg, false)
     }
 }
-
-export default { handle }

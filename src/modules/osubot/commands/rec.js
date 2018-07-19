@@ -5,7 +5,7 @@ import { drawRecent } from '../canvas'
 import MESSAGES from './_messages'
 
 export default {
-    args: '[usr]',
+    args: '[usr...]',
     options: util.flatten(util.modes),
     /**
      * Get a user's most recent play
@@ -13,7 +13,8 @@ export default {
      * @param {string} usr The username that'll be queried
      * @param {string} mode the mode that will be queried
      */
-    async action(msg, { usr = 'me' }, [ mode = 'o' ]) {
+    async action(msg, { usr = ['me'] }, [ mode = 'o' ]) {
+        usr = usr.join(' ')
         mode = util.checkmode(mode)
         let recent, map, status
         if (usr === 'me') {

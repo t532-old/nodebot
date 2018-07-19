@@ -5,7 +5,7 @@ import { drawBest } from '../canvas'
 import MESSAGES from './_messages'
 
 export default {
-    args: '<order> [usr]',
+    args: '<order> [usr...]',
     options: util.flatten(util.modes),
     /**
      * Get a user's best performance
@@ -14,7 +14,8 @@ export default {
      * @param {string} usr The username that'll be queried
      * @param {string} mode the mode that will be queried
      */
-    async action(msg, { order, usr = 'me' }, [ mode = 'o' ]) {
+    async action(msg, { order, usr = ['me'] }, [ mode = 'o' ]) {
+        usr = usr.join(' ')
         mode = util.checkmode(mode)
         let best, map, status
         if (!parseInt(order) || parseInt(order) < 1 || parseInt(order) > 100)

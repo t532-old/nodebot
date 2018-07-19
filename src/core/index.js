@@ -7,7 +7,6 @@ import message from './message'
 import { inits } from '../modules'
 import greet from './greeting'
 import { log } from './log'
-import request from './request'
 // ascii
 greet()
 // environment init
@@ -18,16 +17,13 @@ if (!fs.existsSync('cache')) fs.mkdirSync('cache')
 if (!fs.existsSync('logs')) fs.mkdirSync('logs')
 // application init
 for (let init of inits) init()
-message.listen()
 // parse the body
 app.use(body())
 // handle the message
 app.use(async ctx => {
     const msg = ctx.request.body
-    if (msg.post_type === 'message')
-        message.handle(msg)
-    else if (msg.post_type === 'request')
-        request.handle(msg)
+    if (msg.post_type)
+        message(msg)
 })
 // start listening
 app.listen(receivePort)
