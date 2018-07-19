@@ -17,7 +17,6 @@ if (!fs.existsSync('cache')) fs.mkdirSync('cache')
 if (!fs.existsSync('logs')) fs.mkdirSync('logs')
 // application init
 for (let init of inits) init()
-message.listen()
 // parse the body
 app.use(body())
 // handle the message

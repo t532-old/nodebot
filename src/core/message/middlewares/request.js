@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { requestLog } from './log'
+import { requestLog } from '../../log'
 import { safeLoad } from 'js-yaml'
 import { readFileSync } from 'fs'
 

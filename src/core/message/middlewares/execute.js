@@ -1,6 +1,6 @@
-import analyzer from '../analyzer'
+import analyzer from '../../analyzer'
 import { commands } from '../../../modules'
-import { Command } from '../command'
+import { Command } from '../../command'
 const handler = new Command({
     prefixes: {
         command: '-',
