@@ -1,4 +1,4 @@
-import fs from 'fs'
+import { existsSync, mkdirSync } from 'fs'
 import { statdb } from './db'
 import { modLog } from '../../core/log'
 import { cachepath } from './canvas/_util'
@@ -21,7 +21,7 @@ const initPaths = [
  */
 export default async function refresher() {
     for (let i of initPaths)
-        if (!fs.existsSync(i)) fs.mkdirSync(i)
+        if (!existsSync(i)) mkdirSync(i)
     const time = new Date(`${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate() + 1}`)
     setTimeout(async () => {
         statdb.refreshAllStat()

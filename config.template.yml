@@ -9,7 +9,7 @@ injectionChecker: # {array<string>} this will be used to generate a RegExp for c
     - '\[CQ:' # the first member of the array is the RegExp
     - 'gi' # and the second one are the RegExp's flags
 develop:
-    version: '3.5.0' # {string} The version. This only influences the develop.about command.
+    version: '3.6.0' # {string} The version. This only influences the develop.about command.
 osubot:
     key: # {string} Your osu! api key
     repeater:

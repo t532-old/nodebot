@@ -1,12 +1,12 @@
-import util from './_util'
+import { flatten, modes, checkmode } from './_util'
 import { api } from '../web'
 import { userdb } from '../db'
 import { drawBest } from '../canvas'
-import MESSAGES from './_messages'
+import { BP, QUERY } from './_messages'
 
 export default {
     args: '<order> [usr...]',
-    options: util.flatten(util.modes),
+    options: flatten(modes),
     /**
      * Get a user's best performance
      * @param {Message} msg The universal msg object
@@ -16,16 +16,16 @@ export default {
      */
     async action(msg, { order, usr }, [ mode = 'o' ]) {
         usr = usr.join(' ') || 'me'
-        mode = util.checkmode(mode)
+        mode = checkmode(mode)
         let best, map, status
         if (!parseInt(order) || parseInt(order) < 1 || parseInt(order) > 100)
-            msg.send(`osubot: bp: ${MESSAGES.BP_ARGS_FAIL}`)
+            msg.send(`osubot: bp: ${BP.ARGS.FAIL}`)
         if (usr === 'me') {
             try {
                 const doc = await userdb.getByQQ(msg.param.user_id)
                 usr = doc.osuid
             } catch {
-                msg.send(`osubot: bp: ${MESSAGES.QUERY_BIND_FAIL}`)
+                msg.send(`osubot: bp: ${QUERY.BIND.FAIL}`)
                 return
             }
         }
@@ -41,7 +41,7 @@ export default {
                     api.statQuery({ u: usr }),
                 ])
             } catch {
-                msg.send(`osubot: bp: ${MESSAGES.QUERY_NET_FAIL}`)
+                msg.send(`osubot: bp: ${QUERY.NET.FAIL}`)
                 return
             }
             const path = await drawBest(best, map, status)
@@ -60,7 +60,7 @@ export default {
                         }
                     },
                 ])
-            else msg.send(`osubot: bp: ${MESSAGES.QUERY_CANVAS_FAIL}`)
+            else msg.send(`osubot: bp: ${QUERY.CANVAS.FAIL}`)
         } catch (err) {
             msg.error(err)
             return

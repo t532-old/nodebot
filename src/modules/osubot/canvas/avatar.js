@@ -1,9 +1,8 @@
 // Import modules
 import gm from 'gm'
-import fs from 'fs'
-import path from 'path'
+import { copyFileSync, readdirSync, unlinkSync, existsSync } from 'fs'
 // Import local files
-import { promisify, promisifyGM, cachepath } from './_util'
+import { promisifyGM, cachepath } from './_util'
 import { res } from '../web'
 
 /**
@@ -18,7 +17,7 @@ async function getAvatar(uid, avatarDest, avatarLargerDest) {
     try { await res.avatarQuery(uid, avatarDest) }
     catch { return false }
     try {
-        await promisify(fs.copyFile, avatarDest, avatarLargerDest)
+        copyFileSync(avatarDest, avatarLargerDest)
         await promisifyGM(
             gm(avatarDest)
             .quality(100)
@@ -43,15 +42,15 @@ async function getAvatar(uid, avatarDest, avatarLargerDest) {
  */
 function clearCachedAvatars(uid) {
     if (!uid) {
-        for (let i of fs.readdirSync(`${cachepath}/avatar`))
-            fs.unlinkSync(`${cachepath}/avatar/${i}.jpg`)
-        for (let i of fs.readdirSync(`${cachepath}/avatarl`))
-            fs.unlinkSync(`${cachepath}/avatarl/${i}.jpg`)
+        for (let i of readdirSync(`${cachepath}/avatar`))
+            unlinkSync(`${cachepath}/avatar/${i}.jpg`)
+        for (let i of readdirSync(`${cachepath}/avatarl`))
+            unlinkSync(`${cachepath}/avatarl/${i}.jpg`)
     } else {
-        if (fs.existsSync(`${cachepath}/avatar/${uid}.jpg`))
-            fs.unlinkSync(`${cachepath}/avatar/${uid}.jpg`)
-        if (fs.existsSync(`${cachepath}/avatarl/${uid}.jpg`))
-            fs.unlinkSync(`${cachepath}/avatarl/${uid}.jpg`)
+        if (existsSync(`${cachepath}/avatar/${uid}.jpg`))
+            unlinkSync(`${cachepath}/avatar/${uid}.jpg`)
+        if (existsSync(`${cachepath}/avatarl/${uid}.jpg`))
+            unlinkSync(`${cachepath}/avatarl/${uid}.jpg`)
     }
 }
 

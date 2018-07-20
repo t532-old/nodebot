@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { post } from 'axios'
 import { requestLog } from '../../log'
 import { safeLoad } from 'js-yaml'
 import { readFileSync } from 'fs'
@@ -6,7 +6,7 @@ import { readFileSync } from 'fs'
 const { autoAccept = 'none', sendAddress } = safeLoad(readFileSync('config.yml'))
 
 async function send(approve, type, flag) {
-    return axios.post(`${sendAddress}/set_${type}_add_request`, {
+    return post(`${sendAddress}/set_${type}_add_request`, {
         flag,
         approve,
         type: 'invite', // only for group requests

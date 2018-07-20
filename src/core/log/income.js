@@ -7,5 +7,5 @@ import chalk from 'chalk'
  * @param {Date} startTime the time of the message
  */
 export default function incomeLog(msg, startTime) {
-    log(`[IN ] ${chalk.gray(startTime.toString())}\n      ${msg.type === 'group' ? `${msg.type} ${msg.target}` : chalk.yellow(`${msg.type} ${msg.target}`)}: ${msg.param.message}`)
+    log(`${chalk.black.bgWhite('[IN ]')} ${chalk.gray(startTime.toString())}\n      ${msg.type === 'group' ? `${msg.type} ${msg.target}` : chalk.yellow(`${msg.type} ${msg.target}`)}: ${msg.param.message}`)
 }

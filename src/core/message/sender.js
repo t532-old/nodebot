@@ -1,9 +1,8 @@
-import axios from 'axios'
+import { post } from 'axios'
 import { safeLoad } from 'js-yaml'
-import fs from 'fs'
-import chalk from 'chalk'
+import { readFileSync } from 'fs'
 import { errorLog, incomeLog, outgoLog } from '../log'
-const { sendAddress } = safeLoad(fs.readFileSync('config.yml'))
+const { sendAddress } = safeLoad(readFileSync('config.yml'))
 /**
  * A class that is uses to send message asynchronously.
  * @class
@@ -81,13 +80,13 @@ export default class Message {
      * @param {string} user_id The target user's qq id.
      * @param {string|array} message The message
      */
-    static async 'private'(user_id, message) { return axios.post(`${sendAddress}/send_private_msg`, { user_id, message }) }
+    static async 'private'(user_id, message) { return post(`${sendAddress}/send_private_msg`, { user_id, message }) }
     /**
      * Sends a group message
      * @static
      * @param {string} group_id The target qq group id.
      * @param {string|array} message The message
      */
-    static async 'group'(group_id, message) { return axios.post(`${sendAddress}/send_group_msg`, { group_id, message }) }
+    static async 'group'(group_id, message) { return post(`${sendAddress}/send_group_msg`, { group_id, message }) }
 }
 

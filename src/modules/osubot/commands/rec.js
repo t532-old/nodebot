@@ -1,12 +1,12 @@
-import util from './_util'
+import { flatten, modes, checkmode } from './_util'
 import { api } from '../web'
 import { userdb } from '../db'
 import { drawRecent } from '../canvas'
-import MESSAGES from './_messages'
+import { QUERY } from './_messages'
 
 export default {
     args: '[usr...]',
-    options: util.flatten(util.modes),
+    options: flatten(modes),
     /**
      * Get a user's most recent play
      * @param {Message} msg The universal msg object
@@ -15,14 +15,14 @@ export default {
      */
     async action(msg, { usr }, [ mode = 'o' ]) {
         usr = usr.join(' ') || 'me'
-        mode = util.checkmode(mode)
+        mode = checkmode(mode)
         let recent, map, status
         if (usr === 'me') {
             try {
                 const doc = await userdb.getByQQ(msg.param.user_id)
                 usr = doc.osuid
             } catch {
-                msg.send(`osubot: stat: ${MESSAGES.QUERY_BIND_FAIL}`)
+                msg.send(`osubot: stat: ${QUERY.BIND.FAIL}`)
                 return
             }
         }
@@ -38,7 +38,7 @@ export default {
                     api.statQuery({ u: usr }),
                 ])
             } catch {
-                msg.send(`osubot: rec: ${MESSAGES.QUERY_NET_FAIL}`)
+                msg.send(`osubot: rec: ${QUERY.NET.FAIL}`)
                 return
             }
             const path = await drawRecent(recent, map, status)
@@ -57,7 +57,7 @@ export default {
                         }
                     },
                 ])
-            else msg.send(`osubot: rec: ${MESSAGES.QUERY_CANVAS_FAIL}`)
+            else msg.send(`osubot: rec: ${QUERY.CANVAS.FAIL}`)
         } catch (err) {
             msg.error(err)
             return

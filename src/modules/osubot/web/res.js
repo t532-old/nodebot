@@ -1,6 +1,5 @@
-import fs from 'fs'
+import { createWriteStream } from 'fs'
 import axios from 'axios'
-import osu from 'ojsama'
 
 /**
  * A GET requrest that gets a file stream, and writes it to another stream
@@ -14,7 +13,7 @@ async function staticQuery(url, dest) {
         responseType: 'stream'
     })
     if (res.status === 403) return false
-    res.data.pipe(fs.createWriteStream(dest))
+    res.data.pipe(createWriteStream(dest))
     return new Promise(function (resolve, reject) {
         res.data.on('end', resolve)
     }).catch(err => { throw err })
