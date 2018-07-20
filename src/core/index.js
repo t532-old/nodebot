@@ -10,7 +10,7 @@ import { log } from './log'
 // ascii
 greet()
 // environment init
-log('[SVR] ATTEMPTING TO START SERVER...')
+log(' SVR  ATTEMPTING TO START SERVER...')
 const app = new Koa()
 const { receivePort } = safeLoad(readFileSync('config.yml'))
 if (!existsSync('cache')) mkdirSync('cache')
@@ -27,4 +27,4 @@ app.use(async ctx => {
 })
 // start listening
 app.listen(receivePort)
-log(`[SVR] SUCCESS`)
+log(` SVR  SUCCESS`)
