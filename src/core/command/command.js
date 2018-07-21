@@ -94,11 +94,25 @@ export default class Command {
      */
     do(command, ...extraArgs) {
         if (!this.#commandPrefix.test(command)) return
-        command = command.trim().split(this.#commandPrefix)[1].split(/["“”'‘’]/).map(i => i.trim()).reduce((target, value, index) => {
-            if (index % 2 == 0) target.push(...value.split(/[\r\n\s]/))
-            else target.push(value)
-            return target
-        }, [])
+        command = command.split(this.#commandPrefix)[1].split(/[\r\n\s]/)
+        const combined = []
+        let inString = false
+        for (let i of command) {
+            if (inString) {
+                combined[combined.length - 1] += ' ' + i
+                if (/["'“”‘’]$/.test(i)) {
+                    combined[combined.length - 1] = combined[combined.length - 1].slice(0, -1)
+                    inString = false
+                }
+            } else {
+                combined.push(i)
+                if (/^["'“”‘’]/.test(i)) {
+                    combined[combined.length - 1] = combined[combined.length - 1].slice(1)
+                    inString = true
+                }
+            }
+        }
+        command = combined
         const name = command.shift()
         if (!this.#list[name]) {
             if (typeof this.defaultHandler === 'function') {

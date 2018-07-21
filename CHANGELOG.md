@@ -4,6 +4,8 @@
 - 重构了 import/export，最终运行时引入包的总体积减少
 - 久违的更新了测试脚本
 - 对 log 颜色稍加修改
+- 更新了命令解析的分割参数部分，现在对于带引号参数的分割更加严格/正常
+- 重构了模块，将 develop 分为 botinfo 和 utility，并将 osubot 中的 -roll 分割到 utility 中
 
 ---
 
