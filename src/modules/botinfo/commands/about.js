@@ -1,3 +1,6 @@
+import { safeLoad } from 'js-yaml'
+import { readFileSync } from 'fs'
+const config = safeLoad(readFileSync('config.yml')).botinfo
 export default {
     args: '',
     options: [],
