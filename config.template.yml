@@ -1,4 +1,4 @@
-operators: # {array<number>} A list, now reserved, will be useful in the future
+operators: # {array<number>} The operators have higher permisson
 receivePort: # {number} The port you want to receive messages from cqhttp
 sendAddress: # {string} cqhttp's api address **WITH PROTOCOL!!**
 databaseAddress: # {string} mongod's address **WITHOUT PROTOCOL!!**

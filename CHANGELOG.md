@@ -6,6 +6,7 @@
 - 对 log 颜色稍加修改
 - 更新了命令解析的分割参数部分，现在对于带引号参数的分割更加严格/正常
 - 重构了模块，将 develop 分为 botinfo 和 utility，并将 osubot 中的 -roll 分割到 utility 中
+- 添加命令 -usage，具体请查看文档
 
 ---
 
