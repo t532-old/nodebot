@@ -1,12 +1,12 @@
-import util from './_util'
+import { flatten, modes, checkmode } from './_util'
 import { api } from '../web'
 import { userdb } from '../db'
 import { drawStat } from '../canvas'
-import MESSAGES from './_messages'
+import { QUERY } from './_messages'
 
 export default {
     args: '[usr...]',
-    options: util.flatten(util.modes),
+    options: flatten(modes),
     /**
      * Fetch a user's status
      * @param {Message} msg The universal msg object
@@ -15,7 +15,7 @@ export default {
      */
     async action(msg, { usr }, [ mode = 'o' ]) {
         usr = usr.join(' ') || 'me'
-        mode = util.checkmode(mode)
+        mode = checkmode(mode)
         let status, prevStatus
         if (usr === 'me') {
             try {
@@ -23,7 +23,7 @@ export default {
                 usr = bindDoc.osuid
                 prevStatus = bindDoc.data[mode]
             } catch {
-                msg.send(`osubot: stat: ${MESSAGES.QUERY_BIND_FAIL}`)
+                msg.send(`osubot: stat: ${QUERY.BIND.FAIL}`)
                 return
             }
         }
@@ -34,11 +34,11 @@ export default {
                     m: mode,
                 })
             } catch {
-                msg.send(`osubot: stat: ${MESSAGES.QUERY_NET_FAIL}`)
+                msg.send(`osubot: stat: ${QUERY.NET.FAIL}`)
                 return
             }
             if (status.pp_rank === null) {
-                msg.send(`osubot: stat: ${MESSAGES.QUERY_NET_FAIL}`)
+                msg.send(`osubot: stat: ${QUERY.NET.FAIL}`)
                 return
             }
             const path = await drawStat(status, prevStatus)
@@ -57,7 +57,7 @@ export default {
                         }
                     },
                 ])
-            else msg.send(`osubot: stat: ${MESSAGES.QUERY_CANVAS_FAIL}`)
+            else msg.send(`osubot: stat: ${QUERY.CANVAS.FAIL}`)
         } catch (err) {
             msg.error(err)
             return

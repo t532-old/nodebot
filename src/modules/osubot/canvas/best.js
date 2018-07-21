@@ -1,13 +1,13 @@
 // Import modules
 import gm from 'gm'
-import fs from 'fs'
-import path from 'path'
-import osu from 'ojsama'
+import { copyFileSync, existsSync } from 'fs'
+import { sep } from 'path'
 // Import local files
-import util from './_util'
-import { promisify, promisifyGM, cachepath, assetspath } from './_util'
+import { accuracy, fillNumber, scorify } from './_util'
+import { promisifyGM, cachepath, assetspath } from './_util'
 import { getAvatar } from './avatar'
 import { res } from '../web'
+import { getMods } from '../map'
 
 /**
  * draws a user's bp and returns its path
@@ -24,13 +24,9 @@ export default async function drawBest(bp, map, stat) {
     const avatarDest = `${cachepath}/avatar/${uid}.jpg`
     const avatarLargerDest = `${cachepath}/avatarl/${uid}.jpg`
     const avatarBGDest = `${cachepath}/recentbg/${uid}.jpg`
-    const mods = osu.modbits.string(bp.enabled_mods).split('').reduce((target, value, index) => {
-        if (index % 2) target[target.length - 1] += value
-        else target.push(value)
-        return target
-    }, [])
-    await promisify(fs.copyFile, `${assetspath}/image/userbg/crecent.jpg`, avatarBGDest)
-    if (fs.existsSync(avatarDest) || await getAvatar(uid, avatarDest, avatarLargerDest))
+    const mods = getMods(bp.enabled_mods)
+    copyFileSync(`${assetspath}/image/userbg/crecent.jpg`, avatarBGDest)
+    if (existsSync(avatarDest) || await getAvatar(uid, avatarDest, avatarLargerDest))
         await promisifyGM(
             gm(avatarBGDest)
             .quality(100)
@@ -38,11 +34,11 @@ export default async function drawBest(bp, map, stat) {
             .gravity('North')
             .geometry('+0-50')
         )
-    if (!fs.existsSync(bgDest)) {
+    if (!existsSync(bgDest)) {
         try { await res.bgQuery(sid, bgDest) }
-        catch { await promisify(fs.copyFile, `${assetspath}/image/userbg/c${Math.ceil(Math.random() * 5)}.jpg`, bgDest) }
+        catch { copyFileSync(`${assetspath}/image/userbg/c${Math.ceil(Math.random() * 5)}.jpg`, bgDest) }
     }
-    await promisify(fs.copyFile, bgDest, dest)
+    copyFileSync(bgDest, dest)
     await promisifyGM(
         gm(dest)
         .quality(100)
@@ -91,10 +87,10 @@ export default async function drawBest(bp, map, stat) {
         .fill('#aaa')
         .fontSize(30)
         .drawText(-300, 2, bp.maxcombo + 'x')
-        .drawText(300, 2, util.accuracy(bp) + '%')
+        .drawText(300, 2, accuracy(bp) + '%')
         .fill('#3ad')
         .drawText(-300, 0, bp.maxcombo + 'x')
-        .drawText(300, 0, util.accuracy(bp) + '%')
+        .drawText(300, 0, accuracy(bp) + '%')
         .fontSize(12)
         .fill('#333')
         .drawText(-290, 20, 'max combo')
@@ -113,10 +109,10 @@ export default async function drawBest(bp, map, stat) {
         .fill('#aaa')
         .drawLine(650, 375, 850, 375)
         .fill('#666')
-        .drawText(-100, 140, util.fillNumber(bp.count300))
-        .drawText(-33, 140, util.fillNumber(bp.count100))
-        .drawText(33, 140, util.fillNumber(bp.count50))
-        .drawText(100, 140, util.fillNumber(bp.countmiss))
+        .drawText(-100, 140, fillNumber(bp.count300))
+        .drawText(-33, 140, fillNumber(bp.count100))
+        .drawText(33, 140, fillNumber(bp.count50))
+        .drawText(100, 140, fillNumber(bp.countmiss))
         .font(`${assetspath}/fonts/Exo2.0-ExtraBold.otf`)
         .fontSize(12)
         .fill('#66a')
@@ -130,7 +126,7 @@ export default async function drawBest(bp, map, stat) {
         .font(`${assetspath}/fonts/Venera-300.otf`)
         .fontSize(50)
         .fill('#f69')
-        .drawText(0, -20, util.scorify(bp.score))
+        .drawText(0, -20, scorify(bp.score))
         .crop(1000, 500)
     )
     await promisifyGM(
@@ -149,5 +145,5 @@ export default async function drawBest(bp, map, stat) {
             .geometry((padding >= 0 ? '+' : '') + padding + '+170')
         )
     }
-    return 'file://' + process.cwd() + path.sep + dest
+    return 'file://' + process.cwd() + sep + dest
 }

@@ -1,9 +1,9 @@
-import fs from 'fs'
-import url from 'url'
-import axios from 'axios'
+import { readFileSync } from 'fs'
+import { format } from 'url'
+import { get } from 'axios'
 import { safeLoad } from 'js-yaml'
 
-const config = safeLoad(fs.readFileSync('config.yml')).osubot
+const config = safeLoad(readFileSync('config.yml')).osubot
 
 /**
  * A GET request to the ppy api.
@@ -11,7 +11,7 @@ const config = safeLoad(fs.readFileSync('config.yml')).osubot
  * @param {object} params 
  */
 async function apiQuery(name, params) {
-    return axios.get(url.format({
+    return get(format({
         protocol: 'https',
         host: 'osu.ppy.sh',
         pathname: `api/${name}`,

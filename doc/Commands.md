@@ -78,5 +78,24 @@
 |-roll                                   |37                              |
 |-roll int100,kj415j45,interBot,Noerusagi|kj415j45                        |
 
+## -usage *\*length <len>* *\*identifier <id>* *\*type <type>*
+查询 bot 用量统计。三个参数均为可选，如果需要使用请遵循以下格式：
+```
+-usage *参数名 参数 *参数名 参数 ...
+```
+各个参数意义为：
+- length: 截取多少个命令/中间件的统计
+- identifier: 标识符，可以理解为命令名
+- type: 有三种可选
+    - command: 仅选择命令的统计
+    - alias: 仅选择命令缩写的统计
+    - middleware: 仅选择中间件（复读）的统计
+- *filter*: 仅限 operators 使用，手动编写数据库的 query，格式为 `abc="def"`
+
+|输入                                     |输出                                                                             |
+|----------------------------------------|----------------------------------------------------------------------------------|
+|-usage                                  |xxx的用量统计，截止至yyy：<br>1. command【rec】 - 810次<br>2. ...<br>...<br>10. ... |
+|-usage *type middleware *length 1       |xxx的用量统计，截止至yyy：<br>1. middleware【osubotRepeat】 - 1919次<br>            |
+
 ## -db *\*backup/recovery*
 备份/修复数据库。

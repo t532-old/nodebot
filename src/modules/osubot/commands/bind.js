@@ -1,6 +1,6 @@
 import { userdb } from '../db'
 import { api } from '../web'
-import MESSAGES from './_messages'
+import { QUERY, BIND } from './_messages'
 
 export default {
     args: '[account...]',
@@ -15,14 +15,14 @@ export default {
         let user
         try { user = await api.statQuery({ u: account }) }
         catch { 
-            msg.send(`osubot: bind: ${MESSAGES.QUERY_NET_FAIL}`) 
+            msg.send(`osubot: bind: ${QUERY.NET.FAIL}`) 
             return
         }
         const result = await userdb.newUser(msg.param.user_id, user.user_id)
         if (!result) {
-            msg.send(`osubot: bind: ${MESSAGES.BIND_FAIL}`)
+            msg.send(`osubot: bind: ${BIND.FAIL}`)
             return
         }
-        msg.send(`osubot: bind: ${MESSAGES.BIND_SUCC}`)
+        msg.send(`osubot: bind: ${BIND.SUCC}`)
     }
 }

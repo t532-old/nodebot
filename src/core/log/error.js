@@ -6,6 +6,6 @@ import chalk from 'chalk'
  * @param {Error} err the error
  */
 export default function errorLog(err) {
-    fs.appendFileSync('logs/error.log', `[ERR] ${new Date().toString()}\n${err.stack || err}\n`)
-    log(`${chalk.red('[ERR]')} ${chalk.gray(new Date().toString())}\n${err.stack || err}`, true)
+    fs.appendFileSync('logs/error.log', ` ERR  ${new Date().toString()}\n${err.stack || err}\n`)
+    log(`${chalk.white.bgRed(' ERR ')} ${chalk.gray(new Date().toString())}\n${err.stack || err}`, true)
 }

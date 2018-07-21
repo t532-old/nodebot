@@ -1,5 +1,5 @@
 import { userdb } from '../db'
-import MESSAGES from './_messages'
+import { UNBIND } from './_messages'
 
 export default {
     args: '',
@@ -11,6 +11,6 @@ export default {
      */
     async action(msg) {
         await userdb.delUser(msg.param.user_id)
-        msg.send(`osubot: unbind: ${MESSAGES.UNBIND_SUCC}`)
+        msg.send(`osubot: unbind: ${UNBIND.SUCC}`)
     }
 }
