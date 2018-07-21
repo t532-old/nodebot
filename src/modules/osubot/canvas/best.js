@@ -24,7 +24,7 @@ export default async function drawBest(bp, map, stat) {
     const avatarDest = `${cachepath}/avatar/${uid}.jpg`
     const avatarLargerDest = `${cachepath}/avatarl/${uid}.jpg`
     const avatarBGDest = `${cachepath}/recentbg/${uid}.jpg`
-    const mods = getMods(rec.enabled_mods)
+    const mods = getMods(bp.enabled_mods)
     copyFileSync(`${assetspath}/image/userbg/crecent.jpg`, avatarBGDest)
     if (existsSync(avatarDest) || await getAvatar(uid, avatarDest, avatarLargerDest))
         await promisifyGM(
