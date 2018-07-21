@@ -21,7 +21,11 @@ export default {
                     query = {}
                     for (let j of queries) {
                         const converted = j.split('=')
-                        query[converted[0]] = eval(converted[1])
+                        try { query[converted[0]] = eval(converted[1]) }
+                        catch {
+                            msg.send('botinfo: usage: 查询编写错误！')
+                            return
+                        }
                     }
                     reply += `filter: ${JSON.stringify(query)}\n`
                     filterFlag = true
