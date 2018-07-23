@@ -11,6 +11,18 @@
 
 nodebot 同时附带了模块 `osubot`，`botinfo` 与 `utility` (共 ~1200 sloc)，包含了 osu! qq bot 所需的基础功能。
 
+## 使用
+该框架 **没有** 上传至 npm。请使用 git clone 来将本框架下载到本地：
+
+```shell
+git clone https://gitlab.com/trustgit/nodebot.git
+cd nodebot
+```
+
+之后参考 [Bot 开发：构建](https://gitlab.com/trustgit/nodebot/wikis/Build)。
+
+~~其实主要是因为 nodebot 这个 package name 被抢了~~
+
 ## 帮助中心
 - **[Bot 用户：指令](https://gitlab.com/trustgit/nodebot/wikis/Commands)**
 - [Bot 开发：构建](https://gitlab.com/trustgit/nodebot/wikis/Build)

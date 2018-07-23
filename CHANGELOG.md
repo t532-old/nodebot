@@ -1,3 +1,10 @@
+# v3.7.0
+
+## Features
+- config 支持自定义命令/选项前缀
+
+---
+
 # v3.6.0
 
 ## Features
