@@ -2,6 +2,9 @@
 
 ## Features
 - config 支持自定义命令/选项前缀
+- 修复了命令解析中的 bug
+- 若使用 *filter，usage 会提供 messageTarget
+- 新命令：batch，接收一条参数，作为 batch command 运行并返回运行结果（需要 operator 权限）
 
 ---
 

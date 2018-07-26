@@ -49,7 +49,7 @@ export default {
             limit: length
         })
         for (let i in result)
-            reply += `${parseInt(i) + 1}. ${result[i].type}【${result[i].identifier}】 - ${result[i].counter}次\n`
+            reply += `${parseInt(i) + 1}. ${result[i].type}【${result[i].identifier}】${filterFlag ? `in ${result[i].messageType} ${result[i].messageTarget}` : ''} - ${result[i].counter}次\n`
         msg.send(reply)
     }
 }
