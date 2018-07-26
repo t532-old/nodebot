@@ -109,10 +109,10 @@ export default class Command {
                 if (/^["'“”‘’]/.test(i)) {
                     combined[combined.length - 1] = combined[combined.length - 1].slice(1)
                     inString = true
-                }
-                if (/["'“”‘’]$/.test(i)) {
-                    combined[combined.length - 1] = combined[combined.length - 1].slice(0, -1)
-                    inString = false
+                    if (/["'“”‘’]$/.test(i)) {
+                        combined[combined.length - 1] = combined[combined.length - 1].slice(0, -1)
+                        inString = false
+                    }
                 }
             }
         }
