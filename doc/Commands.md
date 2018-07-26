@@ -98,4 +98,7 @@
 |-usage *type middleware *length 1       |xxx的用量统计，截止至yyy：<br>1. middleware【osubotRepeat】 - 1919次<br>            |
 
 ## -db *\*backup/recovery*
-备份/修复数据库。
+备份/修复数据库。*仅限 operators。*
+
+## -batch <command>
+运行 batch 命令并返回结果。*仅限 operators。*
