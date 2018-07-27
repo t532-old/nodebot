@@ -2,6 +2,7 @@
 
 ## Features
 - 对 log 进行了一些修改并增加了主进程专用 log 函数 `serverLog`
+- 使用 cluster 来增强性能
 
 ---
 
