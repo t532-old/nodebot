@@ -3,7 +3,7 @@ import { readFileSync } from 'fs'
 import analyzer from '../../analyzer'
 import { commands } from '../../../modules'
 import { Command } from '../../command'
-const { prefixes = { command: '-', options: '*' } } = safeLoad(readFileSync('config.yml'))
+const { prefixes = { command: '[!！]', options: '-' } } = safeLoad(readFileSync('config.yml'))
 const handler = new Command({
     prefixes,
     handlers: {
