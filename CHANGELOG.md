@@ -1,3 +1,10 @@
+# v3.8.0
+
+## Features
+- 对 log 进行了一些修改并增加了主进程专用 log 函数 `serverLog`
+
+---
+
 # v3.7.0
 
 ## Features
