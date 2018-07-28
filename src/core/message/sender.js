@@ -37,7 +37,7 @@ export default class Message {
      * @param {object} param A standard cqhttp message object
      */
     constructor(param) {
-        this.target = param.group_id || param.user_id
+        this.target = param.group_id || param.discuss_id || param.user_id
         this.type = param.message_type
         this.param = param
         incomeLog(this, this.#startTime)
@@ -88,5 +88,12 @@ export default class Message {
      * @param {string|array} message The message
      */
     static async 'group'(group_id, message) { return post(`${sendAddress}/send_group_msg`, { group_id, message }) }
+    /**
+     * Sends a discuss message
+     * @static
+     * @param {string} discuss_id The target qq discuss id.
+     * @param {string|array} message The message
+     */
+    static async 'discuss'(discuss_id, message) { return post(`${sendAddress}/send_discuss_msg`, { discuss_id, message }) }
 }
 
