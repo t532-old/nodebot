@@ -15,7 +15,7 @@ const { repeater: config } = safeLoad(readFileSync('config.yml')).osubot
  * if it reaches 3, the bot repeats it
  * @param {Message} msg 
  */
-export default function repeater(msg) {
+function repeater(msg) {
     if (new RegExp(...injectionChecker).test(msg.param.message) === false) {
         if ('notAllowed' in config && config.notAllowed.includes(msg.target)) return
         if ('allowed' in config && !config.allowed.includes(msg.target)) return
@@ -32,3 +32,5 @@ export default function repeater(msg) {
         } 
     }
 }
+
+export default [ repeater ]

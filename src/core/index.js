@@ -13,7 +13,6 @@ import { safeLoad } from 'js-yaml'
 import greet from './greeting'
 import chalk from 'chalk'
 import { serverLog } from './log'
-import { inits } from '../modules'
 // import main handler
 import message from './message'
 
@@ -26,6 +25,12 @@ if (cluster.isMaster) {
     if (!existsSync('logs')) mkdirSync('logs')
     serverLog(`Files initialized`)
     // application init
+    const { inits: moduleList } = safeLoad(readFileSync('src/modules/exports.yml'))
+    let inits = []
+    for (let i of moduleList) {
+        const { inits: moduleInits } = require(`../modules/${i}`)
+        inits = [...inits, ...moduleInits]
+    }
     for (let init of inits) init()
     serverLog(`Bot modules initialized`)
     for (let i = 0; i < countCPUs; i++) cluster.fork()
