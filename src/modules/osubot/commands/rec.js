@@ -50,12 +50,6 @@ export default {
                             file: path,
                         }
                     },
-                    {
-                        type: 'text',
-                        data: {
-                            text: `\nhttps://osu.ppy.sh/b/${recent.beatmap_id}`
-                        }
-                    },
                 ])
             else msg.send(`osubot: rec: ${QUERY.CANVAS.FAIL}`)
         } catch (err) {

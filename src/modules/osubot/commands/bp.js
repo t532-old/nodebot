@@ -53,12 +53,6 @@ export default {
                             file: path,
                         }
                     },
-                    {
-                        type: 'text',
-                        data: {
-                            text: `\nhttps://osu.ppy.sh/b/${best.beatmap_id}`
-                        }
-                    },
                 ])
             else msg.send(`osubot: bp: ${QUERY.CANVAS.FAIL}`)
         } catch (err) {

@@ -50,12 +50,6 @@ export default {
                             file: path,
                         }
                     },
-                    {
-                        type: 'text',
-                        data: {
-                            text: `\nhttps://osu.ppy.sh/u/${status.user_id}`
-                        }
-                    },
                 ])
             else msg.send(`osubot: stat: ${QUERY.CANVAS.FAIL}`)
         } catch (err) {
