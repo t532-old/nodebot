@@ -1,5 +1,5 @@
 # test
-From helper
+From utility
 ## Description
 将参数用空格拼接后发出去。
 ## Usage

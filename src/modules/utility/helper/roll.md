@@ -1,5 +1,5 @@
 # roll
-From helper
+From utility
 ## Description
 在提供的范围（默认为 100）内随机选择值。
 ## Usage

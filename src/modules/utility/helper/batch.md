@@ -1,5 +1,5 @@
 # batch
-From helper
+From utility
 ## Description
 执行一条 batch 命令。仅限 operators 使用。
 ## Usage
