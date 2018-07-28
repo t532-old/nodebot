@@ -4,4 +4,4 @@ bp: helper/bp.md
 db: helper/db.md
 rec: helper/rec.md
 stat: helper/stat.md
-unbind: helper/recent.md
+unbind: helper/unbind.md

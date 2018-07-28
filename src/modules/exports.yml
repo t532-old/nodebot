@@ -7,6 +7,7 @@ middlewares:
     - osubot
 inits:
     - osubot
+    - helper
 helper:
     - botinfo
     - osubot
