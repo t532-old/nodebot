@@ -2,7 +2,12 @@ import { Aliaser } from '../../command'
 import analyzer from '../../analyzer'
 import { safeLoad } from 'js-yaml'
 import { readFileSync } from 'fs'
-const aliases = safeLoad(readFileSync('aliases.yml'))
+const { aliases: moduleList } = safeLoad(readFileSync('src/modules/exports.yml'))
+let aliases = safeLoad(readFileSync('aliases.yml'))
+for (let i of moduleList) {
+    const moduleAliases = safeLoad(readFileSync(`src/modules/${i}/aliases.yml`))
+    aliases = { ...aliases, ...moduleAliases }
+}
 const aliaser = new Aliaser(aliases)
 /**
  * Make a message its alias.
