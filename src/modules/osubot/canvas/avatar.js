@@ -4,6 +4,7 @@ import { copyFileSync, readdirSync, unlinkSync, existsSync } from 'fs'
 // Import local files
 import { promisifyGM, cachepath } from './_util'
 import { res } from '../web'
+import { errorLog } from '../../../core/log'
 
 /**
  * get a user's avatar
@@ -17,12 +18,12 @@ async function getAvatar(uid, avatarDest, avatarLargerDest) {
     try { await res.avatarQuery(uid, avatarDest) }
     catch { return false }
     try {
-        copyFileSync(avatarDest, avatarLargerDest)
         await promisifyGM(
             gm(avatarDest)
             .quality(100)
             .resize(350, 350)
         )
+        copyFileSync(avatarDest, avatarLargerDest)
         await promisifyGM(
             gm(avatarLargerDest)
             .quality(100)
@@ -30,7 +31,8 @@ async function getAvatar(uid, avatarDest, avatarLargerDest) {
             .blur(3, 3)
         )
         return true
-    } catch {
+    } catch (err) {
+        errorLog(err)
         await clearCachedAvatars(uid)
         return false
     }
