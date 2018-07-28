@@ -6,5 +6,5 @@ import chalk from 'chalk'
  * @param {string} message the log message
  */
 export default function serverLog(message) {
-    log(`${chalk.white.bgBlack('  *  ')} ${message}`)
+    log(`${chalk.black.bgCyan('  *  ')} ${message}`)
 }

@@ -21,14 +21,15 @@ if (cluster.isMaster) {
     // ascii
     greet()
     // environment init
-    serverLog('Initializing...')
+    serverLog(`Module initialized`)
     if (!existsSync('cache')) mkdirSync('cache')
     if (!existsSync('logs')) mkdirSync('logs')
+    serverLog(`Files initialized`)
     // application init
     for (let init of inits) init()
-    serverLog('Attempting to start server...')
+    serverLog(`Bot modules initialized`)
     for (let i = 0; i < countCPUs; i++) cluster.fork()
-    serverLog(chalk.gray.bold(`Master process #${process.pid} forking ${countCPUs} workers`))
+    serverLog(`${chalk.gray(`Master process #${process.pid} initializing ${countCPUs} workers`)}`)
     cluster.on('exit', worker => 
         serverLog(chalk.gray(`    Exited ${worker.process.pid}`))
     )
