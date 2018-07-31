@@ -1,6 +1,7 @@
 # stat
 From osubot
 ## Description
+简写为两条横杠 -- 。
 查询玩家的信息，返回一张成绩图片作为查询结果。
 ## Usage
 ### Param

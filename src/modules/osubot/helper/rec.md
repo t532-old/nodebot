@@ -1,6 +1,7 @@
 # rec
 From osubot
 ## Description
+简写为一条横杠 - 。
 查询玩家最近玩过的一张图，返回一张成绩图片作为查询结果。
 ## Usage
 ### Param
