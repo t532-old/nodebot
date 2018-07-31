@@ -8,17 +8,9 @@ export default function aggregatedMapInfo(mapPath, play) {
     const pp = getPP(stars, play)
     const fcpp = getFCPP(stars, play)
     return {
-        pp: {
-            total: pp.total,
-            aim: pp.aim,
-            acc: pp.acc,
-            speed: pp.speed,
-        },
+        pp,
+        ...map,
         fcpp: fcpp.total,
         stars: stars.total.toString().slice(0, 4),
-        ar: map.ar,
-        cs: map.cs,
-        od: map.od,
-        hp: map.hp,
     }
 }

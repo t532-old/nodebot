@@ -1,6 +1,6 @@
 // Import modules
 import gm from 'gm'
-import { copyFileSync, readdirSync, unlinkSync, existsSync } from 'fs'
+import { readdirSync, unlinkSync, existsSync } from 'fs'
 // Import local files
 import { promisifyGM, cachepath } from './_util'
 import { res } from '../web'

@@ -8,6 +8,7 @@ import { promisifyGM, cachepath, assetspath } from './_util'
 import { getAvatar } from './avatar'
 import { res } from '../web'
 import { getMods } from '../map'
+import calc from '../map'
 
 /**
  * draws a user's bp and returns its path
@@ -24,6 +25,7 @@ export default async function drawBest(bp, map, stat) {
     const bgDest = `${cachepath}/mapbg/${sid}.jpg`
     const avatarDest = `${cachepath}/avatar/${uid}.jpg`
     const avatarBGDest = `${cachepath}/recentbg/${uid}.jpg`
+    const mapFileDest =  `${cachepath}/mapfile/${bid}.jpg`
     const mods = getMods(bp.enabled_mods)
     copyFileSync(`${assetspath}/image/userbg/crecent.jpg`, avatarBGDest)
     if (existsSync(avatarDest) || await getAvatar(uid, avatarDest))
@@ -71,18 +73,18 @@ export default async function drawBest(bp, map, stat) {
         .gravity('Center')
         .fill('#888a')
         .drawEllipse(750, 250, 210, 210, -145, -35)
+        .gravity('West')
         .fill('#fff')
         .font(`${assetspath}/fonts/Exo2.0-Medium.otf`)
-        .fontSize(25)
-        .drawText(0, -185, Math.round(bp.pp).toString() + 'pp')
-        .fontSize(30)
-        .drawText(0, -155, stat.username)
+        .fontSize(20)
+        .drawText(600, -137, stat.username)
+        .gravity('Center')
         .font(`${assetspath}/fonts/Exo2.0-BoldItalic.otf`)
         .fontSize(25)
         .fill('#3ad')
-        .drawText(0, 35, map.title.slice(0, 35) + (map.title.length > 35 ? '...' : ''))
+        .drawText(0, 40, map.title.slice(0, 35) + (map.title.length > 35 ? '...' : ''))
         .fontSize(17)
-        .drawText(0, 60, map.artist.slice(0, 50) + (map.artist.length > 50 ? '...' : ''))
+        .drawText(0, 65, map.artist.slice(0, 50) + (map.artist.length > 50 ? '...' : ''))
         .font(`${assetspath}/fonts/Exo2.0-Bold.otf`)
         .fill('#aaa')
         .fontSize(30)
@@ -99,9 +101,6 @@ export default async function drawBest(bp, map, stat) {
         .fill('#999')
         .drawText(0, 85, map.version + ' - mapped by ' + map.creator)
         .drawRectangle(675, 345, 825, 365)
-        .fontSize(12)
-        .fill('#f69')
-        .drawText(0, 5, 'total score')
         .font(`${assetspath}/fonts/Exo2.0-Regular.otf`)
         .fill('#fff')
         .drawText(0, 105, bp.date)
@@ -126,9 +125,34 @@ export default async function drawBest(bp, map, stat) {
         .font(`${assetspath}/fonts/Venera-300.otf`)
         .fontSize(50)
         .fill('#f69')
-        .drawText(0, -20, scorify(bp.score))
+        .drawText(0, 0, scorify(bp.score))
         .crop(1000, 500)
     )
+    try {
+        if (!existsSync(mapFileDest)) await res.mapFileQuery(bid, mapFileDest)
+        const info = calc(mapFileDest, bp)
+        await promisifyGM(
+            gm(dest)
+            .quality(100)
+            .gravity('West')
+            .fill('#fff')
+            .font(`${assetspath}/fonts/Venera-700.otf`)
+            .fontSize(25)
+            .drawText(410, -165, Math.round(info.pp.total).toString() + 'PP')
+            .gravity('East')
+            .font(`${assetspath}/fonts/Venera-900.otf`)
+            .fontSize(12)
+            .drawText(410, -177, Math.round(info.pp.aim).toString() + ' AIM')
+            .drawText(410, -165, Math.round(info.pp.speed).toString() + ' SPD')
+            .drawText(410, -153, Math.round(info.pp.acc).toString() + ' ACC')
+            .gravity('Center')
+            .drawText(0, -190, Math.round(info.fcpp).toString() + 'pp if FC')
+            .font(`${assetspath}/fonts/Exo2.0-Bold.otf`)
+            .fontSize(14)
+            .fill('#aaa')
+            .drawText(0, -42, `${info.stars} Stars [AR${info.ar}  CS${info.cs}  OD${info.od}  HP${info.hp}]`)
+        )
+    } catch (err) { console.log(err) }
     await promisifyGM(
         gm(dest)
         .quality(100)
