@@ -94,24 +94,27 @@ export default class Command {
      */
     do(command, ...extraArgs) {
         if (!this.#commandPrefix.test(command)) return
-        command = command.split(this.#commandPrefix)[1].split(/[\r\n\s]/)
+        command = command.split(this.#commandPrefix)[1].split(/(?=\s)/)
         const combined = []
         let inString = false
         for (let i of command) {
             if (inString) {
-                combined[combined.length - 1] += ' ' + i
+                combined[combined.length - 1] += i
                 if (/["'“”‘’]$/.test(i)) {
                     combined[combined.length - 1] = combined[combined.length - 1].slice(0, -1)
                     inString = false
                 }
             } else {
-                combined.push(i)
-                if (/^["'“”‘’]/.test(i)) {
-                    combined[combined.length - 1] = combined[combined.length - 1].slice(1)
-                    inString = true
-                    if (/["'“”‘’]$/.test(i)) {
-                        combined[combined.length - 1] = combined[combined.length - 1].slice(0, -1)
-                        inString = false
+                i = i.split(/\s/).filter(i => i)[0]
+                if (i) {
+                    combined.push(i)
+                    if (/^["'“”‘’]/.test(i)) {
+                        combined[combined.length - 1] = combined[combined.length - 1].slice(1)
+                        inString = true
+                        if (/["'“”‘’]$/.test(i)) {
+                            combined[combined.length - 1] = combined[combined.length - 1].slice(0, -1)
+                            inString = false
+                        }
                     }
                 }
             }
