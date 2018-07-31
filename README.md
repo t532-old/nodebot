@@ -24,7 +24,7 @@ cd nodebot
 ~~其实主要是因为 nodebot 这个 package name 被抢了~~
 
 ## 帮助中心
-- **[Bot 用户：指令](https://gitlab.com/trustgit/nodebot/wikis/Commands)**
+- **Bot 用户应使用 `help` 命令查询帮助。**
 - [Bot 开发：构建](https://gitlab.com/trustgit/nodebot/wikis/Build)
 - [Bot 开发：扩展](https://gitlab.com/trustgit/nodebot/wikis/Development)
 - [？？？：关于 Bot](https://gitlab.com/trustgit/nodebot/wikis/About)
