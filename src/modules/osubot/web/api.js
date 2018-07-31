@@ -9,6 +9,7 @@ const config = safeLoad(readFileSync('config.yml')).osubot
  * A GET request to the ppy api.
  * @param {string} name 
  * @param {object} params 
+ * @returns {AxiosResponse}
  */
 async function apiQuery(name, params) {
     return get(format({
@@ -21,7 +22,8 @@ async function apiQuery(name, params) {
 
 /**
  * Simple sugar over apiQuery, queries user's status
- * @param {object} params 
+ * @param {{ u: string|number, m?: number }} params 
+ * @returns {any}
  */
 async function statQuery(params) {
     let result
@@ -33,7 +35,8 @@ async function statQuery(params) {
 
 /**
  * Simple sugar over apiQuery, queries user's most recent play
- * @param {object} params 
+ * @param {{ u: string|number, m?: number, limit?: number }} params 
+ * @returns {any}
  */
 async function recentQuery(params) {
     let result
@@ -45,7 +48,8 @@ async function recentQuery(params) {
 
 /**
  * Simple sugar over apiQuery, queries user's best performance
- * @param {object} params 
+ * @param {{ u: string|number, m?: number, limit?: number }} params 
+ * @returns {any}
  */
 async function bestQuery(params) {
     let result
@@ -57,7 +61,8 @@ async function bestQuery(params) {
 
 /**
  * Simple sugar over apiQuery, queries a map's info
- * @param {object} params 
+ * @param {{ b?: number, s?: number, u?: string|number, m?: string|number, limit?: number }} params 
+ * @returns {any}
  */
 async function mapQuery(params) {
     let result

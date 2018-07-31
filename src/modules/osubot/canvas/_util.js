@@ -1,7 +1,8 @@
 /**
  * Calculates a play's accuracy (f**k ppy).
  * @name accuracy
- * @param {object} data The recent play data
+ * @param {{ count50: string, count100: string, count300: string, countmiss: string }} data The recent play data
+ * @returns {string} the accuracy
  */
 export function accuracy(data) {
     const rec = copy(data)
@@ -16,7 +17,8 @@ export function accuracy(data) {
  * separate a string with comma
  * @name scorify
  * @param {string} score The string
- * @param {number} sep The interval
+ * @param {number?} sep The interval
+ * @returns {string} the separated string
  */
 export function scorify(score, sep = 3) {
     let result = ''
@@ -31,7 +33,8 @@ export function scorify(score, sep = 3) {
  * increase a string's length to a specific one
  * @name fillNumber
  * @param {string} num The string
- * @param {number} len The length
+ * @param {number?} len The length
+ * @returns {string} the filled string
  */
 export function fillNumber(num, len = 4) {
     while (num.length < len) num = '0' + num
@@ -42,7 +45,8 @@ export function fillNumber(num, len = 4) {
  * increase a string's length to a specific one, but add 0s at the back of the number
  * @name fillNumberReversed
  * @param {string} num The string
- * @param {number} len The length
+ * @param {number?} len The length
+ * @return {string} the filled string
  */
 export function fillNumberReversed(num, len = 4) {
     while (num.length < len) num = num + '0'
@@ -52,8 +56,9 @@ export function fillNumberReversed(num, len = 4) {
 /**
  * Diffs the numbers in two objects
  * @name objDiff
- * @param {object} differ - The base comparing object
- * @param {object} diffee - The substractors
+ * @param {any} differ - The base comparing object
+ * @param {any} diffee - The substractors
+ * @returns {any} diffed object
  */
 export function objDiff(differ, diffee) {
     const result = copy(differ)
@@ -70,7 +75,8 @@ export function objDiff(differ, diffee) {
 /**
  * Deep copy an object
  * @name copy
- * @param {object} obj The object that's being copied
+ * @param {any} obj The object that's being copied
+ * @returns {any} the copied object
  */
 export function copy(obj) {
     let res = new obj.constructor()
@@ -84,6 +90,7 @@ export function copy(obj) {
 /**
  * return a promise that waits for the saving of the gm object
  * @param {GMStat} gmO The gm object
+ * @returns {Promise<void>}
  */
 export function promisifyGM(gmO) {
     return new Promise(function(resolve, reject) {

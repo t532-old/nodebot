@@ -9,6 +9,7 @@ export const modes = [
  * Convert a mode string to mode id.
  * @name checkmode
  * @param {string} mode The mode string that's going to be converted
+ * @returns {number} the mode number
  */
 export function checkmode(mode) {
     mode = mode.toLowerCase()
@@ -20,7 +21,8 @@ export function checkmode(mode) {
 /**
  * Deep copy an object
  * @name copy
- * @param {object} obj The object that's being copied
+ * @param {any} obj The object that's being copied
+ * @returns {any} the copied object
  */
 export function copy(obj) {
     let res = new obj.constructor()
@@ -34,7 +36,8 @@ export function copy(obj) {
 /**
  * flatten an array (f**k tc39).
  * @name flatten
- * @param {array} arr Array to be flatten
+ * @param {any[]} arr Array to be flatten
+ * @returns {any[]} the flattened array
  */
 export function flatten(arr) {
     let flat = []

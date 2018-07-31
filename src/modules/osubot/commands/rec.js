@@ -10,8 +10,8 @@ export default {
     /**
      * Get a user's most recent play
      * @param {Message} msg The universal msg object
-     * @param {string} usr The username that'll be queried
-     * @param {string} mode the mode that will be queried
+     * @param {{ usr: string }} - The username that'll be queried
+     * @param {string[]} mode the mode that will be queried
      */
     async action(msg, { usr }, [ mode = 'o' ]) {
         usr = usr.join(' ') || 'me'
@@ -48,12 +48,6 @@ export default {
                         type: 'image',
                         data: {
                             file: path,
-                        }
-                    },
-                    {
-                        type: 'text',
-                        data: {
-                            text: `\nhttps://osu.ppy.sh/b/${recent.beatmap_id}`
                         }
                     },
                 ])

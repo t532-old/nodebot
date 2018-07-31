@@ -6,6 +6,7 @@ const users = db.get('users')
 /**
  * refreshes a bound user's stat cache
  * @param {string} osuid - The querying arg osuid
+ * @returns {Promise}
  */
 async function refreshStat(qqid) {
     const osuid = (await users.findOne({ qqid })).osuid

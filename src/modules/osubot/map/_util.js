@@ -1,7 +1,8 @@
 /**
  * Calculates a play's accuracy (f**k ppy).
  * @name accuracy
- * @param {object} data The recent play data
+ * @param {{ count50: string, count100: string, count300: string, countmiss: string }} data The recent play data
+ * @returns {string} the accuracy
  */
 export function accuracy(data) {
     const rec = copy(data)
@@ -15,7 +16,8 @@ export function accuracy(data) {
 /**
  * Deep copy an object
  * @name copy
- * @param {object} obj The object that's being copied
+ * @param {any} obj The object that's being copied
+ * @returns {any} the copied object
  */
 export function copy(obj) {
     let res = new obj.constructor()

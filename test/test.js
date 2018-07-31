@@ -3,14 +3,12 @@ console.log(
 `-------------------------------
 Running runtime tests...`
 )
-console.log('- 1/3: Load config:')
+console.log('- 1/2: Load config:')
 require('fs').copyFileSync('config.template.yml', 'config.yml')
 console.log('  - config.yml')
 require('fs').copyFileSync('aliases.template.yml', 'aliases.yml')
 console.log('  - aliases.yml')
-console.log('- 2/3: Load Modules:')
-console.log(require('../dist/modules'))
-console.log('- 3/3: Load Core:')
+console.log('- 2/2: Load Core:')
 console.log('  - 1/3: Load Command Parser:')
 console.log(require('../dist/core/command'))
 console.log('  - 2/3: Load Logger:')

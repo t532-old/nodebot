@@ -17,6 +17,7 @@ export default class Aliaser {
      * otherwise it returns `from` param itself
      * @method
      * @param {string} from 
+     * @returns {string}
      */
     alias(from) { return this.#aliases[from] || from }
 }

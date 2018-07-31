@@ -10,14 +10,14 @@ import { getAvatar } from './avatar'
 /**
  * Draws a user's status
  * also draws the increasement if statPrev exists
- * @param {object} stat
- * @param {object?} statPrev
+ * @param {{ user_id: string, username: string, playcount: string, ranked_score: string, pp_rank: string, level: string, pp_raw: string, accuracy: string, count_rank_ss: string, count_rank_ssh: string, count_rank_s: string, count_rank_sh: string, count_rank_a: string, country: string, pp_country_rank: string }} stat
+ * @param {{ user_id: string, username: string, playcount: string, ranked_score: string, pp_rank: string, level: string, pp_raw: string, accuracy: string, count_rank_ss: string, count_rank_ssh: string, count_rank_s: string, count_rank_sh: string, count_rank_a: string, country: string, pp_country_rank: string }?} statPrev
+ * @returns {string}
  */
 export default async function drawStat(stat, statPrev) {
     const uid = stat.user_id
     const dest = `${cachepath}/stat/${uid}.jpg`
     const avatarDest = `${cachepath}/avatar/${uid}.jpg`
-    const avatarLargerDest = `${cachepath}/avatarl/${uid}.jpg`
     const ranks = ['XH', 'X', 'SH', 'S', 'A']
     copyFileSync(`${assetspath}/image/userbg/c${Math.ceil(Math.random() * 5)}.jpg`, dest)
     await promisifyGM(
@@ -28,7 +28,7 @@ export default async function drawStat(stat, statPrev) {
         .fill('#0005')
         .drawRectangle(30, 20, 400, 390)
     )
-    if (existsSync(avatarDest) || await getAvatar(uid, avatarDest, avatarLargerDest))
+    if (existsSync(avatarDest) || await getAvatar(uid, avatarDest))
         await promisifyGM(
             gm(dest)
             .quality(100)

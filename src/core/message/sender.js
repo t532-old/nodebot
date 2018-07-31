@@ -1,7 +1,8 @@
-import { post } from 'axios'
+import { get, post } from 'axios'
 import { safeLoad } from 'js-yaml'
 import { readFileSync } from 'fs'
 import { errorLog, incomeLog, outgoLog } from '../log'
+import { AxiosResponse } from '../../../node_modules/axios';
 const { sendAddress } = safeLoad(readFileSync('config.yml'))
 /**
  * A class that is uses to send message asynchronously.
@@ -34,10 +35,10 @@ export default class Message {
     /**
      * builds a message object
      * @constructor
-     * @param {object} param A standard cqhttp message object
+     * @param {{ group_id: number, message_type: string, ... }} param A standard cqhttp message object
      */
     constructor(param) {
-        this.target = param.group_id || param.user_id
+        this.target = param.group_id || param.discuss_id || param.user_id
         this.type = param.message_type
         this.param = param
         incomeLog(this, this.#startTime)
@@ -79,6 +80,7 @@ export default class Message {
      * @static
      * @param {string} user_id The target user's qq id.
      * @param {string|array} message The message
+     * @returns {AxiosResponse}
      */
     static async 'private'(user_id, message) { return post(`${sendAddress}/send_private_msg`, { user_id, message }) }
     /**
@@ -86,7 +88,22 @@ export default class Message {
      * @static
      * @param {string} group_id The target qq group id.
      * @param {string|array} message The message
+     * @returns {AxiosResponse}
      */
     static async 'group'(group_id, message) { return post(`${sendAddress}/send_group_msg`, { group_id, message }) }
+    /**
+     * Sends a discuss message
+     * @static
+     * @param {string} discuss_id The target qq discuss id.
+     * @param {string|array} message The message
+     * @returns {AxiosResponse}
+     */
+    static async 'discuss'(discuss_id, message) { return post(`${sendAddress}/send_discuss_msg`, { discuss_id, message }) }
+    /**
+     * get group list
+     * @static
+     * @returns {{ group_id: number, group_name: string }[]}
+     */
+    static async 'groupList'() { return (await get(`${sendAddress}/get_group_list`)).data.data }
 }
 

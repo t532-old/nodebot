@@ -7,6 +7,7 @@ const users = db.get('users')
  * Adds a bound user to db
  * @param {string} qqid - The querying arg qqid
  * @param {string} osuid The querying arg osuid
+ * @returns {Promise}
  */
 async function newUser(qqid, osuid) {
     const exists = await users.findOne({ qqid })
@@ -27,6 +28,7 @@ async function newUser(qqid, osuid) {
 /**
  * Remove a user from bound users' list in db
  * @param {string} qqid - The querying arg qqid
+ * @returns {Promise}
  */
 async function delUser(qqid) {
     return users.remove({ qqid })

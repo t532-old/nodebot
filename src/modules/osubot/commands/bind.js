@@ -8,7 +8,7 @@ export default {
     /**
      * binds an osu! id with a QQ id.
      * @param {Message} msg The universal msg object
-     * @param {string} account The account
+     * @param {{ account: string }} - The account
      */
     async action(msg, { account }) {
         account = account.join(' ')

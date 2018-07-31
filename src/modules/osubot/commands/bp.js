@@ -10,9 +10,8 @@ export default {
     /**
      * Get a user's best performance
      * @param {Message} msg The universal msg object
-     * @param {string} order The username that'll be queried
-     * @param {string} usr The username that'll be queried
-     * @param {string} mode the mode that will be queried
+     * @param {{ order: string, usr: string }} - The order and username that'll be queried
+     * @param {string[]} mode the mode that will be queried
      */
     async action(msg, { order, usr }, [ mode = 'o' ]) {
         usr = usr.join(' ') || 'me'
@@ -51,12 +50,6 @@ export default {
                         type: 'image',
                         data: {
                             file: path,
-                        }
-                    },
-                    {
-                        type: 'text',
-                        data: {
-                            text: `\nhttps://osu.ppy.sh/b/${best.beatmap_id}`
                         }
                     },
                 ])

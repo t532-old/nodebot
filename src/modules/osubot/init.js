@@ -19,7 +19,7 @@ const initPaths = [
  * This sets an interval function that 
  * refreshes bound users' status every 0:00
  */
-export default async function refresher() {
+async function refresher() {
     for (let i of initPaths)
         if (!existsSync(i)) mkdirSync(i)
     const time = new Date(`${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate() + 1}`)
@@ -32,3 +32,5 @@ export default async function refresher() {
         }, 86400000)
     }, time.getTime() - Date.now())
 }
+
+export default [ refresher ]

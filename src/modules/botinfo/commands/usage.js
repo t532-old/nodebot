@@ -8,8 +8,10 @@ export default {
     args: '[queries...]',
     options: ['length', 'filter', 'identifier', 'type'],
     /**
-     * Send bot's help link.
+     * Send bot's command usage.
      * @param {Message} msg The universal msg object
+     * @param {{ queries: string[] }} - the query params
+     * @param {string[]} methods the query methods
      */
     async action(msg, { queries }, methods) {
         let reply = `== ${msg.target} 的用量统计，截至 ${new Date().toString()} ==\n`

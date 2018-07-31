@@ -12,9 +12,10 @@ import { getMods } from '../map'
 
 /**
  * Draws a recent play image and returns its path
- * @param {object} rec 
- * @param {object} map 
- * @param {object} stat 
+ * @param {{ beatmap_id: string, enabled_mods: string, score: string, maxcombo: string, count100: string, count300: string, count50: string, countmiss: string, date: string, rank: string }} rec
+ * @param {{ artist: string, creator: string, title: string, version: string }} map 
+ * @param {{ username: string, user_id: string }} stat
+ * @returns {string}
  */
 export default async function drawRecent(rec, map, stat) {
     const uid = stat.user_id
@@ -23,12 +24,11 @@ export default async function drawRecent(rec, map, stat) {
     const dest = `${cachepath}/recent/${uid}.jpg`
     const bgDest = `${cachepath}/mapbg/${sid}.jpg`
     const avatarDest = `${cachepath}/avatar/${uid}.jpg`
-    const avatarLargerDest = `${cachepath}/avatarl/${uid}.jpg`
     const avatarBGDest = `${cachepath}/recentbg/${uid}.jpg`
     const mapFileDest = `${cachepath}/mapfile/${bid}.osu`
     const mods = getMods(rec.enabled_mods)
     copyFileSync(`${assetspath}/image/userbg/crecent.jpg`, avatarBGDest)
-    if (existsSync(avatarDest) || await getAvatar(uid, avatarDest, avatarLargerDest)) 
+    if (existsSync(avatarDest) || await getAvatar(uid, avatarDest)) 
         await promisifyGM(
             gm(avatarBGDest)
             .quality(100)

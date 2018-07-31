@@ -7,5 +7,5 @@ import chalk from 'chalk'
  * @param {string} message the log message
  */
 export default function modLog(name, message) {
-    log(`${chalk.white.bgBlue(' MOD ')} ${chalk.gray(new Date().toString())} by ${name}: ${message}`)
+    log(`${chalk.white.bgBlue('  +  ')} ${chalk.gray(new Date().toString())} by ${name}:\n      ${message}`)
 }

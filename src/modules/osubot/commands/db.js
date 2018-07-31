@@ -11,7 +11,7 @@ export default {
     /**
      * backup or recovery the db
      * @param {Message} msg The universal msg object
-     * @param {string} type Whether the db will be backuped or recoveried
+     * @param {string[]} type Whether the db will be backuped or recoveried
      */
     async action(msg, {}, [ type ]) {
         if (operators.includes(msg.param.user_id)) {

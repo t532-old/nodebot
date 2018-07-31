@@ -58,8 +58,8 @@ typings/
 .env
 
 # config file
-config.yml
-aliases.yml
+/config.yml
+/aliases.yml
 
 # bot caches
 cache/
