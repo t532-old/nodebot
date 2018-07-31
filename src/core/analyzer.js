@@ -7,11 +7,10 @@ const data = db.get('analytics')
 /**
  * count an event
  * @name analyzer
- * @param {Message} msg the message object
- *      {string} type - the type of the message
- *      {number} target - the target of the message
+ * @param {{ type: string, target: number }} msg the message object
  * @param {string} type the event type
  * @param {string} identifier the event name
+ * @returns {Promise}
  */
 export default async function analyzer({ type: messageType, target: messageTarget }, type, identifier) {
     if (analyzeMessage) {

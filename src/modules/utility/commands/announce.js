@@ -9,7 +9,8 @@ export default {
     /**
      * Runs a batch command
      * @param {Message} msg The universal msg object
-     * @param {{ announcement: string|{ type: string, data }[], groups: string[] }} - the announcement info
+     * @param {{ announcement: string, groups: string[] }} - the announcement info
+     * @param {string[]} type - the filter type
      */
     async action(msg, { announcement, groups }, [ type ]) {
         if (operators.includes(msg.param.user_id)) {

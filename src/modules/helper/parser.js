@@ -1,6 +1,7 @@
 /**
  * parse a helper file string into program-readable object
- * @param {string} raw 
+ * @param {string} raw the raw markdown help file
+ * @returns {{ name: string, module: string, description: string, parameters: string[], options: string[] }} the parsed help info
  */
 export default function parseHelp(raw) {
     raw = raw.split(/\r|\n/).filter(i => i)

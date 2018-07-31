@@ -7,7 +7,7 @@ export const commands = {
         /**
          * Send bot's help link.
          * @param {Message} msg The universal msg object
-         * @param {{ topic }} - the help topic
+         * @param {{ topic?: string }} - the help topic
          */
         async action(msg, { topic }) {
             if (topic && readdirSync('cache/helper').includes(`${topic}.jpg`)) {

@@ -7,7 +7,7 @@ export default {
     /**
      * Returns the text directly to the user
      * @param {Message} msg The universal msg object
-     * @param {array} txt The texts user sends
+     * @param {{ txt: string[] }} txt The texts user sends
      */
     async action(msg, { txt }) { msg.send(txt.filter(i => new RegExp(...injectionChecker).test(i) === false).join(' ')) }
 }

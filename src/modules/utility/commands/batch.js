@@ -10,7 +10,7 @@ export default {
     /**
      * Runs a batch command
      * @param {Message} msg The universal msg object
-     * @param {string} command A batch command
+     * @param {{ command: string}} - A batch command
      */
     async action(msg, { command }) {
         if (operators.includes(msg.param.user_id)) {

@@ -32,8 +32,8 @@ export default class Command {
     /**
      * @constructor
      * @name Command
-     * @param {object} prefixes - The commands' && options' prefix
-     * @param {object} handlers - do this when no avalible commands || the arguments are missing
+     * @param {{ command: string, options: string }} prefixes - The commands' && options' prefix
+     * @param {{ default: function, invalid: function, success?: function }} handlers - do these when no avalible commands or the arguments are missing or command is executed
      */
     constructor({prefixes, handlers}) { 
         this.#commandPrefix = new RegExp('^' + prefixes.command)
@@ -46,7 +46,7 @@ export default class Command {
      * bind a command
      * @method
      * @param {string} name - the command name
-     * @param {object} params - {
+     * @param {{ args: string, options: string[], action: function }} params - {
      *      {string} args - the arguments' format, 
      *          <name> (with the angle brackets!) is a required arg, 
      *          [name] (with the square brackets, and must be given after required ones) is an optional args,
@@ -63,6 +63,7 @@ export default class Command {
      *      options: ['*x', '*y'],
      *      action(args, options) { return [args, options] }
      * })
+     * @returns {Command}
      */
     on(name, {args, options, action}) {
         const str = this.#commandPrefix.toString().slice(2, -1) + name + ' ' + args
@@ -81,6 +82,7 @@ export default class Command {
      * Bind a group of commands.
      * @method
      * @param {object} commands 
+     * @returns {Command}
      */
     onAll(commands) {
         for (let i of Object.keys(commands)) 
@@ -91,6 +93,7 @@ export default class Command {
      * do a command
      * @method
      * @param {string} command 
+     * @param {any} extraArgs
      */
     do(command, ...extraArgs) {
         if (!this.#commandPrefix.test(command)) return
@@ -148,5 +151,10 @@ export default class Command {
         this.#list[name].action(...extraArgs, args, options)
         this.successHandler(...extraArgs, [name, [args, options]])
     }
+    /**
+     * Get a command's usage
+     * @param {string} name the command's name
+     * @returns {string}
+     */
     getUsage(name) { return this.#list[name].str }
 }

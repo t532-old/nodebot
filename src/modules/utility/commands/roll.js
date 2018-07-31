@@ -7,7 +7,7 @@ export default {
     /**
      * Gives a random result in a specific range (default 100)
      * @param {Message} msg The universal msg object
-     * @param {string} range The rolling range
+     * @param {{ range: string }} - The rolling range
      */
     async action(msg, { range }) {
         range = range.map(i => i.trim()).join(',') || '100'

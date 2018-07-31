@@ -10,8 +10,8 @@ export default {
     /**
      * Fetch a user's status
      * @param {Message} msg The universal msg object
-     * @param {string} usr username that will be queried
-     * @param {string} mode the mode that will be queried
+     * @param {{usr: string}} - username that will be queried
+     * @param {string[]} mode the mode that will be queried
      */
     async action(msg, { usr }, [ mode = 'o' ]) {
         usr = usr.join(' ') || 'me'

@@ -5,6 +5,7 @@ import axios from 'axios'
  * A GET requrest that gets a file stream, and writes it to another stream
  * @param {string} url The url you want to fetch
  * @param {string} dest The place the file will be copied to
+ * @returns {Promise}
  */
 async function staticQuery(url, dest) {
     const res = await axios({
@@ -22,18 +23,21 @@ async function staticQuery(url, dest) {
 /**
  * Simple sugar over staticQuery, queries a user's avatar
  * @param {string} uid 
+ * @returns {Promise}
  */
 async function avatarQuery(uid, dest) { return staticQuery('https://a.ppy.sh/' + uid, dest) }
 
 /**
  * Simple sugar over staticQuery, queries a map's background
  * @param {string} sid 
+ * @returns {Promise}
  */
 async function bgQuery(sid, dest) { return staticQuery('https://assets.ppy.sh/beatmaps/' + sid + '/covers/cover.jpg', dest) }
 
 /**
  * Simple sugar over staticQuery, queries a map's .osu file
  * @param {string} bid 
+ * @returns {Promise}
  */
 async function mapFileQuery(bid, dest) { return staticQuery('https://osu.ppy.sh/osu/' + bid, dest) }
 

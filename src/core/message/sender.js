@@ -35,7 +35,7 @@ export default class Message {
     /**
      * builds a message object
      * @constructor
-     * @param {object} param A standard cqhttp message object
+     * @param {{ group_id: number, message_type: string, ... }} param A standard cqhttp message object
      */
     constructor(param) {
         this.target = param.group_id || param.discuss_id || param.user_id
@@ -102,7 +102,7 @@ export default class Message {
     /**
      * get group list
      * @static
-     * @returns {AxiosResponse}
+     * @returns {{ group_id: number, group_name: string }[]}
      */
     static async 'groupList'() { return (await get(`${sendAddress}/get_group_list`)).data.data }
 }
