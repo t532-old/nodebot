@@ -7,3 +7,5 @@ From osubot
 - 无参数。
 ### Option
 - 无选项。
+## Example
+- * -avatar *

@@ -152,7 +152,19 @@ export default async function drawRecent(rec, map, stat) {
             .fill('#aaa')
             .drawText(0, -42, `${info.stars} Stars [AR${info.ar}  CS${info.cs}  OD${info.od}  HP${info.hp}]`)
         )
-    } catch { }
+    } catch {
+        try {
+            await promisifyGM(
+                gm(dest)
+                .quality(100)
+                .gravity('Center')
+                .font(`${assetspath}/fonts/Exo2.0-Bold.otf`)
+                .fontSize(14)
+                .fill('#aaa')
+                .drawText(0, -42, `${map.difficultyrating.slice(0, 4)} Stars [AR${map.diff_approach}  CS${map.diff_size}  OD${map.diff_overall}  HP${map.diff_drain}]`)
+            )
+        } catch { }
+    }
     await promisifyGM(
         gm(dest)
         .quality(100)

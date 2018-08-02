@@ -11,3 +11,7 @@ From osubot
 - *t: 模式为 osu!Taiko。
 - *c: 模式为 osu!Catch。
 - *m: 模式为 osu!Mania。
+## Example
+- * -bp <id> [usr=me] *o/t/c/m *
+- -bp 3 *m
+- -bp 99 jhlee0133 *t

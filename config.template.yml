@@ -18,7 +18,7 @@ prefixes:
     command: '[!！]'  # {string} the prefix of the command.
     options: '-' # {string} the prifix of the options
 botinfo:
-    version: '4.0.0' # {string} The version. This only influences the botinfo.about command.
+    version: '4.1.0' # {string} The version. This only influences the botinfo.about command.
 osubot:
     key: # {string} Your osu! api key
     repeater:

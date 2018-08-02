@@ -11,6 +11,7 @@ export default function parseHelp(raw) {
         description: '',
         parameters: [],
         options: [],
+        example: [],
     }
     let inParagraph
     for (let i of raw) {
@@ -36,6 +37,12 @@ export default function parseHelp(raw) {
         const usageHeaderMatched = i.match(/^##\s*Usage/i)
         if (usageHeaderMatched) {
             inParagraph = 'usage'
+            continue
+        }
+        // Example Header
+        const exampleHeaderMatched = i.match(/^##\s*Example/i)
+        if (exampleHeaderMatched) {
+            inParagraph = 'example'
             continue
         }
         // Description
@@ -68,7 +75,16 @@ export default function parseHelp(raw) {
         if (inParagraph === 'usage-option') {
             const optionFormatMatched = i.match(/-\s*(.+)/)
             if (optionFormatMatched) result.options.push(optionFormatMatched[1])
-            else if (result.options.length > 0) result.options[options.length - 1] += `\n${i}`
+            else if (result.options.length > 0) result.options[result.options.length - 1] += `\n${i}`
+        }
+        // Example
+        if (inParagraph === 'example') {
+            const exampleFormatMatched = i.match(/-\s*(.+)/)
+            const exampleSpecialFormatMatched = i.match(/-\s*\*(.+)\*/)
+            if (exampleSpecialFormatMatched) result.example.unshift(exampleSpecialFormatMatched[1])
+            else if (exampleFormatMatched) result.example.push(exampleFormatMatched[1])
+            else if (result.example.length > 0) result.example[result.example.length - 1] += `\n${i}`
+            continue
         }
     }
     return result

@@ -1,3 +1,14 @@
+# v4.1.0
+
+## Features
+- 增加了 helper 文档的 Example 字段
+
+## Bugs
+- 修复了其他模式查询 bp 和 rec 时不显示四维（与 pp）的 bug
+- 修复了 helper 绘制 description 时换行处理不正确的 bug
+
+---
+
 # v4.0.0
 
 ## Features

@@ -7,3 +7,5 @@ From utility
 - <command>: 将被执行的 batch 命令。
 ### Option
 - 无选项。
+## Example
+- * -batch <command> *

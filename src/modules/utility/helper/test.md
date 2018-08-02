@@ -7,3 +7,6 @@ From utility
 - [text...]: 将被发出的参数。
 ### Option
 - 无选项。
+## Example
+- * -test [text...] *
+- -test a  b c

@@ -7,3 +7,6 @@ From osubot
 - <usr>: 你想要绑定的 osu!id。
 ### Option
 - 无选项。
+## Example
+- * -bind <usr> *
+- -bind Cookiezi

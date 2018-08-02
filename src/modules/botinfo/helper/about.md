@@ -7,3 +7,5 @@ From botinfo
 - 无参数。
 ### Option
 - 无选项。
+## Example
+- * -about *

@@ -10,3 +10,7 @@ From utility
 ### Option
 - *include: 仅发送在 group 列表里的群。
 - *except: 仅发送不在 group 列表里的群。
+## Example
+- * -announce <announcement> *include/except [group...] *
+- -announce test1
+- -announce test2 *except 1234567

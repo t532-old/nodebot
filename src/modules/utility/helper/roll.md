@@ -8,3 +8,7 @@ From utility
 - [limit...]: 一组值，在里面随机选定。
 ### Option
 - 无选项。
+## Example
+- * -roll [limit...] *
+- -roll 100
+- -roll a b c d e
