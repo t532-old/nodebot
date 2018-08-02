@@ -157,11 +157,11 @@ export default async function drawBest(bp, map, stat) {
             await promisifyGM(
                 gm(dest)
                 .quality(100)
-                .gravity('West')
+                .gravity('North')
                 .fill('#fff')
                 .font(`${assetspath}/fonts/Venera-700.otf`)
                 .fontSize(25)
-                .drawText(410, 0, Math.round(bp.pp).toString() + 'PP')
+                .drawText(0, 100, Math.round(bp.pp).toString() + 'PP')
                 .gravity('Center')
                 .font(`${assetspath}/fonts/Exo2.0-Bold.otf`)
                 .fontSize(14)
