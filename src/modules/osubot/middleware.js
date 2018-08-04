@@ -28,7 +28,6 @@ function repeater(msg) {
             modLog('osubot middleware', `attempting to repeat \`${msg.param.message}' in ${msg.type === 'private' ? chalk.yellow(`${msg.type} ${msg.target}`) : `${msg.type} ${msg.target}`} in ${Math.round(timeout / 1000)} secs`)
             setTimeout(() => { msg.send(repeatTarget.message) }, timeout)
             analyzer(msg, 'middleware', 'osubotRepeat')
-            delete log[msg.type][msg.target]
         } 
     }
 }
