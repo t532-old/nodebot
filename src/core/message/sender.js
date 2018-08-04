@@ -1,4 +1,4 @@
-import { get, post } from 'axios'
+import { post } from 'axios'
 import { safeLoad } from 'js-yaml'
 import { readFileSync } from 'fs'
 import { errorLog, incomeLog, outgoLog } from '../log'
@@ -78,25 +78,25 @@ export default class Message {
     /**
      * Sends a private message
      * @static
-     * @param {string} user_id The target user's qq id.
+     * @param {number} user_id The target user's qq id.
      * @param {string|array} message The message
-     * @returns {AxiosResponse}
+     * @returns {AxiosPromise}
      */
     static async 'private'(user_id, message) { return post(`${sendAddress}/send_private_msg`, { user_id, message }) }
     /**
      * Sends a group message
      * @static
-     * @param {string} group_id The target qq group id.
+     * @param {number} group_id The target qq group id.
      * @param {string|array} message The message
-     * @returns {AxiosResponse}
+     * @returns {AxiosPromise}
      */
     static async 'group'(group_id, message) { return post(`${sendAddress}/send_group_msg`, { group_id, message }) }
     /**
      * Sends a discuss message
      * @static
-     * @param {string} discuss_id The target qq discuss id.
+     * @param {number} discuss_id The target qq discuss id.
      * @param {string|array} message The message
-     * @returns {AxiosResponse}
+     * @returns {AxiosPromise}
      */
     static async 'discuss'(discuss_id, message) { return post(`${sendAddress}/send_discuss_msg`, { discuss_id, message }) }
     /**
@@ -104,6 +104,58 @@ export default class Message {
      * @static
      * @returns {{ group_id: number, group_name: string }[]}
      */
-    static async 'groupList'() { return (await get(`${sendAddress}/get_group_list`)).data.data }
+    static async 'groupList'() { return (await post(`${sendAddress}/get_group_list`)).data.data }
+    /**
+     * get user info
+     * @static
+     * @param {number} user_id
+     * @param {number?} group_id
+     * @returns {{ user_id: number, nickname: string, sex: string, age: number, group_id?: number, card?: number, area?: string, join_time?: number, last_sent_time?: number, level?: string, role?: string, unfriendly?: boolean, title?: string, title_expire_time?: number, card_changeable?: boolean }}
+     */
+    static async 'userInfo'(user_id, group_id) { 
+        return group_id ? 
+               (await post(`${sendAddress}/get_stranger_info`), { user_id }).data.data : 
+               (await post(`${sendAddress}/get_group_member_info`), { user_id, group_id }).data.data 
+    }
+    /**
+     * kick a user
+     * @static
+     * @param {number} group_id
+     * @param {number} user_id
+     * @param {boolean} reject_add_request = false (true => reject, false => don't reject)
+     * @returns {AxiosPromise}
+     */
+    static async 'kick'(group_id, user_id, reject_add_request = false) { return post(`${sendAddress}/set_group_kick`, { group_id, user_id, reject_add_request }) }
+    /**
+     * ban a user
+     * @static
+     * @param {number} group_id
+     * @param {number} user_id
+     * @param {number} duration = 10 * 60
+     * @returns {AxiosPromise}
+     */
+    static async 'ban'(group_id, user_id, duration = 10 * 60) { return post(`${sendAddress}/set_group_ban`, { group_id, user_id, duration }) }
+    /**
+     * ban a whole group
+     * @static
+     * @param {number} group_id
+     * @param {boolean} enable = true (true => ban, false => unban)
+     * @returns {AxiosPromise}
+     */
+    static async 'wholeBan'(group_id, enable = true) { return post(`${sendAddress}/set_group_whole_ban`, { group_id, enable }) }
+    /**
+     * leave a group
+     * @static
+     * @param {number} group_id 
+     * @returns {AxiosPromise}
+     */
+    static async 'leave'(group_id) { return post(`${sendAddress}/set_group_leave`, { group_id }) }
+    /**
+     * leave a discuss
+     * @static
+     * @param {number} discuss_id
+     * @returns {AxiosPromise}
+     */
+    static async 'leaveDiscuss'(discuss_id) { return post(`${sendAddress}/set_discuss_leave`, { discuss_id }) }
 }
 
