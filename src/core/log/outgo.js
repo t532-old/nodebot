@@ -3,7 +3,7 @@ import chalk from 'chalk'
 /**
  * log an outgoing message
  * @name outgoLog
- * @param {Message} msg the incoming message object
+ * @param {ContentMessage} msg the incoming message object
  * @param {array|string} text the replied text
  * @param {Date} startTime the time of the incoming message
  */

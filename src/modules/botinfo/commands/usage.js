@@ -9,7 +9,7 @@ export default {
     options: ['length', 'filter', 'identifier', 'type'],
     /**
      * Send bot's command usage.
-     * @param {Message} msg The universal msg object
+     * @param {ContentMessage} msg The universal msg object
      * @param {{ queries: string[] }} - the query params
      * @param {string[]} methods the query methods
      */

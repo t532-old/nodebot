@@ -9,7 +9,7 @@ export default {
     options: flatten(modes),
     /**
      * Get a user's best performance
-     * @param {Message} msg The universal msg object
+     * @param {ContentMessage} msg The universal msg object
      * @param {{ order: string, usr: string }} - The order and username that'll be queried
      * @param {string[]} mode the mode that will be queried
      */

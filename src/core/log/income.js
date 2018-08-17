@@ -3,7 +3,7 @@ import chalk from 'chalk'
 /**
  * log an incoming message
  * @name incomeLog
- * @param {Message} msg the message object
+ * @param {ContentMessage} msg the message object
  * @param {Date} startTime the time of the message
  */
 export default function incomeLog(msg, startTime) {

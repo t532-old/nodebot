@@ -9,7 +9,7 @@ export default {
     options: flatten(modes),
     /**
      * Get a user's most recent play
-     * @param {Message} msg The universal msg object
+     * @param {ContentMessage} msg The universal msg object
      * @param {{ usr: string }} - The username that'll be queried
      * @param {string[]} mode the mode that will be queried
      */

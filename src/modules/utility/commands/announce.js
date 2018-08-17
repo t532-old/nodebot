@@ -1,14 +1,14 @@
 import { safeLoad } from 'js-yaml'
 import { readFileSync } from 'fs'
 import { modLog } from '../../../core/log'
-import Message from '../../../core/message/sender'
+import { Message } from '../../../core/message/sender'
 const { operators } = safeLoad(readFileSync('config.yml'))
 export default {
     args: '<announcement> [groups...]',
     options: ['include', 'except'],
     /**
      * Runs a batch command
-     * @param {Message} msg The universal msg object
+     * @param {ContentMessage} msg The universal msg object
      * @param {{ announcement: string, groups: string[] }} - the announcement info
      * @param {string[]} type - the filter type
      */
