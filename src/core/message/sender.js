@@ -1,7 +1,7 @@
 import { post } from 'axios'
 import { safeLoad } from 'js-yaml'
 import { readFileSync } from 'fs'
-import { errorLog, incomeLog, outgoLog } from '../log'
+import { errorLog, incomeLog, outgoLog, requestLog } from '../log'
 const { sendAddress } = safeLoad(readFileSync('config.yml'))
 /**
  * A class that stores message info in a more readable way.
@@ -357,6 +357,7 @@ export class RequestMessage extends Message {
      * @param {boolean} approve
      */
     send(approve) {
+        requestLog(this, approve)
         if (this.requestType === 'add') return Message.enter(this.flag, approve)
         else return Message.request[this.type](this.flag, approve)
     }
