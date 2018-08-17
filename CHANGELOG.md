@@ -2,6 +2,7 @@
 
 ## Features
 - 增加了 helper 文档的 Example 字段
+- 大幅度修改了 sender (即 Message) 的结构，具体见源代码（core/message/sender）。
 
 ## Bugs
 - 修复了其他模式查询 bp 和 rec 时不显示四维（与 pp）的 bug

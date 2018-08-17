@@ -13,7 +13,7 @@ const { repeater: config } = safeLoad(readFileSync('config.yml')).osubot
 /**
  * This middleware counts the repeated times of a message
  * if it reaches 3, the bot repeats it
- * @param {Message} msg 
+ * @param {ContentMessage} msg 
  */
 function repeater(msg) {
     if (new RegExp(...injectionChecker).test(msg.param.message) === false) {

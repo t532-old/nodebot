@@ -6,7 +6,7 @@ export default {
     options: [],
     /**
      * Gives a random result in a specific range (default 100)
-     * @param {Message} msg The universal msg object
+     * @param {ContentMessage} msg The universal msg object
      * @param {{ range: string }} - The rolling range
      */
     async action(msg, { range }) {

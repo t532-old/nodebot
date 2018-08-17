@@ -6,7 +6,7 @@ export default {
     options: [],
     /**
      * Send bot's info.
-     * @param {Message} msg The universal msg object
+     * @param {ContentMessage} msg The universal msg object
      */
     async action(msg) {
         msg.send(

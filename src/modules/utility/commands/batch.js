@@ -9,7 +9,7 @@ export default {
     options: [],
     /**
      * Runs a batch command
-     * @param {Message} msg The universal msg object
+     * @param {ContentMessage} msg The universal msg object
      * @param {{ command: string}} - A batch command
      */
     async action(msg, { command }) {

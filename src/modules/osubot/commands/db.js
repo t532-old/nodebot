@@ -10,7 +10,7 @@ export default {
     options: ['backup', 'recovery'],
     /**
      * backup or recovery the db
-     * @param {Message} msg The universal msg object
+     * @param {ContentMessage} msg The universal msg object
      * @param {string[]} type Whether the db will be backuped or recoveried
      */
     async action(msg, {}, [ type ]) {
