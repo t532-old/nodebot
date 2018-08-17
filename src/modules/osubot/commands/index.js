@@ -1,5 +1,6 @@
 export avatar from './avatar'
 export bind from './bind'
+export bpm from './bpm'
 export bp from './bp'
 export db from './db'
 export rec from './rec'

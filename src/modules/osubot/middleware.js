@@ -3,6 +3,7 @@ import { readFileSync } from 'fs'
 import chalk from 'chalk'
 import { modLog } from '../../core/log'
 import analyzer from '../../core/analyzer'
+import { getTest, endTest } from './commands/bpm'
 const { injectionChecker } = safeLoad(readFileSync('config.yml'))
 const log = {
     private: {},
@@ -32,4 +33,13 @@ function repeater(msg) {
     }
 }
 
-export default [ repeater ]
+function bpmTester(msg) {
+    const startTime = getTest(msg.targetUser), 
+          endTime = Date.now()
+    if (startTime) {
+        msg.send(`测试结束！成绩为${Math.round(msg.param.message.length / ((endTime - startTime) / 1000) * 60) / 4}bpm`)
+        endTest(msg.targetUser)
+    }
+}
+
+export default [ repeater, bpmTester ]
