@@ -1,15 +1,43 @@
 /**
  * Calculates a play's accuracy (f**k ppy).
  * @name accuracy
- * @param {{ count50: string, count100: string, count300: string, countmiss: string }} data The recent play data
+ * @param {{ count50: string, count100: string, count300: string, countmiss: string, countkatu: string, countgeki: string }} data The recent play data
+ * @param {number} mode
  * @returns {string} the accuracy
  */
-export function accuracy(data) {
+export function accuracy(data, mode = 0) {
     const rec = copy(data)
     for (let i in rec) rec[i] = parseInt(rec[i])
-    const result = (((rec.count50 * 50 + rec.count100 * 100 + rec.count300 * 300) / 
-             ((rec.countmiss + rec.count50 + rec.count100 + rec.count300) * 300)
-    ) * 100).toString()
+    let result
+    switch (mode) {
+    case 0: // std
+        result = ((
+            (rec.count50 * 50 + rec.count100 * 100 + rec.count300 * 300) / 
+            ((rec.countmiss + rec.count50 + rec.count100 + rec.count300) * 300)
+        ) * 100).toString()
+        break
+    case 1: // taiko
+        result = ((
+            (rec.count100 * 0.5 + rec.count300) / 
+            (rec.countmiss + rec.count50 + rec.count100 + rec.count300)
+        ) * 100).toString()
+        break
+    case 2: // ctb
+        result = ((
+            (rec.count50 + rec.count100 + rec.count300) / 
+            (rec.countmiss + rec.countkatu + rec.count50 + rec.count100 + rec.count300)
+        ) * 100).toString()
+        break
+    case 3: // mania
+        result = ((
+            (50 * rec.count50 + 100 * rec.count100 + 200 * rec.countkatu + 300 * (rec.count300 + rec.countgeki)) / 
+            (300 * (rec.countmiss + rec.count50 + rec.count100 + rec.countkatu + rec.count300 + rec.countgeki))
+        ) * 100).toString()
+        break
+    default: // this should never happen
+        throw new Error('Attempting to use a mode that doesn\'t exist')
+        break
+    }
     return result.slice(0, 3 + result.split('.')[0].length)
 }
 

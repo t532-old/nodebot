@@ -43,7 +43,7 @@ export default {
                 msg.send(`osubot: bp: ${QUERY.NET.FAIL}`)
                 return
             }
-            const path = await drawBest(best, map, status)
+            const path = await drawBest(best, map, status, parseInt(mode))
             if (path)
                 msg.send([
                     {

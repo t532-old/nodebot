@@ -41,7 +41,7 @@ export default {
                 msg.send(`osubot: rec: ${QUERY.NET.FAIL}`)
                 return
             }
-            const path = await drawRecent(recent, map, status)
+            const path = await drawRecent(recent, map, status, parseInt(mode))
             if (path)
                 msg.send([
                     {

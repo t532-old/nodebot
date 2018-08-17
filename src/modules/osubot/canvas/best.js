@@ -15,9 +15,10 @@ import calc from '../map'
  * @param {{ beatmap_id: string, enabled_mods: string, pp: string, score: string, maxcombo: string, count100: string, count300: string, count50: string, countmiss: string, date: string, rank: string }} bp 
  * @param {{ artist: string, creator: string, title: string, version: string }} map 
  * @param {{ username: string, user_id: string }} stat 
+ * @param {boolean} mode
  * @returns {string}
  */
-export default async function drawBest(bp, map, stat) {
+export default async function drawBest(bp, map, stat, mode = 0) {
     const uid = stat.user_id
     const sid = map.beatmapset_id
     const bid = bp.beatmap_id
@@ -89,10 +90,10 @@ export default async function drawBest(bp, map, stat) {
         .fill('#aaa')
         .fontSize(30)
         .drawText(-300, 2, bp.maxcombo + 'x')
-        .drawText(300, 2, accuracy(bp) + '%')
+        .drawText(300, 2, accuracy(bp, mode) + '%')
         .fill('#3ad')
         .drawText(-300, 0, bp.maxcombo + 'x')
-        .drawText(300, 0, accuracy(bp) + '%')
+        .drawText(300, 0, accuracy(bp, mode) + '%')
         .fontSize(12)
         .fill('#333')
         .drawText(-290, 20, 'max combo')
@@ -128,31 +129,34 @@ export default async function drawBest(bp, map, stat) {
         .drawText(0, 0, scorify(bp.score))
         .crop(1000, 500)
     )
-    try {
-        if (!existsSync(mapFileDest)) await res.mapFileQuery(bid, mapFileDest)
-        const info = calc(mapFileDest, bp)
-        await promisifyGM(
-            gm(dest)
-            .quality(100)
-            .gravity('West')
-            .fill('#fff')
-            .font(`${assetspath}/fonts/Venera-700.otf`)
-            .fontSize(25)
-            .drawText(410, -165, Math.round(info.pp.total).toString() + 'PP')
-            .gravity('East')
-            .font(`${assetspath}/fonts/Venera-900.otf`)
-            .fontSize(12)
-            .drawText(410, -177, Math.round(info.pp.aim).toString() + ' AIM')
-            .drawText(410, -165, Math.round(info.pp.speed).toString() + ' SPD')
-            .drawText(410, -153, Math.round(info.pp.acc).toString() + ' ACC')
-            .gravity('Center')
-            .drawText(0, -190, Math.round(info.fcpp).toString() + 'pp if FC')
-            .font(`${assetspath}/fonts/Exo2.0-Bold.otf`)
-            .fontSize(14)
-            .fill('#aaa')
-            .drawText(0, -42, `${info.stars} Stars [AR${info.ar}  CS${info.cs}  OD${info.od}  HP${info.hp}]`)
-        )
-    } catch {
+    if (mode === 0) {
+        try {
+            if (!existsSync(mapFileDest)) await res.mapFileQuery(bid, mapFileDest)
+            const info = calc(mapFileDest, bp, mode)
+            if (!info.pp.total) throw new Error('Unexpected Data')
+            await promisifyGM(
+                gm(dest)
+                .quality(100)
+                .gravity('West')
+                .fill('#fff')
+                .font(`${assetspath}/fonts/Venera-700.otf`)
+                .fontSize(25)
+                .drawText(410, -165, Math.round(info.pp.total).toString() + 'PP')
+                .gravity('East')
+                .font(`${assetspath}/fonts/Venera-900.otf`)
+                .fontSize(12)
+                .drawText(410, -177, Math.round(info.pp.aim).toString() + ' AIM')
+                .drawText(410, -165, Math.round(info.pp.speed).toString() + ' SPD')
+                .drawText(410, -153, Math.round(info.pp.acc).toString() + ' ACC')
+                .gravity('Center')
+                .drawText(0, -190, Math.round(info.fcpp).toString() + 'pp if FC')
+                .font(`${assetspath}/fonts/Exo2.0-Bold.otf`)
+                .fontSize(14)
+                .fill('#aaa')
+                .drawText(0, -42, `${info.stars} Stars [AR${info.ar}  CS${info.cs}  OD${info.od}  HP${info.hp}]`)
+            )
+        } catch { }
+    } else {
         try {
             await promisifyGM(
                 gm(dest)
