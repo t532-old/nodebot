@@ -1,4 +1,7 @@
-# v4.1.1
+# v4.2.0
+
+## Features
+- 新命令 -bpm
 
 ## Bugs
 - 修复了其他三模式 accuracy 计算错误的问题
