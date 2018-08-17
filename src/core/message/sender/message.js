@@ -1,7 +1,6 @@
 import { post } from 'axios'
 import { safeLoad } from 'js-yaml'
 import { readFileSync } from 'fs'
-import { errorLog, incomeLog, outgoLog, requestLog } from '../log'
 const { sendAddress } = safeLoad(readFileSync('config.yml'))
 /**
  * A class that stores message info in a more readable way.
@@ -17,7 +16,7 @@ const { sendAddress } = safeLoad(readFileSync('config.yml'))
  * @property {string} type The message_type || request_type || event
  * @property {{ group_id: number, message_type: string, ... }} param the raw cqhttp POST message
  */
-export class Message {
+export default class Message {
     startTime = new Date()
     isGroup
     isDiscuss
@@ -288,82 +287,4 @@ export class Message {
      * @returns {AxiosPromise}
      */
     async 'enter'(flag, approve) { return post(`${sendAddress}/set_group_add_request`, { approve, flag, type: 'add' }) }
-}
-
-/**
- * a class that can be used to send message back
- * @class
- * @name ContentMessage
- * @extends Message
- */
-export class ContentMessage extends Message {
-    constructor(param) {
-        super(param)
-        incomeLog(this, this.startTime)
-    }
-    /**
-     * Send a message back to the target
-     * @method send
-     * @param {string|array} message The message that'll be sent
-     */
-    send(message) {
-        Message[this.type](this.target, message)
-        outgoLog(this, message, this.startTime)
-    }
-    /**
-     * send an error message to the target and log the error
-     * @method error
-     * @param {Error} err 
-     */
-    error(err) {
-        this.send([
-            {
-                type: 'text',
-                data: {
-                    text: '很遗憾，发生了一个未预料到的错误。请过会重试；同时，请您复制下面的信息：\n' +
-                            new Date().toString() + ': ' +
-                            err.toString() + 
-                            '\n并到 https://gitlab.com/trustgit/nodebot/issues 提交issue或私聊' 
-                }
-            },
-            {
-                type: 'at',
-                data: { qq: '2037246484' }
-            },
-        ])
-        errorLog(err)
-    }
-}
-
-/**
- * a class that can be used to process requests
- * @class
- * @name ContentMessage
- * @extends Message
- * @property {string} flag the request flag
- * @property {string?} requestType the request type (if from group)
- */
-export class RequestMessage extends Message {
-    flag
-    requestType
-    constructor(param) {
-        super(param)
-        this.flag = param.flag
-        this.requestType = param.sub_type
-    }
-    /**
-     * accept or refuse the request
-     * @method send
-     * @param {boolean} approve
-     */
-    send(approve) {
-        requestLog(this, approve)
-        if (this.requestType === 'add') return Message.enter(this.flag, approve)
-        else return Message.request[this.type](this.flag, approve)
-    }
-}
-
-export class EventMessage extends Message {
-    constructor(param) { super(param) }
-    // TODO: write something to process events.
 }
