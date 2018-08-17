@@ -2,6 +2,7 @@
 
 ## Features
 - 新命令 -bpm
+- 修改了 stat 绘制的样式并增加了 tth 信息
 
 ## Bugs
 - 修复了其他三模式 accuracy 计算错误的问题
