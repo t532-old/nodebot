@@ -29,8 +29,8 @@ export default class Message {
      * @param {{ group_id: number, message_type: string, ... }} param A standard cqhttp message object
      */
     constructor(param) {
-        this.isGroup = new Boolean(param.group_id)
-        this.isDiscuss = new Boolean(param.discuss_id)
+        this.isGroup = param.group_id ? true : false
+        this.isDiscuss = param.discuss_id ? true : false
         this.isPrivate = !(this.isGroup || this.isDiscuss)
         this.target = param.group_id || param.discuss_id || param.user_id
         this.targetUser = param.user_id
