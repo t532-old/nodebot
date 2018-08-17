@@ -11,6 +11,10 @@ const log = {
     discuss: {},
 }
 const { repeater: config } = safeLoad(readFileSync('config.yml')).osubot
+const BPM_UNDERFLOW_LIMIT = 40
+const BPM_UNDERFLOW_RESPONSE = '太惨了。'
+const BPM_OVERFLOW_LIMIT = 400
+const BPM_OVERFLOW_RESPONSE = '复制粘贴好玩吗？'
 /**
  * This middleware counts the repeated times of a message
  * if it reaches 3, the bot repeats it
@@ -34,10 +38,11 @@ function repeater(msg) {
 }
 
 function bpmTester(msg) {
-    const startTime = getTest(msg.targetUser), 
-          endTime = Date.now()
+    const endTime = Date.now(),
+          startTime = getTest(msg.targetUser)
+    const result = Math.round(msg.param.message.length / ((endTime - startTime) / 1000) * 60) / 4
     if (startTime) {
-        msg.send(`测试结束！成绩为${Math.round(msg.param.message.length / ((endTime - startTime) / 1000) * 60) / 4}bpm`)
+        msg.send(`测试结束！成绩为${result}bpm。${result < BPM_UNDERFLOW_LIMIT ? BPM_UNDERFLOW_RESPONSE : ''}${result > BPM_OVERFLOW_LIMIT ? BPM_OVERFLOW_RESPONSE : ''}`)
         endTest(msg.targetUser)
     }
 }
