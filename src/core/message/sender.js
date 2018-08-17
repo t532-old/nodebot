@@ -18,7 +18,7 @@ const { sendAddress } = safeLoad(readFileSync('config.yml'))
  * @property {{ group_id: number, message_type: string, ... }} param the raw cqhttp POST message
  */
 export class Message {
-    #startTime = new Date()
+    startTime = new Date()
     isGroup
     isDiscuss
     isPrivate
@@ -299,7 +299,7 @@ export class Message {
 export class ContentMessage extends Message {
     constructor(param) {
         super(param)
-        incomeLog(this, this.#startTime)
+        incomeLog(this, this.startTime)
     }
     /**
      * Send a message back to the target
@@ -308,7 +308,7 @@ export class ContentMessage extends Message {
      */
     send(message) {
         Message[this.type](this.target, message)
-        outgoLog(this, message, this.#startTime)
+        outgoLog(this, message, this.startTime)
     }
     /**
      * send an error message to the target and log the error
