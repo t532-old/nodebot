@@ -1,5 +1,5 @@
 import Message from './message'
-import { requestLog } from '../log'
+import { requestLog } from '../../log'
 /**
  * a class that can be used to process requests
  * @class

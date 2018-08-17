@@ -1,5 +1,5 @@
 import Message from './message'
-import { errorLog, incomeLog, outgoLog } from '../log'
+import { errorLog, incomeLog, outgoLog } from '../../log'
 /**
  * a class that can be used to send message back
  * @class
