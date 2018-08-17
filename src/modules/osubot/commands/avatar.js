@@ -7,7 +7,7 @@ export default {
     options: [],
     /**
      * clear a user's cached avatar
-     * @param {Message} msg The universal msg object
+     * @param {ContentMessage} msg The universal msg object
      */
     async action(msg) {
         const user = await userdb.getByQQ(msg.param.user_id)

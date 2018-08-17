@@ -9,7 +9,7 @@ export default {
     options: flatten(modes),
     /**
      * Fetch a user's status
-     * @param {Message} msg The universal msg object
+     * @param {ContentMessage} msg The universal msg object
      * @param {{usr: string}} - username that will be queried
      * @param {string[]} mode the mode that will be queried
      */

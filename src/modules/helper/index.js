@@ -6,7 +6,7 @@ export const commands = {
         options: [],
         /**
          * Send bot's help link.
-         * @param {Message} msg The universal msg object
+         * @param {ContentMessage} msg The universal msg object
          * @param {{ topic?: string }} - the help topic
          */
         async action(msg, { topic }) {

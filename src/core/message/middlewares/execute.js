@@ -25,6 +25,6 @@ Should be: ${this.getUsage(name)}`
 }).onAll(commands)
 /**
  * execute a message (command).
- * @param {Message} msg 
+ * @param {ContentMessage} msg 
  */
 export default function execute(msg) { handler.do(msg.param.message, msg) }

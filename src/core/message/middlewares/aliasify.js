@@ -11,7 +11,7 @@ for (let i of moduleList) {
 const aliaser = new Aliaser(aliases)
 /**
  * Make a message its alias.
- * @param {Message} msg 
+ * @param {ContentMessage} msg 
  */
 export default function aliasify(msg) {
     const alias = aliaser.alias(msg.param.message)

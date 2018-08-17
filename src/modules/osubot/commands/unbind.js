@@ -6,7 +6,7 @@ export default {
     options: [],
     /**
      * unbinds an osu! id from a QQ id.
-     * @param {Message} msg The universal msg object
+     * @param {ContentMessage} msg The universal msg object
      */
     async action(msg) {
         await userdb.delUser(msg.param.user_id)
