@@ -7,7 +7,6 @@ import { errorLog } from '../log'
  * @param {object} param A cqhttp message object
  */
 export default async function handle(param) {
-    const msg = new Message(param)
     if (middlewares[param.post_type])
         for (let middleware of middlewares[param.post_type]) {
             try { await middleware(msg) }
