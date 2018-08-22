@@ -16,7 +16,7 @@ async function staticQuery(url, dest) {
     if (res.status === 403) return false
     res.data.pipe(createWriteStream(dest))
     return new Promise(function (resolve, reject) {
-        res.data.on('end', resolve)
+        res.data.on('end', () => setTimeout(resolve, 500))
     }).catch(err => { throw err })
 }
 
@@ -25,20 +25,20 @@ async function staticQuery(url, dest) {
  * @param {string} uid 
  * @returns {Promise}
  */
-async function avatarQuery(uid, dest) { return staticQuery('https://a.ppy.sh/' + uid, dest) }
+function avatarQuery(uid, dest) { return staticQuery('https://a.ppy.sh/' + uid, dest) }
 
 /**
  * Simple sugar over staticQuery, queries a map's background
  * @param {string} sid 
  * @returns {Promise}
  */
-async function bgQuery(sid, dest) { return staticQuery('https://assets.ppy.sh/beatmaps/' + sid + '/covers/cover.jpg', dest) }
+function bgQuery(sid, dest) { return staticQuery('https://assets.ppy.sh/beatmaps/' + sid + '/covers/cover.jpg', dest) }
 
 /**
  * Simple sugar over staticQuery, queries a map's .osu file
  * @param {string} bid 
  * @returns {Promise}
  */
-async function mapFileQuery(bid, dest) { return staticQuery('https://osu.ppy.sh/osu/' + bid, dest) }
+function mapFileQuery(bid, dest) { return staticQuery('https://osu.ppy.sh/osu/' + bid, dest) }
 
 export default { query: staticQuery, avatarQuery, bgQuery, mapFileQuery }

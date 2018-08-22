@@ -155,8 +155,9 @@ export default async function drawRecent(rec, map, stat, mode = 0) {
                 .fill('#aaa')
                 .drawText(0, -42, `${info.stars} Stars [AR${info.ar}  CS${info.cs}  OD${info.od}  HP${info.hp}]`)
             )
-        } catch { }
-    } else {
+        } catch { mode = -1 }
+    } 
+    if (mode !== 0) {
         try {
             await promisifyGM(
                 gm(dest)

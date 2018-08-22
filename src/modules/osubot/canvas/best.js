@@ -26,7 +26,7 @@ export default async function drawBest(bp, map, stat, mode = 0) {
     const bgDest = `${cachepath}/mapbg/${sid}.jpg`
     const avatarDest = `${cachepath}/avatar/${uid}.jpg`
     const avatarBGDest = `${cachepath}/recentbg/${uid}.jpg`
-    const mapFileDest =  `${cachepath}/mapfile/${bid}.jpg`
+    const mapFileDest =  `${cachepath}/mapfile/${bid}.osu`
     const mods = getMods(bp.enabled_mods)
     copyFileSync(`${assetspath}/image/userbg/crecent.jpg`, avatarBGDest)
     if (existsSync(avatarDest) || await getAvatar(uid, avatarDest))
