@@ -7,5 +7,5 @@ import chalk from 'chalk'
  * @param {Date} startTime the time of the message
  */
 export default function incomeLog(msg, startTime) {
-    log(`${chalk.black.bgWhite('  <  ')} ${chalk.gray(startTime.toString())}\n      ${msg.type === 'private' ? chalk.yellow(`${msg.type} ${msg.target}`) : `${msg.type} ${msg.target}(${msg.targetUser})`}: ${msg.param.message}`)
+    log(`${chalk.black.bgWhite('  <  ')} ${chalk.gray(startTime.toString())}\n      ${msg.type === 'private' ? chalk.yellow(`${msg.type} ${msg.target}`) : `${msg.type} ${msg.target}(${msg.targetUser})`}: ${msg.content}`)
 }

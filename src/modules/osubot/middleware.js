@@ -21,16 +21,16 @@ const BPM_OVERFLOW_RESPONSE = '复制粘贴好玩吗？'
  * @param {ContentMessage} msg 
  */
 function repeater(msg) {
-    if (new RegExp(...injectionChecker).test(msg.param.message) === false) {
+    if (new RegExp(...injectionChecker).test(msg.content) === false) {
         if ('notAllowed' in config && config.notAllowed.includes(msg.target)) return
         if ('allowed' in config && !config.allowed.includes(msg.target)) return
-        if (!log[msg.type][msg.target]) log[msg.type][msg.target] = { count: 1, message: msg.param.message }
-        else if (msg.param.message === log[msg.type][msg.target].message) log[msg.type][msg.target].count++
-        else log[msg.type][msg.target] = { count: 1, message: msg.param.message }
+        if (!log[msg.type][msg.target]) log[msg.type][msg.target] = { count: 1, message: msg.content }
+        else if (msg.content === log[msg.type][msg.target].message) log[msg.type][msg.target].count++
+        else log[msg.type][msg.target] = { count: 1, message: msg.content }
         if (log[msg.type][msg.target].count === config.times) {
             const timeout = Math.round(Math.random() * 200000),
                   repeatTarget = log[msg.type][msg.target]
-            modLog('osubot middleware', `attempting to repeat \`${msg.param.message}' in ${msg.type === 'private' ? chalk.yellow(`${msg.type} ${msg.target}`) : `${msg.type} ${msg.target}`} in ${Math.round(timeout / 1000)} secs`)
+            modLog('osubot middleware', `attempting to repeat \`${msg.content}' in ${msg.type === 'private' ? chalk.yellow(`${msg.type} ${msg.target}`) : `${msg.type} ${msg.target}`} in ${Math.round(timeout / 1000)} secs`)
             setTimeout(() => { msg.send(repeatTarget.message) }, timeout)
             analyzer(msg, 'middleware', 'osubotRepeat')
         } 
@@ -40,7 +40,7 @@ function repeater(msg) {
 function bpmTester(msg) {
     const endTime = Date.now(),
           startTime = getTest(msg.targetUser)
-    const result = Math.round(msg.param.message.length / ((endTime - startTime) / 1000) * 60) / 4
+    const result = Math.round(msg.content.length / ((endTime - startTime) / 1000) * 60) / 4
     if (startTime) {
         msg.send(`测试结束！成绩为${result}bpm。${result < BPM_UNDERFLOW_LIMIT ? BPM_UNDERFLOW_RESPONSE : ''}${result > BPM_OVERFLOW_LIMIT ? BPM_OVERFLOW_RESPONSE : ''}`)
         endTest(msg.targetUser)

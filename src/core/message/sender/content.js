@@ -5,10 +5,13 @@ import { errorLog, incomeLog, outgoLog } from '../../log'
  * @class
  * @name ContentMessage
  * @extends Message
+ * @property {string} content the message content
  */
 export default class ContentMessage extends Message {
+    content
     constructor(param) {
         super(param)
+        this.content = param.message
         incomeLog(this, this.startTime)
     }
     /**

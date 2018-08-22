@@ -14,9 +14,9 @@ const aliaser = new Aliaser(aliases)
  * @param {ContentMessage} msg 
  */
 export default function aliasify(msg) {
-    const alias = aliaser.alias(msg.param.message)
-    if (msg.param.message !== alias) {
-        analyzer(msg, 'alias', `${msg.param.message}:${alias}`)
-        msg.param.message = alias
+    const alias = aliaser.alias(msg.content)
+    if (msg.content !== alias) {
+        analyzer(msg, 'alias', `${msg.content}:${alias}`)
+        msg.content = alias
     }
 }

@@ -27,4 +27,4 @@ Should be: ${this.getUsage(name)}`
  * execute a message (command).
  * @param {ContentMessage} msg 
  */
-export default function execute(msg) { handler.do(msg.param.message, msg) }
+export default function execute(msg) { handler.do(msg.content, msg) }

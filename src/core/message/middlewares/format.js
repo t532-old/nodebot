@@ -2,4 +2,4 @@
  * formats a message.
  * @param {ContentMessage} msg 
  */
-export default function format(msg) { msg.param.message = unescape(msg.param.message.replace(/&#(\d+);/g, (match, str) => '%' + parseInt(str).toString(16))) }
+export default function format(msg) { msg.content = unescape(msg.content.replace(/&#(\d+);/g, (match, str) => '%' + parseInt(str).toString(16))) }
