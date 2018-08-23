@@ -32,12 +32,11 @@ export default class Command {
     /**
      * @constructor
      * @name Command
-     * @param {{ command: string, options: string }} prefixes - The commands' && options' prefix
-     * @param {{ default: function, invalid: function, success?: function }} handlers - do these when no avalible commands or the arguments are missing or command is executed
+     * @param {{{ command?: string, options: string }, { default: function, invalid: function, success?: function }}} params prefixes and handlers
      */
     constructor({prefixes, handlers}) { 
-        this.#commandPrefix = new RegExp('^' + prefixes.command)
         this.#optionsPrefix = new RegExp('^' + prefixes.options)
+        if (prefixes.command) this.#commandPrefix = new RegExp('^' + prefixes.command)
         if (handlers.default) this.defaultHandler = handlers.default
         if (handlers.invalid) this.invalidHandler = handlers.invalid
         if (handlers.success) this.successHandler = handlers.success
@@ -96,8 +95,11 @@ export default class Command {
      * @param {any} extraArgs
      */
     do(command, ...extraArgs) {
-        if (!this.#commandPrefix.test(command)) return
-        command = command.split(this.#commandPrefix)[1].split(/(?=\s)/)
+        if (this.commandPrefix) {
+            if (!this.#commandPrefix.test(command)) return
+            command = command.split(this.#commandPrefix)[1]
+        }
+        command = command.split(/(?=\s)/)
         const combined = []
         let inString = false
         for (let i of command) {
