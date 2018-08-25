@@ -15,6 +15,8 @@ import chalk from 'chalk'
 import { serverLog } from './util/log'
 // import main handler
 import handle from './handler'
+// import message class
+import { Message } from './sender'
 
 if (cluster.isMaster) {
     // ascii
@@ -31,7 +33,7 @@ if (cluster.isMaster) {
         const { inits: moduleInits } = require(`nodebot-module-${i}`)
         inits = [...inits, ...moduleInits]
     }
-    for (let init of inits) init()
+    for (let init of inits) init(new Message())
     serverLog(`Bot modules initialized`)
     for (let i = 0; i < countCPUs; i++) cluster.fork()
     serverLog(`${chalk.gray(`Master process #${process.pid} initializing ${countCPUs} workers`)}`)
