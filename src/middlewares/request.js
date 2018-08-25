@@ -1,8 +1,7 @@
 import { safeLoad } from 'js-yaml'
 import { readFileSync } from 'fs'
 
-const { autoAccept = 'none' } = safeLoad(readFileSync('config.yml'))
-
+const { autoAccept = 'none' } = safeLoad(readFileSync('config/config.yml'))
 export default async function request(msg) {
     if (
         (msg.type === autoAccept ||

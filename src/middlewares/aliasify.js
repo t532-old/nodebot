@@ -1,11 +1,11 @@
-import { Aliaser } from '../../command'
-import analyzer from '../../analyzer'
+import { Aliaser } from '../command'
+import analyzer from '../util/analyzer'
 import { safeLoad } from 'js-yaml'
 import { readFileSync } from 'fs'
-const { aliases: moduleList } = safeLoad(readFileSync('src/modules/exports.yml'))
-let aliases = safeLoad(readFileSync('aliases.yml'))
+const { aliases: moduleList } = safeLoad(readFileSync('config/exports.yml'))
+let aliases = safeLoad(readFileSync('config/aliases.yml'))
 for (let i of moduleList) {
-    const moduleAliases = safeLoad(readFileSync(`src/modules/${i}/aliases.yml`))
+    const moduleAliases = safeLoad(readFileSync(`node_modules/nodebot-module-${i}/aliases.yml`))
     aliases = { ...aliases, ...moduleAliases }
 }
 const aliaser = new Aliaser(aliases)

@@ -1,12 +1,12 @@
 import { safeLoad } from 'js-yaml'
 import { readFileSync } from 'fs'
-import analyzer from '../../analyzer'
-import { Command } from '../../command'
-const { prefixes = { command: '[!！]', options: '-' } } = safeLoad(readFileSync('config.yml'))
-const { commands: moduleList } = safeLoad(readFileSync('src/modules/exports.yml'))
+import analyzer from '../util/analyzer'
+import { Command } from '../command'
+const { prefixes = { command: '[!！]', options: '-' } } = safeLoad(readFileSync('config/config.yml'))
+const { commands: moduleList } = safeLoad(readFileSync('config/exports.yml'))
 let commands = {}
 for (let i of moduleList) {
-    const { commands: moduleCommands } = require(`../../../modules/${i}`)
+    const { commands: moduleCommands } = require(`nodebot-module-${i}`)
     commands = { ...commands, ...moduleCommands }
 }
 const handler = new Command({
