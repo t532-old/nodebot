@@ -1,7 +1,7 @@
 import Monk from 'monk'
 import { safeLoad } from 'js-yaml'
 import { readFileSync } from 'fs'
-const { databaseAddress, analyzeMessage } = safeLoad(readFileSync('config.yml'))
+const { databaseAddress, analyzeMessage } = safeLoad(readFileSync('config/config.yml'))
 const db = Monk(`${databaseAddress}/botdb`)
 const data = db.get('analytics')
 /**
