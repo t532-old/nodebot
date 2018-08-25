@@ -45,4 +45,5 @@ export default class ContentMessage extends Message {
         ])
         Message.log.errorLog(err)
     }
+    isInjection() { return Message.injectionChecker.test(this.content) }
 }

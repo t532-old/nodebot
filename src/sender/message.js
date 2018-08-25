@@ -4,7 +4,7 @@ import analyzer from '../util/analyzer'
 import { safeLoad } from 'js-yaml'
 import { readFileSync } from 'fs'
 const config = safeLoad(readFileSync('config/config.yml'))
-const { sendAddress } = config
+const { sendAddress, injectionChecker } = config
 /**
  * A class that stores message info in a more readable way.
  * Also provides methods to response the message.
@@ -29,6 +29,7 @@ export default class Message {
     static log = log
     static analyzer = analyzer
     static config = config
+    static injectionChecker = new RegExp(...injectionChecker)
     /**
      * builds a message object
      * @constructor
@@ -44,6 +45,10 @@ export default class Message {
         this.type = param.message_type || param.request_type || param.event
         this.param = param
     }
+    /**
+     * this is to let developers use static methods without importing core.
+     */
+    static() { return Message }
     /**
      * get target user's info.
      * @method info
