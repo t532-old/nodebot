@@ -2,9 +2,9 @@
   "name": "nodebot",
   "version": "5.0.0",
   "description": "A bot",
-  "main": "src/core/index.js",
+  "main": "src/index.js",
   "scripts": {
-    "start": "npm run build && node -r source-map-support/register dist/core/index.js",
+    "start": "npm run build && node -r source-map-support/register dist/index.js",
     "build": "babel src -d dist -s --verbose",
     "test": "npm run build && node -r source-map-support/register test/test.js"
   },
