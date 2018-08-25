@@ -1,7 +1,7 @@
 // imports
 import * as middlewares from './middlewares'
 import * as initialize from './initialize'
-import { errorLog } from '../log'
+import { errorLog } from './util/log'
 /**
  * handles a command by a specific target.
  * @param {object} param A cqhttp message object
