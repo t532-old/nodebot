@@ -1,5 +1,4 @@
 import Message from './message'
-import { errorLog, incomeLog, outgoLog } from '../../log'
 /**
  * a class that can be used to send message back
  * @class
@@ -12,7 +11,7 @@ export default class ContentMessage extends Message {
     constructor(param) {
         super(param)
         this.content = param.message
-        incomeLog(this, this.startTime)
+        Message.log.incomeLog(this, this.startTime)
     }
     /**
      * Send a message back to the target
@@ -21,7 +20,7 @@ export default class ContentMessage extends Message {
      */
     send(message) {
         Message[this.type](this.target, message)
-        outgoLog(this, message, this.startTime)
+        Message.log.outgoLog(this, message, this.startTime)
     }
     /**
      * send an error message to the target and log the error
@@ -44,6 +43,6 @@ export default class ContentMessage extends Message {
                 data: { qq: '2037246484' }
             },
         ])
-        errorLog(err)
+        Message.log.errorLog(err)
     }
 }

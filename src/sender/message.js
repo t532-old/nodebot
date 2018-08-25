@@ -1,7 +1,10 @@
 import { post } from 'axios'
+import * as log from '../util/log'
+import analyzer from '../util/analyzer'
 import { safeLoad } from 'js-yaml'
 import { readFileSync } from 'fs'
-const { sendAddress } = safeLoad(readFileSync('config.yml'))
+const config = safeLoad(readFileSync('config/config.yml'))
+const { sendAddress } = config
 /**
  * A class that stores message info in a more readable way.
  * Also provides methods to response the message.
@@ -23,6 +26,9 @@ export default class Message {
     isPrivate
     target
     targetUser
+    static log = log
+    static analyzer = analyzer
+    static config = config
     /**
      * builds a message object
      * @constructor
@@ -286,5 +292,5 @@ export default class Message {
      * @param {boolean} approve whether you accept or refuse
      * @returns {AxiosPromise}
      */
-    async 'enter'(flag, approve) { return post(`${sendAddress}/set_group_add_request`, { approve, flag, type: 'add' }) }
+    static async 'enter'(flag, approve) { return post(`${sendAddress}/set_group_add_request`, { approve, flag, type: 'add' }) }
 }

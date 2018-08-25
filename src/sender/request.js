@@ -1,5 +1,4 @@
 import Message from './message'
-import { requestLog } from '../../log'
 /**
  * a class that can be used to process requests
  * @class
@@ -22,7 +21,7 @@ export default class RequestMessage extends Message {
      * @param {boolean} approve
      */
     send(approve) {
-        requestLog(this, approve)
+        Message.log.requestLog(this, approve)
         if (this.requestType === 'add') return Message.enter(this.flag, approve)
         else return Message.request[this.type](this.flag, approve)
     }
