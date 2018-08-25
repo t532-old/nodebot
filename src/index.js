@@ -12,9 +12,9 @@ import { safeLoad } from 'js-yaml'
 // import startup
 import greet from './greeting'
 import chalk from 'chalk'
-import { serverLog } from './log'
+import { serverLog } from './util/log'
 // import main handler
-import message from './message'
+import handle from './handler'
 
 if (cluster.isMaster) {
     // ascii
@@ -25,10 +25,10 @@ if (cluster.isMaster) {
     if (!existsSync('logs')) mkdirSync('logs')
     serverLog(`Files initialized`)
     // application init
-    const { inits: moduleList } = safeLoad(readFileSync('src/modules/exports.yml'))
+    const { inits: moduleList } = safeLoad(readFileSync('config/exports.yml'))
     let inits = []
     for (let i of moduleList) {
-        const { inits: moduleInits } = require(`../modules/${i}`)
+        const { inits: moduleInits } = require(`nodebot-module-${i}`)
         inits = [...inits, ...moduleInits]
     }
     for (let init of inits) init()
@@ -39,16 +39,16 @@ if (cluster.isMaster) {
         serverLog(chalk.gray(`    Exited ${worker.process.pid}`))
     )
 } else {
+    const { receivePort } = safeLoad(readFileSync('./config/config.yml'))
     // environment init
     const app = new Koa()
-    const { receivePort } = safeLoad(readFileSync('config.yml'))
     // parse the body
     app.use(body())
     // handle the message
     app.use(async ctx => {
         const msg = ctx.request.body
         if (msg.post_type)
-            message(msg)
+            handle(msg)
     })
     // start listening
     app.listen(receivePort)

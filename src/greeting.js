@@ -1,6 +1,6 @@
-import { version } from '../../package.json'
+import { version } from '../package.json'
 import chalk from 'chalk'
-import { log } from './log'
+import { log } from './util/log'
 
 const ascii = `
                     __     __          __ 
