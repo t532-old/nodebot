@@ -96,7 +96,7 @@ export default class Command {
      * @param {any} extraArgs
      */
     do(command, ...extraArgs) {
-        if (this.commandPrefix) {
+        if (this.#commandPrefix) {
             if (!this.#commandPrefix.test(command)) return
             command = command.split(this.#commandPrefix)[1]
         }
