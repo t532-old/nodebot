@@ -8,6 +8,7 @@
     "build": "babel src -d dist -s --verbose",
     "test": "npm run build && node -r source-map-support/register test/test.js"
   },
+  "files": ["*.json", ".babelrc", ".gitignore", ".npmrc", "*.md", "dist/", "src/", "bin/", "assets/", "config/", "test/"],
   "repository": {
     "type": "git",
     "url": "git+https://gitlab.com/trustgit/nodebot.git"
