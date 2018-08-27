@@ -20,12 +20,12 @@ import handleAPI from './api'
 import { Message } from './sender'
 
 if (cluster.isMaster) {
+    if (!existsSync('cache')) mkdirSync('cache')
+    if (!existsSync('logs')) mkdirSync('logs')
     // ascii
     greet()
     // environment init
     serverLog(`Module initialized`)
-    if (!existsSync('cache')) mkdirSync('cache')
-    if (!existsSync('logs')) mkdirSync('logs')
     serverLog(`Files initialized`)
     // application init
     const { inits: moduleList } = safeLoad(readFileSync('config/exports.yml'))
