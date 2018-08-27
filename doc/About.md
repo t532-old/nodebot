@@ -2,8 +2,6 @@
 
 ## 声明
 - **本项目依赖的软件“酷Q Air/Pro”是闭源商业软件。**
-- 本项目的画图部分使用了类似 [osu!lazer](https://github.com/ppy/osu) (MIT License) 的图像，同时使用了 [ppy/osu-resources](https://github.com/ppy/osu-resources) (CC BY-NC 4.0) 中的图片资源。
-- 本项目的画图部分使用了 `Exo 2` 及 `Venera` 字体。
 - 本项目使用的所有 package 均可见 `package.json`。
 - 本项目不使用 `package-lock.json`。
 - 本项目遵循 [semver 语义化版本规则](https://semver.org)。
@@ -15,6 +13,7 @@ nodebot 已经在以下群内工作：
 - osu! 新人进阶群（`758120648`，仅接受新人群内成员）
 - osu! 新人群后花园（`514661057`，仅接受 >2500pp）
 - osu! 娱乐群（`102171745`，无限制）
+- 等等... 不下 20 个
 
 以及其它一些~~不便公开的~~ qq 群内。
 
