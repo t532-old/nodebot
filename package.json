@@ -1,14 +1,14 @@
 {
-  "name": "nodebot",
+  "name": "nodebot-core",
   "version": "5.0.0",
   "description": "A bot",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "start": "npm run build && node -r source-map-support/register dist/index.js",
     "build": "babel src -d dist -s --verbose",
     "test": "npm run build && node -r source-map-support/register test/test.js"
   },
-  "files": ["*.json", ".babelrc", ".gitignore", ".npmrc", "*.md", "dist/", "src/", "bin/", "assets/", "config/", "test/"],
+  "files": ["helper/", "LICENSE", "*.yml", "*.json", ".babelrc", ".gitignore", ".npmrc", "*.md", "dist/", "src/", "bin/", "assets/", "config/", "test/"],
   "repository": {
     "type": "git",
     "url": "git+https://gitlab.com/trustgit/nodebot.git"
