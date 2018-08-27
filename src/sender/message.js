@@ -103,15 +103,36 @@ export default class Message {
         else throw new Error('Not in a Group')
     }
     /**
-     * ban the whole target group
+     * unban target user
      * ADMIN REQUIRED
-     * @method wholeBan
-     * @param {boolean} enable whether ban or unban
+     * @method unban
      * @returns {AxiosPromise}
      * @throws {Error} if not in a group.
      */
-    wholeBan(enable) {
-        if (this.isGroup) return Message.wholeBan(this.target, enable)
+    ban() {
+        if (this.isGroup) return Message.unban(this.target, this.targetUser)
+        else throw new Error('Not in a Group')
+    }
+    /**
+     * ban the whole target group
+     * ADMIN REQUIRED
+     * @method wholeBan
+     * @returns {AxiosPromise}
+     * @throws {Error} if not in a group.
+     */
+    wholeBan() {
+        if (this.isGroup) return Message.wholeBan(this.target)
+        else throw new Error('Not in a Group')
+    }
+    /**
+     * unban the whole target group
+     * ADMIN REQUIRED
+     * @method wholeUnban
+     * @returns {AxiosPromise}
+     * @throws {Error} if not in a group.
+     */
+    wholeUnban() {
+        if (this.isGroup) return Message.wholeUnban(this.target)
         else throw new Error('Not in a Group')
     }
     /**
@@ -130,12 +151,22 @@ export default class Message {
      * set a group member's admin permission
      * OWNER REQUIRED
      * @method admin
-     * @param {boolean} enable whether set or unset.
      * @returns {AxiosPromise}
      * @throws {Error} if not in a group.
      */
-    admin(enable) {
-        if (this.isGroup) return Message.admin(this.target, this.targetUser, enable)
+    admin() {
+        if (this.isGroup) return Message.admin(this.target, this.targetUser)
+        else throw new Error('Not in a Group')
+    }
+    /**
+     * unset a group member's admin permission
+     * OWNER REQUIRED
+     * @method unadmin
+     * @returns {AxiosPromise}
+     * @throws {Error} if not in a group.
+     */
+    unadmin() {
+        if (this.isGroup) return Message.unadmin(this.target, this.targetUser)
         else throw new Error('Not in a Group')
     }
     /**
@@ -223,14 +254,30 @@ export default class Message {
      */
     static async 'ban'(group_id, user_id, duration = 10 * 60) { return post(`${sendAddress}/set_group_ban`, { group_id, user_id, duration }) }
     /**
+     * unban a user
+     * @static
+     * @method unban
+     * @param {number} group_id
+     * @param {number} user_id
+     * @returns {AxiosPromise}
+     */
+    static async 'unban'(group_id, user_id) { return post(`${sendAddress}/set_group_ban`, { group_id, user_id, duration: 0 }) }
+    /**
      * ban a whole group
      * @static
      * @method wholeBan
      * @param {number} group_id
-     * @param {boolean} enable = true (true => ban, false => unban)
      * @returns {AxiosPromise}
      */
-    static async 'wholeBan'(group_id, enable = true) { return post(`${sendAddress}/set_group_whole_ban`, { group_id, enable }) }
+    static async 'wholeBan'(group_id) { return post(`${sendAddress}/set_group_whole_ban`, { group_id, enable: true }) }
+    /**
+     * unban a whole group
+     * @static
+     * @method wholeUnban
+     * @param {number} group_id
+     * @returns {AxiosPromise}
+     */
+    static async 'wholeUnban'(group_id) { return post(`${sendAddress}/set_group_whole_ban`, { group_id, enable: false }) }
     /**
      * leave a group
      * @static
@@ -258,15 +305,23 @@ export default class Message {
      */
     static async 'rename'(group_id, user_id, card) { return post(`${sendAddress}/set_group_card`, { group_id, user_id, card }) }
     /**
-     * rename a user's group card
+     * set an admin of a group
      * @static
      * @method admin
      * @param {number} group_id
      * @param {number} user_id
-     * @param {boolean} enable = true (true => set, false => unset)
      * @returns {AxiosPromise}
      */
-    static async 'admin'(group_id, user_id, enable = true) { return post(`${sendAddress}/set_group_admin`, { group_id, user_id, enable }) }
+    static async 'admin'(group_id, user_id) { return post(`${sendAddress}/set_group_admin`, { group_id, user_id, enable: true }) }
+    /**
+     * unset an admin of a group
+     * @static
+     * @method admin
+     * @param {number} group_id
+     * @param {number} user_id
+     * @returns {AxiosPromise}
+     */
+    static async 'unadmin'(group_id, user_id) { return post(`${sendAddress}/set_group_admin`, { group_id, user_id, enable: false }) }
     /**
      * process for requests
      * @static
