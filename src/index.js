@@ -15,6 +15,7 @@ import chalk from 'chalk'
 import { serverLog } from './util/log'
 // import main handler
 import handle from './handler'
+import handleAPI from './api'
 // import message class
 import { Message } from './sender'
 
@@ -41,7 +42,7 @@ if (cluster.isMaster) {
         serverLog(chalk.gray(`    Exited ${worker.process.pid}`))
     )
 } else {
-    const { receivePort } = safeLoad(readFileSync('./config/config.yml'))
+    const { receivePort, apiPort } = safeLoad(readFileSync('./config/config.yml'))
     // environment init
     const app = new Koa()
     // parse the body
@@ -54,5 +55,20 @@ if (cluster.isMaster) {
     })
     // start listening
     app.listen(receivePort)
+    if (apiPort) {
+        // environment init
+        const api = new Koa()
+        // parse the body
+        api.use(body())
+        // handle the message
+        api.use(async ctx => {
+            const op = ctx.request.body
+            ctx.type = 'application/json'
+            if (op.name)
+                ctx.body = await handleAPI(op)
+        })
+        // start listening
+        api.listen(apiPort)
+    }
     serverLog(chalk.gray(`    Worker process #${process.pid} forked`))
 }
