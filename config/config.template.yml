@@ -1,5 +1,6 @@
 operators: # {array<number>} A list of operators. Operators have higher permisson.
 receivePort: # {number} The port you want to receive messages from cqhttp
+apiPort: # {number?} If specified, the bot will open an api for nodebot-cli as well as for other applications.
 sendAddress: # {string} cqhttp's api address **WITH PROTOCOL!!**
 databaseAddress: # {string} mongod's address **WITHOUT PROTOCOL!!**
 logMessage: false # {boolean} turn it to 'true' to log every message to your console.
