@@ -3,7 +3,9 @@ import analyzer from '../util/analyzer'
 import { safeLoad } from 'js-yaml'
 import { readFileSync } from 'fs'
 const { aliases: moduleList } = safeLoad(readFileSync('config/exports.yml'))
-let aliases = safeLoad(readFileSync('config/aliases.yml'))
+let aliases
+try { aliases = safeLoad(readFileSync('config/aliases.yml')) }
+catch { aliases = {} }
 for (let i of moduleList) {
     const moduleAliases = safeLoad(readFileSync(`node_modules/nodebot-module-${i}/aliases.yml`))
     aliases = { ...aliases, ...moduleAliases }
