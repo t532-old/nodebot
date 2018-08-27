@@ -1,3 +1,18 @@
+# v5.0.0
+
+## Features
+- 将模块作为标准 npm package 彻底与 nodebot 分离。
+- 增加了可外部调用的 HTTP API
+- 大幅扩展了 Message 对象，包括 static 方法以及新属性。
+- 将配置文件统一放置到 /config 目录下
+- 现在在调用 init 脚本时也会接受到空 Message 对象
+
+## Bugs
+- 修复了命令解析的重大 bug
+- 修复了其他各处的 bugs
+
+---
+
 # v4.2.0
 
 ## Features
@@ -12,7 +27,9 @@
 - 修复了 Command 对象不设置命令前缀时的解析 bug
 
 ## P.S.
-这 **可能是** nodebot 的最后一个版本。
+~~这 **可能是** nodebot 的最后一个版本。~~  
+
+这是 nodebot 最后一个 4.0.0 版本，同时是最后一个自带模块的版本。
 
 ---
 

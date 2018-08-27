@@ -7,21 +7,24 @@
 [![GitLab repo wiki](https://img.shields.io/badge/read-repo%20wiki-ffaa55.svg)](https://gitlab.com/trustgit/nodebot/wikis)
 [![凑badge（](https://img.shields.io/badge/developed%20for-osu!-ff6699.svg)](https://osu.ppy.sh/home)
 
-**nodebot 是一个模块化，轻量化 (~350 sloc) 的，基于命令的 Node.js qqbot 框架。**
+**nodebot 是一个模块化，轻量化 (~450 sloc) 的，基于命令的 Node.js qqbot 框架。**
 
-nodebot 同时附带了模块 `osubot`，`botinfo`，`helper` 与 `utility` (共 ~1400 sloc)，包含了 osu! qq bot 所需的基础功能。
+nodebot 核心现已与模块分割。原本附带的模块应参考 [osubot](https://gitlab.com/trustgit/nodebot-module-osubot), [botinfo](https://gitlab.com/trustgit/nodebot-module-botinfo), [helper](https://gitlab.com/trustgit/nodebot-module-helper), [utility](https://gitlab.com/trustgit/nodebot-module-utility)。
 
 ## 使用
-该框架 **没有** 上传至 npm。请使用 git clone 来将本框架下载到本地：
+我们推荐使用 [nodebot-cli](https://gitlab.com/trustgit/nodebot-cli) 进行安装：
+```shell
+npm install nodebot-cli
+nodebot
+```
 
+你也可以使用 git clone 来将本框架下载到本地：
 ```shell
 git clone https://gitlab.com/trustgit/nodebot.git
 cd nodebot
 ```
 
 之后参考 [Bot 开发：构建](https://gitlab.com/trustgit/nodebot/wikis/Build)。
-
-~~其实主要是因为 nodebot 这个 package name 被抢了~~
 
 ## 帮助中心
 - **Bot 用户应使用 `help` 命令查询帮助。**

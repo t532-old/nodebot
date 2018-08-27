@@ -10,15 +10,10 @@
 - 酷Q安装插件 [cqhttp](https://github.com/richardchien/coolq-http-api/releases)
 - MongoDB
 
-### 可选
-如果你想要使用 `osubot` 模块内的功能，则你也需要安装这些依赖：
-- 酷Q Pro
-- GraphicsMagick
-
 ## 运行
 0. 启动 `mongod`。
 1. 运行 `cqhttp`。
-2. 根据 `config.template.yml` 创建一个 `config.yml` 文件。
+2. 根据 `config/config.template.yml` 创建一个 `config/config.yml` 文件。
 3. 运行：
 
 ```sh

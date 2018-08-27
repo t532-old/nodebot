@@ -1,0 +1,29 @@
+operators: # {array<number>} A list of operators. Operators have higher permisson.
+receivePort: # {number} The port you want to receive messages from cqhttp
+apiPort: # {number?} If specified, the bot will open an api for nodebot-cli as well as for other applications.
+sendAddress: # {string} cqhttp's api address **WITH PROTOCOL!!**
+databaseAddress: # {string} mongod's address **WITHOUT PROTOCOL!!**
+logMessage: false # {boolean} turn it to 'true' to log every message to your console.
+analyzeMessage: false # {boolean} make it 'true' to record events to the database.
+autoAccept: none # {string} use one of ['none', 'friend', 'group', 'both'] to automatically accept/refuse these requests
+injectionChecker: 
+    # {array<string>} this will be used to generate a RegExp for checking whether the message have injection or not. 
+    # If result is true, the message will be handled in a different way. BE CAREFUL WITH THE RegExp ESCAPES.
+    - '\[CQ:' # the first member of the array is the RegExp
+    - 'gi' # and the second one is the RegExp's flags
+prefixes: 
+    # {object} the command parser's prefixes. 
+    # If you use the default configuration, a command should look like this:
+    # !name param1 -option1 param2 ...
+    # These will also be used to generate RegExps, so BE CAREFUL WITH THE RegExp ESCAPES.
+    command: '[!！]'  # {string} the prefix of the command.
+    options: '-' # {string} the prifix of the options
+botinfo:
+    version: '5.0.0' # {string} The version. This only influences the botinfo.about command.
+osubot:
+    key: # {string} Your osu! api key
+    repeater:
+        times: 3 # {number} the bot will repeat after this number of times.
+        # use either 'notAllowed' or 'allowed', or none of them. If you use both, 'notAllowed' will be processed first.
+        notAllowed: # {array<number>?} A list of groups that you don't want the bot to repeat in.
+        allowed: # {array<number>?} A list of groups that you want the bot to repeat in.

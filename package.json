@@ -1,13 +1,14 @@
 {
-  "name": "nodebot",
-  "version": "4.2.0",
+  "name": "nodebot-core",
+  "version": "5.0.0",
   "description": "A bot",
-  "main": "src/core/index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "start": "npm run build && node -r source-map-support/register dist/core/index.js",
+    "start": "npm run build && node -r source-map-support/register dist/index.js",
     "build": "babel src -d dist -s --verbose",
     "test": "npm run build && node -r source-map-support/register test/test.js"
   },
+  "files": ["helper/", "LICENSE", "*.yml", "*.json", ".babelrc", ".gitignore", ".npmrc", "*.md", "dist/", "src/", "bin/", "assets/", "config/", "test/"],
   "repository": {
     "type": "git",
     "url": "git+https://gitlab.com/trustgit/nodebot.git"
@@ -22,7 +23,6 @@
     "@babel/runtime": "^7.0.0-beta.51",
     "axios": "^0.18.0",
     "chalk": "^2.4.1",
-    "gm": "^1.23.1",
     "js-yaml": "^3.11.0",
     "koa": "^2.5.0",
     "koa-body": "^2.5.0",
