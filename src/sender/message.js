@@ -109,7 +109,7 @@ export default class Message {
      * @returns {AxiosPromise}
      * @throws {Error} if not in a group.
      */
-    ban() {
+    unban() {
         if (this.isGroup) return Message.unban(this.target, this.targetUser)
         else throw new Error('Not in a Group')
     }
@@ -210,7 +210,7 @@ export default class Message {
      * @param {number} group_id
      * @returns {{ user_id: number, nickname: string, sex: string, age: number, group_id?: number, card?: number, area?: string, join_time?: number, last_sent_time?: number, level?: string, role?: string, unfriendly?: boolean, title?: string, title_expire_time?: number, card_changeable?: boolean }[]}
      */
-    static async 'memberList'(group_id) { return (await post(`${sendAddress}/get_group_member_list`)).data.data }
+    static async 'memberList'(group_id) { return (await post(`${sendAddress}/get_group_member_list`, { group_id })).data.data }
     /**
      * get user info
      * @static
