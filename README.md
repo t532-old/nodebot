@@ -3,7 +3,8 @@
 
 [![license](https://img.shields.io/badge/license-MIT-55aa55.svg)](https://gitlab.com/trustgit/nodebot/blob/master/LICENSE)
 [![pipeline status](https://gitlab.com/trustgit/nodebot/badges/master/pipeline.svg)](https://gitlab.com/trustgit/nodebot/commits/master)
-[![GitLab (pre-)release](https://img.shields.io/badge/see-latest%20release-5555ff.svg)](https://gitlab.com/trustgit/nodebot/tags)
+[![npm package](https://img.shields.io/npm/v/nodebot-core.svg)](https://www.npmjs.com/package/nodebot-core)
+[![nodebot project](https://img.shields.io/badge/part%20of-nodebot-5555ff.svg)](https://gitlab.com/trustgit/nodebot)
 [![GitLab repo wiki](https://img.shields.io/badge/read-repo%20wiki-ffaa55.svg)](https://gitlab.com/trustgit/nodebot/wikis)
 [![凑badge（](https://img.shields.io/badge/developed%20for-osu!-ff6699.svg)](https://osu.ppy.sh/home)
 
